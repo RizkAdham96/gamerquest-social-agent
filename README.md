@@ -84,4 +84,4 @@ Sprint 5 closes Meta's public-media URL requirement with a temporary GitHub Rele
 
 ## Sprint 6 — scheduled automation
 
-The standalone agent now includes `.github/workflows/social-agent.yml`, a Monday/Wednesday/Friday GitHub Actions workflow. It defaults to dry-run mode, runs tests first, renders a Reel, and saves the output as an Actions artifact. Live publishing is enabled only with `GQ_LIVE_PUBLISH=true` plus the required Meta/Drive configuration. See `SPRINT6.md`.
+The standalone agent now includes `.github/workflows/social-agent.yml`, a Monday/Wednesday/Friday GitHub Actions workflow. It defaults to dry-run mode, runs tests first, renders a Reel, and saves the output as a downloadable GitHub Actions artifact for 90 days. Live publishing is enabled only with `GQ_LIVE_PUBLISH=true` plus the required Meta configuration. Google Cloud and Google Drive are not required. See `SPRINT6.md`.

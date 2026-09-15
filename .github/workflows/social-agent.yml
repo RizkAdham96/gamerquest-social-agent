@@ -24,7 +24,6 @@ jobs:
       GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
       GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
       GQ_YOUTUBE_API_KEY: ${{ secrets.GQ_YOUTUBE_API_KEY }}
-      GQ_DRIVE_PUBLISHED_FOLDER_ID: ${{ vars.GQ_DRIVE_PUBLISHED_FOLDER_ID }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -49,15 +48,6 @@ jobs:
 
       - name: Verify test suite
         run: pytest -q
-
-      - name: Prepare Google Drive credentials
-        env:
-          SERVICE_ACCOUNT_JSON: ${{ secrets.GQ_GOOGLE_SERVICE_ACCOUNT_JSON }}
-        run: |
-          if [ -n "$SERVICE_ACCOUNT_JSON" ]; then
-            printf '%s' "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/gq-service-account.json"
-            echo "GQ_GOOGLE_SERVICE_ACCOUNT_FILE=$RUNNER_TEMP/gq-service-account.json" >> "$GITHUB_ENV"
-          fi
 
       - name: Load candidate topics
         env:
@@ -88,7 +78,7 @@ jobs:
           name: gamerquest-social-agent-output
           path: output/
           if-no-files-found: ignore
-          retention-days: 7
+          retention-days: 90
 
       - name: Persist publish state
         if: ${{ success() && vars.GQ_LIVE_PUBLISH == 'true' }}
