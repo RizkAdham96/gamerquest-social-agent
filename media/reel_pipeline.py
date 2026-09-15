@@ -36,7 +36,7 @@ class ReelPipeline:
         reel_path = output_dir / "reel.mp4"
 
         self.tts.synthesize(voiceover_text, voice_path)
-        cues = build_subtitle_cues(voiceover_text, duration_seconds, max_words=5)
+        cues = build_subtitle_cues(voiceover_text, duration_seconds, max_words=4)
         subtitle_path.write_text(cues_to_srt(cues), encoding="utf-8")
 
         spec = ReelBuildSpec(
