@@ -52,3 +52,13 @@ class ReelScript:
     beats: list[str]
     cta: str
     voiceover: str
+
+
+@dataclass(frozen=True)
+class EditorialBeat:
+    index: int
+    role: str
+    start: float
+    end: float
+    narration: str
+    visual_query: str

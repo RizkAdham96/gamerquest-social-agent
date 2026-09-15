@@ -6,6 +6,8 @@ from content.subtitle_writer import build_subtitle_cues, cues_to_srt
 from .reel_builder import ReelBuildSpec, ReelBuilder
 from .tts import SmartFrenchTTS
 
+DEFAULT_BRAND_LOGO = Path(__file__).resolve().parents[1] / "brand_assets" / "gamerquest-logo.png"
+
 
 class TTSProvider(Protocol):
     def synthesize(self, text: str, output: Path) -> Path: ...
@@ -24,11 +26,14 @@ class ReelPipeline:
         output_dir: Path,
         duration_seconds: float,
         background_music: Path | None = None,
+        brand_logo: Path = DEFAULT_BRAND_LOGO,
     ) -> Path:
         if not footage.exists():
             raise FileNotFoundError(footage)
         if not voiceover_text.strip():
             raise ValueError("voiceover_text must not be empty")
+        if not brand_logo.exists():
+            raise FileNotFoundError(brand_logo)
         output_dir.mkdir(parents=True, exist_ok=True)
 
         voice_path = output_dir / "voice.wav"
@@ -43,6 +48,7 @@ class ReelPipeline:
             footage=footage,
             voiceover=voice_path,
             subtitles=subtitle_path,
+            brand_logo=brand_logo,
             output=reel_path,
             duration_seconds=duration_seconds,
             background_music=background_music,

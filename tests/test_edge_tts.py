@@ -6,7 +6,10 @@ from media.tts import EdgeTTS, SmartFrenchTTS
 def test_edge_tts_builds_french_neural_voice_command(tmp_path):
     tts = EdgeTTS(voice="fr-FR-DeniseNeural", rate="+5%")
     command = tts.build_command("Bonjour GamerQuest", tmp_path / "voice.mp3")
-    assert command[0].endswith("edge-tts")
+    assert command[0].endswith("edge-tts") or command[1:3] == [
+        "-m",
+        "edge_tts",
+    ]
     assert "--voice" in command
     assert "fr-FR-DeniseNeural" in command
     assert "--rate=+5%" in command

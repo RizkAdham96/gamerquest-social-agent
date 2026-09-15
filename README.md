@@ -85,3 +85,14 @@ Sprint 5 closes Meta's public-media URL requirement with a temporary GitHub Rele
 ## Sprint 6 — scheduled automation
 
 The standalone agent now includes `.github/workflows/social-agent.yml`, a Monday/Wednesday/Friday GitHub Actions workflow. It defaults to dry-run mode, runs tests first, renders a Reel, and saves the output as a downloadable GitHub Actions artifact for 90 days. Live publishing is enabled only with `GQ_LIVE_PUBLISH=true` plus the required Meta configuration. Google Cloud and Google Drive are not required. See `SPRINT6.md`.
+
+## Clean Newsroom quality rebuild
+
+Instagram publishing is temporarily hard-disabled. The workflow accepts only an
+explicit real-topic URL through `GQ_TOPICS_URL`; the former Bunny placeholder
+has been removed.
+
+A preview is not approved merely because rendering succeeds. Review requires
+the Reel, its contact sheet, captions, asset provenance, and quality report. The
+approved direction preserves original media colors and proportions, requires
+narration-matched assets, and blocks robotic narration and placeholder content.

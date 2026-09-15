@@ -9,7 +9,7 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["agent", "app", "automation", "content", "media", "social", "storage"]
+packages = ["agent", "app", "automation", "content", "media", "quality", "social", "storage"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
