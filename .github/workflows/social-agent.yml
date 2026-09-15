@@ -69,7 +69,9 @@ jobs:
             echo "GQ_TOPICS_URL must be configured before live publishing." >&2
             exit 1
           else
-            cp topics.sample.json "$RUNNER_TEMP/topics.json"
+            printf '%s\n' \
+              '[{"title":"GamerQuest dry run","url":"https://gamerquestfr.com/","source":"dry-run","official_footage_url":"https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/big_buck_bunny.mp4","tags":["gaming","news"]}]' \
+              > "$RUNNER_TEMP/topics.json"
           fi
 
       - name: Run social agent
