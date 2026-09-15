@@ -1,1 +1,2 @@
-ZWRnZS10dHM8OCw+PTcuMgpnb29nbGUtYXV0aDwzLD49Mi4zNQo=
+edge-tts<8,>=7.2
+google-auth<3,>=2.35

@@ -1,1 +1,63 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUsIHRpbWV6b25lCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAoKCmNsYXNzIFB1Ymxpc2hMb2c6CiAgICBkZWYgX19pbml0X18oc2VsZiwgcGF0aDogc3RyIHwgUGF0aCk6CiAgICAgICAgc2VsZi5wYXRoID0gUGF0aChwYXRoKQoKICAgIGRlZiBfbG9hZChzZWxmKSAtPiBsaXN0W2RpY3RdOgogICAgICAgIGlmIG5vdCBzZWxmLnBhdGguZXhpc3RzKCk6CiAgICAgICAgICAgIHJldHVybiBbXQogICAgICAgIHJhdyA9IGpzb24ubG9hZHMoc2VsZi5wYXRoLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKSkKICAgICAgICBpZiBub3QgaXNpbnN0YW5jZShyYXcsIGxpc3QpOgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJwdWJsaXNoIGxvZyBtdXN0IGNvbnRhaW4gYSBKU09OIGxpc3QiKQogICAgICAgIHJldHVybiByYXcKCiAgICBkZWYgX3NhdmUoc2VsZiwgcmVjb3JkczogbGlzdFtkaWN0XSkgLT4gTm9uZToKICAgICAgICBzZWxmLnBhdGgucGFyZW50Lm1rZGlyKHBhcmVudHM9VHJ1ZSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICB0bXAgPSBzZWxmLnBhdGgud2l0aF9zdWZmaXgoc2VsZi5wYXRoLnN1ZmZpeCArICIudG1wIikKICAgICAgICB0bXAud3JpdGVfdGV4dChqc29uLmR1bXBzKHJlY29yZHMsIGVuc3VyZV9hc2NpaT1GYWxzZSwgaW5kZW50PTIpLCBlbmNvZGluZz0idXRmLTgiKQogICAgICAgIHRtcC5yZXBsYWNlKHNlbGYucGF0aCkKCiAgICBkZWYgaGFzX3RvcGljKHNlbGYsIHRvcGljX2lkOiBzdHIpIC0+IGJvb2w6CiAgICAgICAgcmV0dXJuIGFueShyZWNvcmQuZ2V0KCJ0b3BpY19pZCIpID09IHRvcGljX2lkIGZvciByZWNvcmQgaW4gc2VsZi5fbG9hZCgpKQoKICAgIGRlZiBjb3VudF9zaW5jZShzZWxmLCBzaW5jZTogZGF0ZXRpbWUpIC0+IGludDoKICAgICAgICBpZiBzaW5jZS50emluZm8gaXMgTm9uZToKICAgICAgICAgICAgc2luY2UgPSBzaW5jZS5yZXBsYWNlKHR6aW5mbz10aW1lem9uZS51dGMpCiAgICAgICAgY291bnQgPSAwCiAgICAgICAgZm9yIHJlY29yZCBpbiBzZWxmLl9sb2FkKCk6CiAgICAgICAgICAgIHZhbHVlID0gcmVjb3JkLmdldCgicHVibGlzaGVkX2F0IikKICAgICAgICAgICAgaWYgbm90IHZhbHVlOgogICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgcHVibGlzaGVkID0gZGF0ZXRpbWUuZnJvbWlzb2Zvcm1hdCh2YWx1ZS5yZXBsYWNlKCJaIiwgIiswMDowMCIpKQogICAgICAgICAgICBpZiBwdWJsaXNoZWQgPj0gc2luY2U6CiAgICAgICAgICAgICAgICBjb3VudCArPSAxCiAgICAgICAgcmV0dXJuIGNvdW50CgogICAgZGVmIHJlY29yZCgKICAgICAgICBzZWxmLAogICAgICAgICosCiAgICAgICAgdG9waWNfaWQ6IHN0ciwKICAgICAgICBjb250YWluZXJfaWQ6IHN0ciwKICAgICAgICBtZWRpYV9pZDogc3RyLAogICAgICAgIG1lZGlhX3VybDogc3RyLAogICAgICAgIHB1Ymxpc2hlZF9hdDogZGF0ZXRpbWUsCiAgICApIC0+IGRpY3Q6CiAgICAgICAgaWYgcHVibGlzaGVkX2F0LnR6aW5mbyBpcyBOb25lOgogICAgICAgICAgICBwdWJsaXNoZWRfYXQgPSBwdWJsaXNoZWRfYXQucmVwbGFjZSh0emluZm89dGltZXpvbmUudXRjKQogICAgICAgIHJlY29yZCA9IHsKICAgICAgICAgICAgInRvcGljX2lkIjogdG9waWNfaWQsCiAgICAgICAgICAgICJjb250YWluZXJfaWQiOiBjb250YWluZXJfaWQsCiAgICAgICAgICAgICJtZWRpYV9pZCI6IG1lZGlhX2lkLAogICAgICAgICAgICAibWVkaWFfdXJsIjogbWVkaWFfdXJsLAogICAgICAgICAgICAicHVibGlzaGVkX2F0IjogcHVibGlzaGVkX2F0LmFzdGltZXpvbmUodGltZXpvbmUudXRjKS5pc29mb3JtYXQoKS5yZXBsYWNlKCIrMDA6MDAiLCAiWiIpLAogICAgICAgIH0KICAgICAgICByZWNvcmRzID0gc2VsZi5fbG9hZCgpCiAgICAgICAgcmVjb3Jkcy5hcHBlbmQocmVjb3JkKQogICAgICAgIHNlbGYuX3NhdmUocmVjb3JkcykKICAgICAgICByZXR1cm4gcmVjb3JkCg==
+from __future__ import annotations
+
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+
+class PublishLog:
+    def __init__(self, path: str | Path):
+        self.path = Path(path)
+
+    def _load(self) -> list[dict]:
+        if not self.path.exists():
+            return []
+        raw = json.loads(self.path.read_text(encoding="utf-8"))
+        if not isinstance(raw, list):
+            raise ValueError("publish log must contain a JSON list")
+        return raw
+
+    def _save(self, records: list[dict]) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = self.path.with_suffix(self.path.suffix + ".tmp")
+        tmp.write_text(json.dumps(records, ensure_ascii=False, indent=2), encoding="utf-8")
+        tmp.replace(self.path)
+
+    def has_topic(self, topic_id: str) -> bool:
+        return any(record.get("topic_id") == topic_id for record in self._load())
+
+    def count_since(self, since: datetime) -> int:
+        if since.tzinfo is None:
+            since = since.replace(tzinfo=timezone.utc)
+        count = 0
+        for record in self._load():
+            value = record.get("published_at")
+            if not value:
+                continue
+            published = datetime.fromisoformat(value.replace("Z", "+00:00"))
+            if published >= since:
+                count += 1
+        return count
+
+    def record(
+        self,
+        *,
+        topic_id: str,
+        container_id: str,
+        media_id: str,
+        media_url: str,
+        published_at: datetime,
+    ) -> dict:
+        if published_at.tzinfo is None:
+            published_at = published_at.replace(tzinfo=timezone.utc)
+        record = {
+            "topic_id": topic_id,
+            "container_id": container_id,
+            "media_id": media_id,
+            "media_url": media_url,
+            "published_at": published_at.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+        }
+        records = self._load()
+        records.append(record)
+        self._save(records)
+        return record

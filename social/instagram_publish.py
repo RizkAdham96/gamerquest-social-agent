@@ -1,1 +1,124 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KaW1wb3J0IHRpbWUKZnJvbSB0eXBpbmcgaW1wb3J0IFByb3RvY29sLCBDYWxsYWJsZQpmcm9tIHVybGxpYi5wYXJzZSBpbXBvcnQgdXJsZW5jb2RlCmZyb20gdXJsbGliLnJlcXVlc3QgaW1wb3J0IFJlcXVlc3QsIHVybG9wZW4KCgpjbGFzcyBNZXRhVHJhbnNwb3J0KFByb3RvY29sKToKICAgIGRlZiBwb3N0KHNlbGYsIHVybDogc3RyLCBwYXJhbXM6IGRpY3Rbc3RyLCBzdHJdKSAtPiBkaWN0OiAuLi4KICAgIGRlZiBnZXQoc2VsZiwgdXJsOiBzdHIsIHBhcmFtczogZGljdFtzdHIsIHN0cl0pIC0+IGRpY3Q6IC4uLgoKCmNsYXNzIFVybGxpYk1ldGFUcmFuc3BvcnQ6CiAgICBkZWYgcG9zdChzZWxmLCB1cmw6IHN0ciwgcGFyYW1zOiBkaWN0W3N0ciwgc3RyXSkgLT4gZGljdDoKICAgICAgICBkYXRhID0gdXJsZW5jb2RlKHBhcmFtcykuZW5jb2RlKCJ1dGYtOCIpCiAgICAgICAgcmVxdWVzdCA9IFJlcXVlc3QodXJsLCBkYXRhPWRhdGEsIG1ldGhvZD0iUE9TVCIpCiAgICAgICAgd2l0aCB1cmxvcGVuKHJlcXVlc3QsIHRpbWVvdXQ9NjApIGFzIHJlc3BvbnNlOgogICAgICAgICAgICByZXR1cm4ganNvbi5sb2FkcyhyZXNwb25zZS5yZWFkKCkuZGVjb2RlKCJ1dGYtOCIpKQoKICAgIGRlZiBnZXQoc2VsZiwgdXJsOiBzdHIsIHBhcmFtczogZGljdFtzdHIsIHN0cl0pIC0+IGRpY3Q6CiAgICAgICAgZnVsbF91cmwgPSBmInt1cmx9P3t1cmxlbmNvZGUocGFyYW1zKX0iCiAgICAgICAgcmVxdWVzdCA9IFJlcXVlc3QoZnVsbF91cmwsIG1ldGhvZD0iR0VUIikKICAgICAgICB3aXRoIHVybG9wZW4ocmVxdWVzdCwgdGltZW91dD0zMCkgYXMgcmVzcG9uc2U6CiAgICAgICAgICAgIHJldHVybiBqc29uLmxvYWRzKHJlc3BvbnNlLnJlYWQoKS5kZWNvZGUoInV0Zi04IikpCgoKY2xhc3MgQ29udGFpbmVyU3RhdHVzRXJyb3IoUnVudGltZUVycm9yKToKICAgIHBhc3MKCgpjbGFzcyBJbnN0YWdyYW1QdWJsaXNoZXI6CiAgICBHUkFQSF9CQVNFID0gImh0dHBzOi8vZ3JhcGguZmFjZWJvb2suY29tIgoKICAgIGRlZiBfX2luaXRfXygKICAgICAgICBzZWxmLAogICAgICAgICosCiAgICAgICAgaWdfdXNlcl9pZDogc3RyLAogICAgICAgIGFjY2Vzc190b2tlbjogc3RyLAogICAgICAgIGFwaV92ZXJzaW9uOiBzdHIgPSAidjI2LjAiLAogICAgICAgIHRyYW5zcG9ydDogTWV0YVRyYW5zcG9ydCB8IE5vbmUgPSBOb25lLAogICAgICAgIHNsZWVwX2ZuOiBDYWxsYWJsZVtbZmxvYXRdLCBOb25lXSB8IE5vbmUgPSBOb25lLAogICAgKToKICAgICAgICBzZWxmLmlnX3VzZXJfaWQgPSBpZ191c2VyX2lkLnN0cmlwKCkKICAgICAgICBzZWxmLmFjY2Vzc190b2tlbiA9IGFjY2Vzc190b2tlbi5zdHJpcCgpCiAgICAgICAgc2VsZi5hcGlfdmVyc2lvbiA9IGFwaV92ZXJzaW9uLnN0cmlwKCkgb3IgInYyNi4wIgogICAgICAgIHNlbGYudHJhbnNwb3J0ID0gdHJhbnNwb3J0IG9yIFVybGxpYk1ldGFUcmFuc3BvcnQoKQogICAgICAgIHNlbGYuc2xlZXBfZm4gPSBzbGVlcF9mbiBvciB0aW1lLnNsZWVwCiAgICAgICAgaWYgbm90IHNlbGYuaWdfdXNlcl9pZDoKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigiaWdfdXNlcl9pZCBpcyByZXF1aXJlZCIpCiAgICAgICAgaWYgbm90IHNlbGYuYWNjZXNzX3Rva2VuOgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJhY2Nlc3NfdG9rZW4gaXMgcmVxdWlyZWQiKQoKICAgIGRlZiBfdXJsKHNlbGYsIHBhdGg6IHN0cikgLT4gc3RyOgogICAgICAgIHJldHVybiBmIntzZWxmLkdSQVBIX0JBU0V9L3tzZWxmLmFwaV92ZXJzaW9ufS97cGF0aC5sc3RyaXAoJy8nKX0iCgogICAgZGVmIGNyZWF0ZV9yZWVsX2NvbnRhaW5lcigKICAgICAgICBzZWxmLAogICAgICAgIHZpZGVvX3VybDogc3RyLAogICAgICAgIGNhcHRpb246IHN0ciwKICAgICAgICAqLAogICAgICAgIHNoYXJlX3RvX2ZlZWQ6IGJvb2wgPSBUcnVlLAogICAgKSAtPiBzdHI6CiAgICAgICAgaWYgbm90IHZpZGVvX3VybC5zdGFydHN3aXRoKCgiaHR0cHM6Ly8iLCAiaHR0cDovLyIpKToKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigiSW5zdGFncmFtIHB1Ymxpc2hpbmcgcmVxdWlyZXMgYSBwdWJsaWNseSBhY2Nlc3NpYmxlIGh0dHAocykgdmlkZW9fdXJsIikKICAgICAgICByZXNwb25zZSA9IHNlbGYudHJhbnNwb3J0LnBvc3QoCiAgICAgICAgICAgIHNlbGYuX3VybChmIntzZWxmLmlnX3VzZXJfaWR9L21lZGlhIiksCiAgICAgICAgICAgIHsKICAgICAgICAgICAgICAgICJtZWRpYV90eXBlIjogIlJFRUxTIiwKICAgICAgICAgICAgICAgICJ2aWRlb191cmwiOiB2aWRlb191cmwsCiAgICAgICAgICAgICAgICAiY2FwdGlvbiI6IGNhcHRpb24sCiAgICAgICAgICAgICAgICAic2hhcmVfdG9fZmVlZCI6ICJ0cnVlIiBpZiBzaGFyZV90b19mZWVkIGVsc2UgImZhbHNlIiwKICAgICAgICAgICAgICAgICJhY2Nlc3NfdG9rZW4iOiBzZWxmLmFjY2Vzc190b2tlbiwKICAgICAgICAgICAgfSwKICAgICAgICApCiAgICAgICAgY29udGFpbmVyX2lkID0gcmVzcG9uc2UuZ2V0KCJpZCIpCiAgICAgICAgaWYgbm90IGNvbnRhaW5lcl9pZDoKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCJNZXRhIGNvbnRhaW5lciBjcmVhdGlvbiByZXR1cm5lZCBubyBpZCIpCiAgICAgICAgcmV0dXJuIHN0cihjb250YWluZXJfaWQpCgogICAgZGVmIGdldF9jb250YWluZXJfc3RhdHVzKHNlbGYsIGNvbnRhaW5lcl9pZDogc3RyKSAtPiBkaWN0OgogICAgICAgIHJldHVybiBzZWxmLnRyYW5zcG9ydC5nZXQoCiAgICAgICAgICAgIHNlbGYuX3VybChjb250YWluZXJfaWQpLAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiZmllbGRzIjogInN0YXR1c19jb2RlLHN0YXR1cyIsCiAgICAgICAgICAgICAgICAiYWNjZXNzX3Rva2VuIjogc2VsZi5hY2Nlc3NfdG9rZW4sCiAgICAgICAgICAgIH0sCiAgICAgICAgKQoKICAgIGRlZiB3YWl0X3VudGlsX3JlYWR5KAogICAgICAgIHNlbGYsCiAgICAgICAgY29udGFpbmVyX2lkOiBzdHIsCiAgICAgICAgKiwKICAgICAgICBtYXhfYXR0ZW1wdHM6IGludCA9IDMwLAogICAgICAgIHBvbGxfc2Vjb25kczogZmxvYXQgPSAyLjAsCiAgICApIC0+IGRpY3Q6CiAgICAgICAgaWYgbWF4X2F0dGVtcHRzIDwgMToKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigibWF4X2F0dGVtcHRzIG11c3QgYmUgPj0gMSIpCiAgICAgICAgZm9yIGF0dGVtcHQgaW4gcmFuZ2UobWF4X2F0dGVtcHRzKToKICAgICAgICAgICAgc3RhdHVzID0gc2VsZi5nZXRfY29udGFpbmVyX3N0YXR1cyhjb250YWluZXJfaWQpCiAgICAgICAgICAgIGNvZGUgPSBzdHIoc3RhdHVzLmdldCgic3RhdHVzX2NvZGUiLCAiIikpLnVwcGVyKCkKICAgICAgICAgICAgaWYgY29kZSA9PSAiRklOSVNIRUQiOgogICAgICAgICAgICAgICAgcmV0dXJuIHN0YXR1cwogICAgICAgICAgICBpZiBjb2RlIGluIHsiRVJST1IiLCAiRVhQSVJFRCIsICJQVUJMSVNIRUQifToKICAgICAgICAgICAgICAgIHJhaXNlIENvbnRhaW5lclN0YXR1c0Vycm9yKAogICAgICAgICAgICAgICAgICAgIGYiY29udGFpbmVyIHtjb250YWluZXJfaWR9IHJlYWNoZWQgdGVybWluYWwgc3RhdHVzIHtjb2RlfToge3N0YXR1cy5nZXQoJ3N0YXR1cycsICcnKX0iCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgIGlmIGF0dGVtcHQgPCBtYXhfYXR0ZW1wdHMgLSAxOgogICAgICAgICAgICAgICAgc2VsZi5zbGVlcF9mbihwb2xsX3NlY29uZHMpCiAgICAgICAgcmFpc2UgVGltZW91dEVycm9yKGYiY29udGFpbmVyIHtjb250YWluZXJfaWR9IHdhcyBub3QgcmVhZHkgYWZ0ZXIge21heF9hdHRlbXB0c30gYXR0ZW1wdHMiKQoKICAgIGRlZiBwdWJsaXNoX2NvbnRhaW5lcihzZWxmLCBjb250YWluZXJfaWQ6IHN0cikgLT4gc3RyOgogICAgICAgIHJlc3BvbnNlID0gc2VsZi50cmFuc3BvcnQucG9zdCgKICAgICAgICAgICAgc2VsZi5fdXJsKGYie3NlbGYuaWdfdXNlcl9pZH0vbWVkaWFfcHVibGlzaCIpLAogICAgICAgICAgICB7CiAgICAgICAgICAgICAgICAiY3JlYXRpb25faWQiOiBjb250YWluZXJfaWQsCiAgICAgICAgICAgICAgICAiYWNjZXNzX3Rva2VuIjogc2VsZi5hY2Nlc3NfdG9rZW4sCiAgICAgICAgICAgIH0sCiAgICAgICAgKQogICAgICAgIG1lZGlhX2lkID0gcmVzcG9uc2UuZ2V0KCJpZCIpCiAgICAgICAgaWYgbm90IG1lZGlhX2lkOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoIk1ldGEgcHVibGlzaCByZXR1cm5lZCBubyBtZWRpYSBpZCIpCiAgICAgICAgcmV0dXJuIHN0cihtZWRpYV9pZCkK
+from __future__ import annotations
+
+import json
+import time
+from typing import Protocol, Callable
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+
+
+class MetaTransport(Protocol):
+    def post(self, url: str, params: dict[str, str]) -> dict: ...
+    def get(self, url: str, params: dict[str, str]) -> dict: ...
+
+
+class UrllibMetaTransport:
+    def post(self, url: str, params: dict[str, str]) -> dict:
+        data = urlencode(params).encode("utf-8")
+        request = Request(url, data=data, method="POST")
+        with urlopen(request, timeout=60) as response:
+            return json.loads(response.read().decode("utf-8"))
+
+    def get(self, url: str, params: dict[str, str]) -> dict:
+        full_url = f"{url}?{urlencode(params)}"
+        request = Request(full_url, method="GET")
+        with urlopen(request, timeout=30) as response:
+            return json.loads(response.read().decode("utf-8"))
+
+
+class ContainerStatusError(RuntimeError):
+    pass
+
+
+class InstagramPublisher:
+    GRAPH_BASE = "https://graph.facebook.com"
+
+    def __init__(
+        self,
+        *,
+        ig_user_id: str,
+        access_token: str,
+        api_version: str = "v26.0",
+        transport: MetaTransport | None = None,
+        sleep_fn: Callable[[float], None] | None = None,
+    ):
+        self.ig_user_id = ig_user_id.strip()
+        self.access_token = access_token.strip()
+        self.api_version = api_version.strip() or "v26.0"
+        self.transport = transport or UrllibMetaTransport()
+        self.sleep_fn = sleep_fn or time.sleep
+        if not self.ig_user_id:
+            raise ValueError("ig_user_id is required")
+        if not self.access_token:
+            raise ValueError("access_token is required")
+
+    def _url(self, path: str) -> str:
+        return f"{self.GRAPH_BASE}/{self.api_version}/{path.lstrip('/')}"
+
+    def create_reel_container(
+        self,
+        video_url: str,
+        caption: str,
+        *,
+        share_to_feed: bool = True,
+    ) -> str:
+        if not video_url.startswith(("https://", "http://")):
+            raise ValueError("Instagram publishing requires a publicly accessible http(s) video_url")
+        response = self.transport.post(
+            self._url(f"{self.ig_user_id}/media"),
+            {
+                "media_type": "REELS",
+                "video_url": video_url,
+                "caption": caption,
+                "share_to_feed": "true" if share_to_feed else "false",
+                "access_token": self.access_token,
+            },
+        )
+        container_id = response.get("id")
+        if not container_id:
+            raise RuntimeError("Meta container creation returned no id")
+        return str(container_id)
+
+    def get_container_status(self, container_id: str) -> dict:
+        return self.transport.get(
+            self._url(container_id),
+            {
+                "fields": "status_code,status",
+                "access_token": self.access_token,
+            },
+        )
+
+    def wait_until_ready(
+        self,
+        container_id: str,
+        *,
+        max_attempts: int = 30,
+        poll_seconds: float = 2.0,
+    ) -> dict:
+        if max_attempts < 1:
+            raise ValueError("max_attempts must be >= 1")
+        for attempt in range(max_attempts):
+            status = self.get_container_status(container_id)
+            code = str(status.get("status_code", "")).upper()
+            if code == "FINISHED":
+                return status
+            if code in {"ERROR", "EXPIRED", "PUBLISHED"}:
+                raise ContainerStatusError(
+                    f"container {container_id} reached terminal status {code}: {status.get('status', '')}"
+                )
+            if attempt < max_attempts - 1:
+                self.sleep_fn(poll_seconds)
+        raise TimeoutError(f"container {container_id} was not ready after {max_attempts} attempts")
+
+    def publish_container(self, container_id: str) -> str:
+        response = self.transport.post(
+            self._url(f"{self.ig_user_id}/media_publish"),
+            {
+                "creation_id": container_id,
+                "access_token": self.access_token,
+            },
+        )
+        media_id = response.get("id")
+        if not media_id:
+            raise RuntimeError("Meta publish returned no media id")
+        return str(media_id)

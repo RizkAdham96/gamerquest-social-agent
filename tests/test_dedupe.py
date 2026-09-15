@@ -1,1 +1,17 @@
-ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUsIHRpbWV6b25lCmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMKZnJvbSBhZ2VudC5kZWR1cGUgaW1wb3J0IFRvcGljTWVtb3J5CgpkZWYgdGVzdF9tZW1vcnlfZGV0ZWN0c19zYW1lX3NsdWcodG1wX3BhdGgpOgogICAgcGF0aCA9IHRtcF9wYXRoIC8gJ21lbW9yeS5qc29uJwogICAgbWVtb3J5ID0gVG9waWNNZW1vcnkocGF0aCkKICAgIGZpcnN0ID0gVG9waWModGl0bGU9J1N0ZWFtIHJlbmQgSGFkZXMgZ3JhdHVpdCcsIHVybD0naHR0cHM6Ly9hLnRlc3QvMScsIHNvdXJjZT0nc3RlYW0nKQogICAgbWVtb3J5Lm1hcmtfcHVibGlzaGVkKGZpcnN0LCBwdWJsaXNoZWRfYXQ9ZGF0ZXRpbWUubm93KHRpbWV6b25lLnV0YykpCiAgICBzZWNvbmQgPSBUb3BpYyh0aXRsZT0nU3RlYW0gcmVuZCBIYWRlcyBncmF0dWl0IScsIHVybD0naHR0cHM6Ly9iLnRlc3QvMicsIHNvdXJjZT0nc3RlYW0nKQogICAgYXNzZXJ0IG1lbW9yeS5pc19kdXBsaWNhdGUoc2Vjb25kLCBsb29rYmFja19kYXlzPTMwKQoKZGVmIHRlc3RfbWVtb3J5X2FsbG93c191bnJlbGF0ZWRfdG9waWModG1wX3BhdGgpOgogICAgcGF0aCA9IHRtcF9wYXRoIC8gJ21lbW9yeS5qc29uJwogICAgbWVtb3J5ID0gVG9waWNNZW1vcnkocGF0aCkKICAgIG1lbW9yeS5tYXJrX3B1Ymxpc2hlZChUb3BpYyh0aXRsZT0nSGFkZXMgZ3JhdHVpdCcsIHVybD0naHR0cHM6Ly9hLnRlc3QnLCBzb3VyY2U9J3N0ZWFtJykpCiAgICBhc3NlcnQgbm90IG1lbW9yeS5pc19kdXBsaWNhdGUoVG9waWModGl0bGU9J05vdXZlbGxlIG1pc2Ugw6Agam91ciBQUzUnLCB1cmw9J2h0dHBzOi8vYi50ZXN0Jywgc291cmNlPSdzb255JyksIGxvb2tiYWNrX2RheXM9MzApCg==
+from datetime import datetime, timezone
+from app.models import Topic
+from agent.dedupe import TopicMemory
+
+def test_memory_detects_same_slug(tmp_path):
+    path = tmp_path / 'memory.json'
+    memory = TopicMemory(path)
+    first = Topic(title='Steam rend Hades gratuit', url='https://a.test/1', source='steam')
+    memory.mark_published(first, published_at=datetime.now(timezone.utc))
+    second = Topic(title='Steam rend Hades gratuit!', url='https://b.test/2', source='steam')
+    assert memory.is_duplicate(second, lookback_days=30)
+
+def test_memory_allows_unrelated_topic(tmp_path):
+    path = tmp_path / 'memory.json'
+    memory = TopicMemory(path)
+    memory.mark_published(Topic(title='Hades gratuit', url='https://a.test', source='steam'))
+    assert not memory.is_duplicate(Topic(title='Nouvelle mise à jour PS5', url='https://b.test', source='sony'), lookback_days=30)

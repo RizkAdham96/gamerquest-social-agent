@@ -1,1 +1,74 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpmcm9tIGFwcC5tb2RlbHMgaW1wb3J0IFRvcGljCmZyb20gbWVkaWEuZm9vdGFnZV92YWxpZGF0b3IgaW1wb3J0IEZvb3RhZ2VDYW5kaWRhdGUKZnJvbSBtZWRpYS5wcm9kdWN0aW9uX3BpcGVsaW5lIGltcG9ydCBSZWVsUHJvZHVjdGlvblBpcGVsaW5lCgoKZGVmIHRlc3RfcHJvZHVjdGlvbl9waXBlbGluZV9kb3dubG9hZHNfcmVuZGVyc19hbmRfYXJjaGl2ZXModG1wX3BhdGgpOgogICAgdG9waWMgPSBUb3BpYyh0aXRsZT0iRXhhbXBsZSIsIHVybD0iaHR0cHM6Ly9ncS50ZXN0L3giLCBzb3VyY2U9IkdRIikKCiAgICBjbGFzcyBEaXNjb3Zlcnk6CiAgICAgICAgZGVmIGRpc2NvdmVyKHNlbGYsIHRvcGljKToKICAgICAgICAgICAgcmV0dXJuIFsKICAgICAgICAgICAgICAgIEZvb3RhZ2VDYW5kaWRhdGUoImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9YWJjIiwgIllvdVR1YmUgb2ZmaWNpYWwiLCBUcnVlKSwKICAgICAgICAgICAgICAgIEZvb3RhZ2VDYW5kaWRhdGUoImh0dHBzOi8vY2RuLmV4YW1wbGUuY29tL3RyYWlsZXIubXA0IiwgIk9mZmljaWFsIENETiIsIFRydWUpLAogICAgICAgICAgICBdCgogICAgY2xhc3MgRG93bmxvYWRlcjoKICAgICAgICBkZWYgZG93bmxvYWQoc2VsZiwgY2FuZGlkYXRlLCBvdXRwdXRfZGlyKToKICAgICAgICAgICAgaWYgInlvdXR1YmUuY29tIiBpbiBjYW5kaWRhdGUudXJsOgogICAgICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigibm90IGRpcmVjdCIpCiAgICAgICAgICAgIHBhdGggPSBvdXRwdXRfZGlyIC8gImZvb3RhZ2UubXA0IgogICAgICAgICAgICBwYXRoLndyaXRlX2J5dGVzKGIidmlkZW8iKQogICAgICAgICAgICByZXR1cm4gcGF0aAoKICAgIGNsYXNzIFJlbmRlcmVyOgogICAgICAgIGRlZiByZW5kZXIoc2VsZiwgKiprd2FyZ3MpOgogICAgICAgICAgICBwYXRoID0ga3dhcmdzWyJvdXRwdXRfZGlyIl0gLyAicmVlbC5tcDQiCiAgICAgICAgICAgIHBhdGgud3JpdGVfYnl0ZXMoYiJyZWVsIikKICAgICAgICAgICAgcmV0dXJuIHBhdGgKCiAgICBjbGFzcyBEcml2ZToKICAgICAgICBkZWYgY3JlYXRlX2ZvbGRlcihzZWxmLCBuYW1lLCBwYXJlbnRfaWQ9Tm9uZSk6CiAgICAgICAgICAgIHJldHVybiAicHVibGlzaGVkLWZvbGRlciIKICAgICAgICBkZWYgdXBsb2FkX2ZpbGUoc2VsZiwgZmlsZV9wYXRoLCBwYXJlbnRfaWQ9Tm9uZSwgbWltZV90eXBlPU5vbmUpOgogICAgICAgICAgICByZXR1cm4geyJpZCI6ICJkcml2ZS1maWxlIiwgIm5hbWUiOiBmaWxlX3BhdGgubmFtZX0KCiAgICBwaXBlbGluZSA9IFJlZWxQcm9kdWN0aW9uUGlwZWxpbmUoCiAgICAgICAgZGlzY292ZXJ5PURpc2NvdmVyeSgpLCBkb3dubG9hZGVyPURvd25sb2FkZXIoKSwgcmVuZGVyZXI9UmVuZGVyZXIoKSwgZHJpdmVfc3RvcmU9RHJpdmUoKSwgZHJpdmVfcm9vdF9mb2xkZXJfaWQ9InJvb3QiCiAgICApCiAgICByZXN1bHQgPSBwaXBlbGluZS5wcm9kdWNlKAogICAgICAgIHRvcGljPXRvcGljLAogICAgICAgIHZvaWNlb3Zlcl90ZXh0PSJVbmUgbm91dmVsbGUgbWlzZSDDoCBqb3VyIGFycml2ZS4iLAogICAgICAgIG91dHB1dF9kaXI9dG1wX3BhdGgsCiAgICAgICAgZHVyYXRpb25fc2Vjb25kcz0xMiwKICAgICkKCiAgICBhc3NlcnQgcmVzdWx0LnNvdXJjZV9uYW1lID09ICJPZmZpY2lhbCBDRE4iCiAgICBhc3NlcnQgcmVzdWx0LnJlZWxfcGF0aC5uYW1lID09ICJyZWVsLm1wNCIKICAgIGFzc2VydCByZXN1bHQuZHJpdmVfZmlsZV9pZCA9PSAiZHJpdmUtZmlsZSIKCgpkZWYgdGVzdF9wcm9kdWN0aW9uX3BpcGVsaW5lX2Nhbl9ydW5fd2l0aG91dF9kcml2ZSh0bXBfcGF0aCk6CiAgICB0b3BpYyA9IFRvcGljKHRpdGxlPSJFeGFtcGxlIiwgdXJsPSJodHRwczovL2dxLnRlc3QveCIsIHNvdXJjZT0iR1EiLCBvZmZpY2lhbF9mb290YWdlX3VybD0iaHR0cHM6Ly9jZG4uZXhhbXBsZS5jb20vYS5tcDQiKQoKICAgIGNsYXNzIERpc2NvdmVyeToKICAgICAgICBkZWYgZGlzY292ZXIoc2VsZiwgdG9waWMpOgogICAgICAgICAgICByZXR1cm4gW0Zvb3RhZ2VDYW5kaWRhdGUodG9waWMub2ZmaWNpYWxfZm9vdGFnZV91cmwsICJPZmZpY2lhbCIsIFRydWUpXQoKICAgIGNsYXNzIERvd25sb2FkZXI6CiAgICAgICAgZGVmIGRvd25sb2FkKHNlbGYsIGNhbmRpZGF0ZSwgb3V0cHV0X2Rpcik6CiAgICAgICAgICAgIHAgPSBvdXRwdXRfZGlyIC8gImZvb3RhZ2UubXA0IgogICAgICAgICAgICBwLndyaXRlX2J5dGVzKGIidmlkZW8iKQogICAgICAgICAgICByZXR1cm4gcAoKICAgIGNsYXNzIFJlbmRlcmVyOgogICAgICAgIGRlZiByZW5kZXIoc2VsZiwgKiprd2FyZ3MpOgogICAgICAgICAgICBwID0ga3dhcmdzWyJvdXRwdXRfZGlyIl0gLyAicmVlbC5tcDQiCiAgICAgICAgICAgIHAud3JpdGVfYnl0ZXMoYiJyZWVsIikKICAgICAgICAgICAgcmV0dXJuIHAKCiAgICBwaXBlbGluZSA9IFJlZWxQcm9kdWN0aW9uUGlwZWxpbmUoZGlzY292ZXJ5PURpc2NvdmVyeSgpLCBkb3dubG9hZGVyPURvd25sb2FkZXIoKSwgcmVuZGVyZXI9UmVuZGVyZXIoKSkKICAgIHJlc3VsdCA9IHBpcGVsaW5lLnByb2R1Y2UodG9waWM9dG9waWMsIHZvaWNlb3Zlcl90ZXh0PSJib25qb3VyIiwgb3V0cHV0X2Rpcj10bXBfcGF0aCwgZHVyYXRpb25fc2Vjb25kcz0xMCkKICAgIGFzc2VydCByZXN1bHQuZHJpdmVfZmlsZV9pZCBpcyBOb25lCg==
+from pathlib import Path
+
+from app.models import Topic
+from media.footage_validator import FootageCandidate
+from media.production_pipeline import ReelProductionPipeline
+
+
+def test_production_pipeline_downloads_renders_and_archives(tmp_path):
+    topic = Topic(title="Example", url="https://gq.test/x", source="GQ")
+
+    class Discovery:
+        def discover(self, topic):
+            return [
+                FootageCandidate("https://www.youtube.com/watch?v=abc", "YouTube official", True),
+                FootageCandidate("https://cdn.example.com/trailer.mp4", "Official CDN", True),
+            ]
+
+    class Downloader:
+        def download(self, candidate, output_dir):
+            if "youtube.com" in candidate.url:
+                raise ValueError("not direct")
+            path = output_dir / "footage.mp4"
+            path.write_bytes(b"video")
+            return path
+
+    class Renderer:
+        def render(self, **kwargs):
+            path = kwargs["output_dir"] / "reel.mp4"
+            path.write_bytes(b"reel")
+            return path
+
+    class Drive:
+        def create_folder(self, name, parent_id=None):
+            return "published-folder"
+        def upload_file(self, file_path, parent_id=None, mime_type=None):
+            return {"id": "drive-file", "name": file_path.name}
+
+    pipeline = ReelProductionPipeline(
+        discovery=Discovery(), downloader=Downloader(), renderer=Renderer(), drive_store=Drive(), drive_root_folder_id="root"
+    )
+    result = pipeline.produce(
+        topic=topic,
+        voiceover_text="Une nouvelle mise à jour arrive.",
+        output_dir=tmp_path,
+        duration_seconds=12,
+    )
+
+    assert result.source_name == "Official CDN"
+    assert result.reel_path.name == "reel.mp4"
+    assert result.drive_file_id == "drive-file"
+
+
+def test_production_pipeline_can_run_without_drive(tmp_path):
+    topic = Topic(title="Example", url="https://gq.test/x", source="GQ", official_footage_url="https://cdn.example.com/a.mp4")
+
+    class Discovery:
+        def discover(self, topic):
+            return [FootageCandidate(topic.official_footage_url, "Official", True)]
+
+    class Downloader:
+        def download(self, candidate, output_dir):
+            p = output_dir / "footage.mp4"
+            p.write_bytes(b"video")
+            return p
+
+    class Renderer:
+        def render(self, **kwargs):
+            p = kwargs["output_dir"] / "reel.mp4"
+            p.write_bytes(b"reel")
+            return p
+
+    pipeline = ReelProductionPipeline(discovery=Discovery(), downloader=Downloader(), renderer=Renderer())
+    result = pipeline.produce(topic=topic, voiceover_text="bonjour", output_dir=tmp_path, duration_seconds=10)
+    assert result.drive_file_id is None

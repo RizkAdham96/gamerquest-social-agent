@@ -1,1 +1,19 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gbWVkaWEucmVlbF9idWlsZGVyIGltcG9ydCBSZWVsQnVpbGRTcGVjLCBSZWVsQnVpbGRlcgoKCmRlZiB0ZXN0X2ZmbXBlZ19jb21tYW5kX3RhcmdldHNfdmVydGljYWxfaDI2NF9hYWNfbXA0KHRtcF9wYXRoOiBQYXRoKToKICAgIHNwZWMgPSBSZWVsQnVpbGRTcGVjKAogICAgICAgIGZvb3RhZ2U9dG1wX3BhdGggLyAiY2xpcC5tcDQiLAogICAgICAgIHZvaWNlb3Zlcj10bXBfcGF0aCAvICJ2b2ljZS53YXYiLAogICAgICAgIHN1YnRpdGxlcz10bXBfcGF0aCAvICJzdWJ0aXRsZXMuc3J0IiwKICAgICAgICBvdXRwdXQ9dG1wX3BhdGggLyAicmVlbC5tcDQiLAogICAgICAgIGR1cmF0aW9uX3NlY29uZHM9MTUuMCwKICAgICkKICAgIGNtZCA9IFJlZWxCdWlsZGVyKCkuYnVpbGRfY29tbWFuZChzcGVjKQogICAgam9pbmVkID0gIiAiLmpvaW4obWFwKHN0ciwgY21kKSkKICAgIGFzc2VydCBjbWRbMF0uZW5kc3dpdGgoImZmbXBlZyIpCiAgICBhc3NlcnQgIjEwODA6MTkyMCIgaW4gam9pbmVkCiAgICBhc3NlcnQgImxpYngyNjQiIGluIGNtZAogICAgYXNzZXJ0ICJhYWMiIGluIGNtZAogICAgYXNzZXJ0IHN0cihzcGVjLm91dHB1dCkgPT0gY21kWy0xXQo=
+from pathlib import Path
+from media.reel_builder import ReelBuildSpec, ReelBuilder
+
+
+def test_ffmpeg_command_targets_vertical_h264_aac_mp4(tmp_path: Path):
+    spec = ReelBuildSpec(
+        footage=tmp_path / "clip.mp4",
+        voiceover=tmp_path / "voice.wav",
+        subtitles=tmp_path / "subtitles.srt",
+        output=tmp_path / "reel.mp4",
+        duration_seconds=15.0,
+    )
+    cmd = ReelBuilder().build_command(spec)
+    joined = " ".join(map(str, cmd))
+    assert cmd[0].endswith("ffmpeg")
+    assert "1080:1920" in joined
+    assert "libx264" in cmd
+    assert "aac" in cmd
+    assert str(spec.output) == cmd[-1]

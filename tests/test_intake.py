@@ -1,1 +1,28 @@
-aW1wb3J0IGpzb24KZnJvbSBhZ2VudC5kaXNjb3ZlciBpbXBvcnQgbG9hZF90b3BpY3NfZnJvbV9qc29uCgpkZWYgdGVzdF9sb2FkX3RvcGljc19mcm9tX2pzb24odG1wX3BhdGgpOgogICAgcCA9IHRtcF9wYXRoIC8gJ3RvcGljcy5qc29uJwogICAgcC53cml0ZV90ZXh0KGpzb24uZHVtcHMoW3sndGl0bGUnOidUZXN0IG5ld3MnLCd1cmwnOidodHRwczovL2V4YW1wbGUuY29tJywnc291cmNlJzoncHVibGlzaGVyJ31dKSwgZW5jb2Rpbmc9J3V0Zi04JykKICAgIHRvcGljcyA9IGxvYWRfdG9waWNzX2Zyb21fanNvbihwKQogICAgYXNzZXJ0IGxlbih0b3BpY3MpID09IDEKICAgIGFzc2VydCB0b3BpY3NbMF0uc2x1ZyA9PSAndGVzdC1uZXdzJwoKCmRlZiB0ZXN0X2xvYWRfdG9waWNzX3ByZXNlcnZlc19mb290YWdlX2Rpc2NvdmVyeV9maWVsZHModG1wX3BhdGgpOgogICAgcCA9IHRtcF9wYXRoIC8gJ3RvcGljcy1yaWNoLmpzb24nCiAgICBwLndyaXRlX3RleHQoanNvbi5kdW1wcyhbewogICAgICAgICd0aXRsZSc6ICdSaWNoIHRvcGljJywKICAgICAgICAndXJsJzogJ2h0dHBzOi8vZXhhbXBsZS5jb20vcmljaCcsCiAgICAgICAgJ3NvdXJjZSc6ICdwdWJsaXNoZXInLAogICAgICAgICdwdWJsaXNoZXInOiAnU3R1ZGlvIFgnLAogICAgICAgICdzdGVhbV9hcHBfaWQnOiAxMjMsCiAgICAgICAgJ29mZmljaWFsX2NoYW5uZWxfaWRzJzogWydVQzEyMyddLAogICAgICAgICdvZmZpY2lhbF9mb290YWdlX3VybCc6IE5vbmUsCiAgICAgICAgJ3RhZ3MnOiBbJ25ld3MnXSwKICAgICAgICAnc3VtbWFyeSc6ICdBIHVzZWZ1bCBzdW1tYXJ5LicKICAgIH1dKSwgZW5jb2Rpbmc9J3V0Zi04JykKICAgIHRvcGljID0gbG9hZF90b3BpY3NfZnJvbV9qc29uKHApWzBdCiAgICBhc3NlcnQgdG9waWMucHVibGlzaGVyID09ICdTdHVkaW8gWCcKICAgIGFzc2VydCB0b3BpYy5zdGVhbV9hcHBfaWQgPT0gMTIzCiAgICBhc3NlcnQgdG9waWMub2ZmaWNpYWxfY2hhbm5lbF9pZHMgPT0gWydVQzEyMyddCg==
+import json
+from agent.discover import load_topics_from_json
+
+def test_load_topics_from_json(tmp_path):
+    p = tmp_path / 'topics.json'
+    p.write_text(json.dumps([{'title':'Test news','url':'https://example.com','source':'publisher'}]), encoding='utf-8')
+    topics = load_topics_from_json(p)
+    assert len(topics) == 1
+    assert topics[0].slug == 'test-news'
+
+
+def test_load_topics_preserves_footage_discovery_fields(tmp_path):
+    p = tmp_path / 'topics-rich.json'
+    p.write_text(json.dumps([{
+        'title': 'Rich topic',
+        'url': 'https://example.com/rich',
+        'source': 'publisher',
+        'publisher': 'Studio X',
+        'steam_app_id': 123,
+        'official_channel_ids': ['UC123'],
+        'official_footage_url': None,
+        'tags': ['news'],
+        'summary': 'A useful summary.'
+    }]), encoding='utf-8')
+    topic = load_topics_from_json(p)[0]
+    assert topic.publisher == 'Studio X'
+    assert topic.steam_app_id == 123
+    assert topic.official_channel_ids == ['UC123']

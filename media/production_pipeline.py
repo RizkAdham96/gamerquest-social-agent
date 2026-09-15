@@ -1,1 +1,84 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIHR5cGluZyBpbXBvcnQgUHJvdG9jb2wKCmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMKZnJvbSAuZm9vdGFnZV9kb3dubG9hZGVyIGltcG9ydCBGb290YWdlRG93bmxvYWRlcgpmcm9tIC5vZmZpY2lhbF9mb290YWdlIGltcG9ydCBPZmZpY2lhbEZvb3RhZ2VEaXNjb3ZlcnkKZnJvbSAucmVlbF9waXBlbGluZSBpbXBvcnQgUmVlbFBpcGVsaW5lCgoKY2xhc3MgRHJpdmVMaWtlKFByb3RvY29sKToKICAgIGRlZiBjcmVhdGVfZm9sZGVyKHNlbGYsIG5hbWU6IHN0ciwgcGFyZW50X2lkOiBzdHIgfCBOb25lID0gTm9uZSkgLT4gc3RyOiAuLi4KICAgIGRlZiB1cGxvYWRfZmlsZShzZWxmLCBmaWxlX3BhdGg6IFBhdGgsIHBhcmVudF9pZDogc3RyIHwgTm9uZSA9IE5vbmUsIG1pbWVfdHlwZTogc3RyIHwgTm9uZSA9IE5vbmUpIC0+IGRpY3Q6IC4uLgoKCkBkYXRhY2xhc3MoZnJvemVuPVRydWUpCmNsYXNzIFByb2R1Y3Rpb25SZXN1bHQ6CiAgICBzb3VyY2VfbmFtZTogc3RyCiAgICByZWVsX3BhdGg6IFBhdGgKICAgIGRyaXZlX2ZpbGVfaWQ6IHN0ciB8IE5vbmUgPSBOb25lCgoKY2xhc3MgUmVlbFByb2R1Y3Rpb25QaXBlbGluZToKICAgIGRlZiBfX2luaXRfXygKICAgICAgICBzZWxmLAogICAgICAgICosCiAgICAgICAgZGlzY292ZXJ5OiBPZmZpY2lhbEZvb3RhZ2VEaXNjb3ZlcnksCiAgICAgICAgZG93bmxvYWRlcjogRm9vdGFnZURvd25sb2FkZXIgfCBOb25lID0gTm9uZSwKICAgICAgICByZW5kZXJlcjogUmVlbFBpcGVsaW5lIHwgTm9uZSA9IE5vbmUsCiAgICAgICAgZHJpdmVfc3RvcmU6IERyaXZlTGlrZSB8IE5vbmUgPSBOb25lLAogICAgICAgIGRyaXZlX3Jvb3RfZm9sZGVyX2lkOiBzdHIgfCBOb25lID0gTm9uZSwKICAgICk6CiAgICAgICAgc2VsZi5kaXNjb3ZlcnkgPSBkaXNjb3ZlcnkKICAgICAgICBzZWxmLmRvd25sb2FkZXIgPSBkb3dubG9hZGVyIG9yIEZvb3RhZ2VEb3dubG9hZGVyKCkKICAgICAgICBzZWxmLnJlbmRlcmVyID0gcmVuZGVyZXIgb3IgUmVlbFBpcGVsaW5lKCkKICAgICAgICBzZWxmLmRyaXZlX3N0b3JlID0gZHJpdmVfc3RvcmUKICAgICAgICBzZWxmLmRyaXZlX3Jvb3RfZm9sZGVyX2lkID0gZHJpdmVfcm9vdF9mb2xkZXJfaWQKCiAgICBkZWYgcHJvZHVjZSgKICAgICAgICBzZWxmLAogICAgICAgICosCiAgICAgICAgdG9waWM6IFRvcGljLAogICAgICAgIHZvaWNlb3Zlcl90ZXh0OiBzdHIsCiAgICAgICAgb3V0cHV0X2RpcjogUGF0aCwKICAgICAgICBkdXJhdGlvbl9zZWNvbmRzOiBmbG9hdCwKICAgICAgICBiYWNrZ3JvdW5kX211c2ljOiBQYXRoIHwgTm9uZSA9IE5vbmUsCiAgICApIC0+IFByb2R1Y3Rpb25SZXN1bHQ6CiAgICAgICAgb3V0cHV0X2RpciA9IFBhdGgob3V0cHV0X2RpcikKICAgICAgICBvdXRwdXRfZGlyLm1rZGlyKHBhcmVudHM9VHJ1ZSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICBjYW5kaWRhdGVzID0gc2VsZi5kaXNjb3ZlcnkuZGlzY292ZXIodG9waWMpCiAgICAgICAgaWYgbm90IGNhbmRpZGF0ZXM6CiAgICAgICAgICAgIHJhaXNlIFJ1bnRpbWVFcnJvcigibm8gb2ZmaWNpYWwgZm9vdGFnZSBjYW5kaWRhdGVzIGZvdW5kIikKCiAgICAgICAgZm9vdGFnZV9wYXRoID0gTm9uZQogICAgICAgIHNlbGVjdGVkX3NvdXJjZSA9IE5vbmUKICAgICAgICBsYXN0X2Vycm9yOiBFeGNlcHRpb24gfCBOb25lID0gTm9uZQogICAgICAgIGZvciBjYW5kaWRhdGUgaW4gY2FuZGlkYXRlczoKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgZm9vdGFnZV9wYXRoID0gc2VsZi5kb3dubG9hZGVyLmRvd25sb2FkKGNhbmRpZGF0ZSwgb3V0cHV0X2RpcikKICAgICAgICAgICAgICAgIHNlbGVjdGVkX3NvdXJjZSA9IGNhbmRpZGF0ZS5zb3VyY2VfbmFtZQogICAgICAgICAgICAgICAgYnJlYWsKICAgICAgICAgICAgZXhjZXB0IChWYWx1ZUVycm9yLCBSdW50aW1lRXJyb3IsIE9TRXJyb3IpIGFzIGV4YzoKICAgICAgICAgICAgICAgIGxhc3RfZXJyb3IgPSBleGMKICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgaWYgZm9vdGFnZV9wYXRoIGlzIE5vbmUgb3Igc2VsZWN0ZWRfc291cmNlIGlzIE5vbmU6CiAgICAgICAgICAgIHJhaXNlIFJ1bnRpbWVFcnJvcigibm8gZG93bmxvYWRhYmxlIG9mZmljaWFsIGZvb3RhZ2UgZm91bmQiKSBmcm9tIGxhc3RfZXJyb3IKCiAgICAgICAgcmVlbF9wYXRoID0gc2VsZi5yZW5kZXJlci5yZW5kZXIoCiAgICAgICAgICAgIGZvb3RhZ2U9Zm9vdGFnZV9wYXRoLAogICAgICAgICAgICB2b2ljZW92ZXJfdGV4dD12b2ljZW92ZXJfdGV4dCwKICAgICAgICAgICAgb3V0cHV0X2Rpcj1vdXRwdXRfZGlyLAogICAgICAgICAgICBkdXJhdGlvbl9zZWNvbmRzPWR1cmF0aW9uX3NlY29uZHMsCiAgICAgICAgICAgIGJhY2tncm91bmRfbXVzaWM9YmFja2dyb3VuZF9tdXNpYywKICAgICAgICApCgogICAgICAgIGRyaXZlX2ZpbGVfaWQ6IHN0ciB8IE5vbmUgPSBOb25lCiAgICAgICAgaWYgc2VsZi5kcml2ZV9zdG9yZToKICAgICAgICAgICAgcGFyZW50X2lkID0gc2VsZi5kcml2ZV9zdG9yZS5jcmVhdGVfZm9sZGVyKCJQdWJsaXNoZWQiLCBwYXJlbnRfaWQ9c2VsZi5kcml2ZV9yb290X2ZvbGRlcl9pZCkKICAgICAgICAgICAgdXBsb2FkID0gc2VsZi5kcml2ZV9zdG9yZS51cGxvYWRfZmlsZShyZWVsX3BhdGgsIHBhcmVudF9pZD1wYXJlbnRfaWQsIG1pbWVfdHlwZT0idmlkZW8vbXA0IikKICAgICAgICAgICAgZHJpdmVfZmlsZV9pZCA9IHVwbG9hZC5nZXQoImlkIikKCiAgICAgICAgcmV0dXJuIFByb2R1Y3Rpb25SZXN1bHQoc291cmNlX25hbWU9c2VsZWN0ZWRfc291cmNlLCByZWVsX3BhdGg9cmVlbF9wYXRoLCBkcml2ZV9maWxlX2lkPWRyaXZlX2ZpbGVfaWQpCg==
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Protocol
+
+from app.models import Topic
+from .footage_downloader import FootageDownloader
+from .official_footage import OfficialFootageDiscovery
+from .reel_pipeline import ReelPipeline
+
+
+class DriveLike(Protocol):
+    def create_folder(self, name: str, parent_id: str | None = None) -> str: ...
+    def upload_file(self, file_path: Path, parent_id: str | None = None, mime_type: str | None = None) -> dict: ...
+
+
+@dataclass(frozen=True)
+class ProductionResult:
+    source_name: str
+    reel_path: Path
+    drive_file_id: str | None = None
+
+
+class ReelProductionPipeline:
+    def __init__(
+        self,
+        *,
+        discovery: OfficialFootageDiscovery,
+        downloader: FootageDownloader | None = None,
+        renderer: ReelPipeline | None = None,
+        drive_store: DriveLike | None = None,
+        drive_root_folder_id: str | None = None,
+    ):
+        self.discovery = discovery
+        self.downloader = downloader or FootageDownloader()
+        self.renderer = renderer or ReelPipeline()
+        self.drive_store = drive_store
+        self.drive_root_folder_id = drive_root_folder_id
+
+    def produce(
+        self,
+        *,
+        topic: Topic,
+        voiceover_text: str,
+        output_dir: Path,
+        duration_seconds: float,
+        background_music: Path | None = None,
+    ) -> ProductionResult:
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        candidates = self.discovery.discover(topic)
+        if not candidates:
+            raise RuntimeError("no official footage candidates found")
+
+        footage_path = None
+        selected_source = None
+        last_error: Exception | None = None
+        for candidate in candidates:
+            try:
+                footage_path = self.downloader.download(candidate, output_dir)
+                selected_source = candidate.source_name
+                break
+            except (ValueError, RuntimeError, OSError) as exc:
+                last_error = exc
+                continue
+        if footage_path is None or selected_source is None:
+            raise RuntimeError("no downloadable official footage found") from last_error
+
+        reel_path = self.renderer.render(
+            footage=footage_path,
+            voiceover_text=voiceover_text,
+            output_dir=output_dir,
+            duration_seconds=duration_seconds,
+            background_music=background_music,
+        )
+
+        drive_file_id: str | None = None
+        if self.drive_store:
+            parent_id = self.drive_store.create_folder("Published", parent_id=self.drive_root_folder_id)
+            upload = self.drive_store.upload_file(reel_path, parent_id=parent_id, mime_type="video/mp4")
+            drive_file_id = upload.get("id")
+
+        return ProductionResult(source_name=selected_source, reel_path=reel_path, drive_file_id=drive_file_id)

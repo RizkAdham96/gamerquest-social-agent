@@ -1,1 +1,101 @@
-bmFtZTogR2FtZXJRdWVzdCBTb2NpYWwgQWdlbnQKCm9uOgogIHdvcmtmbG93X2Rpc3BhdGNoOgogIHNjaGVkdWxlOgogICAgLSBjcm9uOiAiMCAxNyAqICogMSwzLDUiCgpwZXJtaXNzaW9uczoKICBjb250ZW50czogd3JpdGUKCmNvbmN1cnJlbmN5OgogIGdyb3VwOiBnYW1lcnF1ZXN0LXNvY2lhbC1hZ2VudAogIGNhbmNlbC1pbi1wcm9ncmVzczogZmFsc2UKCmpvYnM6CiAgYnVpbGQtYW5kLXB1Ymxpc2g6CiAgICBydW5zLW9uOiB1YnVudHUtbGF0ZXN0CiAgICB0aW1lb3V0LW1pbnV0ZXM6IDI1CiAgICBlbnY6CiAgICAgIEdRX0xJVkVfUFVCTElTSDogJHt7IHZhcnMuR1FfTElWRV9QVUJMSVNIIHx8ICdmYWxzZScgfX0KICAgICAgR1FfTUFYX1JFRUxTX1BFUl9XRUVLOiAke3sgdmFycy5HUV9NQVhfUkVFTFNfUEVSX1dFRUsgfHwgJzMnIH19CiAgICAgIEdRX01JTl9UT1BJQ19TQ09SRTogJHt7IHZhcnMuR1FfTUlOX1RPUElDX1NDT1JFIHx8ICc1NScgfX0KICAgICAgR1FfTUVUQV9BUElfVkVSU0lPTjogJHt7IHZhcnMuR1FfTUVUQV9BUElfVkVSU0lPTiB8fCAndjI2LjAnIH19CiAgICAgIEdRX0lOU1RBR1JBTV9VU0VSX0lEOiAke3sgc2VjcmV0cy5HUV9JTlNUQUdSQU1fVVNFUl9JRCB9fQogICAgICBHUV9JTlNUQUdSQU1fQUNDRVNTX1RPS0VOOiAke3sgc2VjcmV0cy5HUV9JTlNUQUdSQU1fQUNDRVNTX1RPS0VOIH19CiAgICAgIEdRX1lPVVRVQkVfQVBJX0tFWTogJHt7IHNlY3JldHMuR1FfWU9VVFVCRV9BUElfS0VZIH19CiAgICAgIEdRX0RSSVZFX1BVQkxJU0hFRF9GT0xERVJfSUQ6ICR7eyB2YXJzLkdRX0RSSVZFX1BVQkxJU0hFRF9GT0xERVJfSUQgfX0KICAgICAgR0lUSFVCX1RPS0VOOiAke3sgc2VjcmV0cy5HSVRIVUJfVE9LRU4gfX0KCiAgICBzdGVwczoKICAgICAgLSBuYW1lOiBDaGVja291dAogICAgICAgIHVzZXM6IGFjdGlvbnMvY2hlY2tvdXRAdjQKCiAgICAgIC0gbmFtZTogU2V0IHVwIFB5dGhvbgogICAgICAgIHVzZXM6IGFjdGlvbnMvc2V0dXAtcHl0aG9uQHY1CiAgICAgICAgd2l0aDoKICAgICAgICAgIHB5dGhvbi12ZXJzaW9uOiAiMy4xMiIKICAgICAgICAgIGNhY2hlOiBwaXAKCiAgICAgIC0gbmFtZTogSW5zdGFsbCBzeXN0ZW0gZGVwZW5kZW5jaWVzCiAgICAgICAgcnVuOiB8CiAgICAgICAgICBzdWRvIGFwdC1nZXQgdXBkYXRlCiAgICAgICAgICBzdWRvIGFwdC1nZXQgaW5zdGFsbCAteSBmZm1wZWcgZXNwZWFrCgogICAgICAtIG5hbWU6IEluc3RhbGwgYWdlbnQKICAgICAgICBydW46IHwKICAgICAgICAgIHB5dGhvbiAtbSBwaXAgaW5zdGFsbCAtLXVwZ3JhZGUgcGlwCiAgICAgICAgICBwaXAgaW5zdGFsbCAtZSAuIHB5dGVzdAoKICAgICAgLSBuYW1lOiBWZXJpZnkgdGVzdCBzdWl0ZQogICAgICAgIHJ1bjogcHl0ZXN0IC1xCgogICAgICAtIG5hbWU6IFByZXBhcmUgR29vZ2xlIERyaXZlIGNyZWRlbnRpYWxzCiAgICAgICAgaWY6ICR7eyBzZWNyZXRzLkdRX0dPT0dMRV9TRVJWSUNFX0FDQ09VTlRfSlNPTiAhPSAnJyB9fQogICAgICAgIGVudjoKICAgICAgICAgIFNFUlZJQ0VfQUNDT1VOVF9KU09OOiAke3sgc2VjcmV0cy5HUV9HT09HTEVfU0VSVklDRV9BQ0NPVU5UX0pTT04gfX0KICAgICAgICBydW46IHwKICAgICAgICAgIHByaW50ZiAnJXMnICIkU0VSVklDRV9BQ0NPVU5UX0pTT04iID4gIiRSVU5ORVJfVEVNUC9ncS1zZXJ2aWNlLWFjY291bnQuanNvbiIKICAgICAgICAgIGVjaG8gIkdRX0dPT0dMRV9TRVJWSUNFX0FDQ09VTlRfRklMRT0kUlVOTkVSX1RFTVAvZ3Etc2VydmljZS1hY2NvdW50Lmpzb24iID4+ICIkR0lUSFVCX0VOViIKCiAgICAgIC0gbmFtZTogTG9hZCBjYW5kaWRhdGUgdG9waWNzCiAgICAgICAgZW52OgogICAgICAgICAgVE9QSUNTX1VSTDogJHt7IHZhcnMuR1FfVE9QSUNTX1VSTCB9fQogICAgICAgIHJ1bjogfAogICAgICAgICAgaWYgWyAtbiAiJFRPUElDU19VUkwiIF07IHRoZW4KICAgICAgICAgICAgY3VybCAtLWZhaWwgLS1sb2NhdGlvbiAtLXJldHJ5IDMgIiRUT1BJQ1NfVVJMIiAtbyAiJFJVTk5FUl9URU1QL3RvcGljcy5qc29uIgogICAgICAgICAgZWxpZiBbICIkR1FfTElWRV9QVUJMSVNIIiA9ICJ0cnVlIiBdOyB0aGVuCiAgICAgICAgICAgIGVjaG8gIkdRX1RPUElDU19VUkwgbXVzdCBiZSBjb25maWd1cmVkIGJlZm9yZSBsaXZlIHB1Ymxpc2hpbmcuIiA+JjIKICAgICAgICAgICAgZXhpdCAxCiAgICAgICAgICBlbHNlCiAgICAgICAgICAgIGNwIHRvcGljcy5zYW1wbGUuanNvbiAiJFJVTk5FUl9URU1QL3RvcGljcy5qc29uIgogICAgICAgICAgZmkKCiAgICAgIC0gbmFtZTogUnVuIHNvY2lhbCBhZ2VudAogICAgICAgIHJ1bjogfAogICAgICAgICAgcHl0aG9uIC1tIGF1dG9tYXRpb24ubWFpbiBcCiAgICAgICAgICAgIC0tdG9waWNzICIkUlVOTkVSX1RFTVAvdG9waWNzLmpzb24iIFwKICAgICAgICAgICAgLS1vdXRwdXQtZGlyIG91dHB1dCBcCiAgICAgICAgICAgIC0tcHVibGlzaC1sb2cgc3RhdGUvcHVibGlzaF9sb2cuanNvbgoKICAgICAgLSBuYW1lOiBVcGxvYWQgZ2VuZXJhdGVkIFJlZWwgZm9yIGluc3BlY3Rpb24KICAgICAgICBpZjogYWx3YXlzKCkKICAgICAgICB1c2VzOiBhY3Rpb25zL3VwbG9hZC1hcnRpZmFjdEB2NAogICAgICAgIHdpdGg6CiAgICAgICAgICBuYW1lOiBnYW1lcnF1ZXN0LXNvY2lhbC1hZ2VudC1vdXRwdXQKICAgICAgICAgIHBhdGg6IG91dHB1dC8KICAgICAgICAgIGlmLW5vLWZpbGVzLWZvdW5kOiBpZ25vcmUKICAgICAgICAgIHJldGVudGlvbi1kYXlzOiA3CgogICAgICAtIG5hbWU6IFBlcnNpc3QgcHVibGlzaCBzdGF0ZQogICAgICAgIGlmOiAke3sgc3VjY2VzcygpICYmIHZhcnMuR1FfTElWRV9QVUJMSVNIID09ICd0cnVlJyB9fQogICAgICAgIHJ1bjogfAogICAgICAgICAgaWYgZ2l0IGRpZmYgLS1xdWlldCAtLSBzdGF0ZS9wdWJsaXNoX2xvZy5qc29uOyB0aGVuCiAgICAgICAgICAgIGVjaG8gIk5vIHB1Ymxpc2gtc3RhdGUgY2hhbmdlLiIKICAgICAgICAgICAgZXhpdCAwCiAgICAgICAgICBmaQogICAgICAgICAgZ2l0IGNvbmZpZyB1c2VyLm5hbWUgImdhbWVycXVlc3Qtc29jaWFsLWFnZW50W2JvdF0iCiAgICAgICAgICBnaXQgY29uZmlnIHVzZXIuZW1haWwgImdhbWVycXVlc3Qtc29jaWFsLWFnZW50W2JvdF1AdXNlcnMubm9yZXBseS5naXRodWIuY29tIgogICAgICAgICAgZ2l0IGFkZCBzdGF0ZS9wdWJsaXNoX2xvZy5qc29uCiAgICAgICAgICBnaXQgY29tbWl0IC1tICJjaG9yZTogcGVyc2lzdCBJbnN0YWdyYW0gcHVibGlzaCBzdGF0ZSIKICAgICAgICAgIGdpdCBwdXNoCg==
+name: GamerQuest Social Agent
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 17 * * 1,3,5"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gamerquest-social-agent
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GQ_LIVE_PUBLISH: ${{ vars.GQ_LIVE_PUBLISH || 'false' }}
+      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
+      GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
+      GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
+      GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
+      GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
+      GQ_YOUTUBE_API_KEY: ${{ secrets.GQ_YOUTUBE_API_KEY }}
+      GQ_DRIVE_PUBLISHED_FOLDER_ID: ${{ vars.GQ_DRIVE_PUBLISHED_FOLDER_ID }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg espeak
+
+      - name: Install agent
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . pytest
+
+      - name: Verify test suite
+        run: pytest -q
+
+      - name: Prepare Google Drive credentials
+        if: ${{ secrets.GQ_GOOGLE_SERVICE_ACCOUNT_JSON != '' }}
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.GQ_GOOGLE_SERVICE_ACCOUNT_JSON }}
+        run: |
+          printf '%s' "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/gq-service-account.json"
+          echo "GQ_GOOGLE_SERVICE_ACCOUNT_FILE=$RUNNER_TEMP/gq-service-account.json" >> "$GITHUB_ENV"
+
+      - name: Load candidate topics
+        env:
+          TOPICS_URL: ${{ vars.GQ_TOPICS_URL }}
+        run: |
+          if [ -n "$TOPICS_URL" ]; then
+            curl --fail --location --retry 3 "$TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
+          elif [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            echo "GQ_TOPICS_URL must be configured before live publishing." >&2
+            exit 1
+          else
+            cp topics.sample.json "$RUNNER_TEMP/topics.json"
+          fi
+
+      - name: Run social agent
+        run: |
+          python -m automation.main \
+            --topics "$RUNNER_TEMP/topics.json" \
+            --output-dir output \
+            --publish-log state/publish_log.json
+
+      - name: Upload generated Reel for inspection
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gamerquest-social-agent-output
+          path: output/
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Persist publish state
+        if: ${{ success() && vars.GQ_LIVE_PUBLISH == 'true' }}
+        run: |
+          if git diff --quiet -- state/publish_log.json; then
+            echo "No publish-state change."
+            exit 0
+          fi
+          git config user.name "gamerquest-social-agent[bot]"
+          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
+          git add state/publish_log.json
+          git commit -m "chore: persist Instagram publish state"
+          git push

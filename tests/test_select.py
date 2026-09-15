@@ -1,1 +1,18 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwpmcm9tIGFnZW50LnNlbGVjdCBpbXBvcnQgc2VsZWN0X2Jlc3RfdG9waWMKCmRlZiB0ZXN0X3NlbGVjdF9iZXN0X3RvcGljX3JlcXVpcmVzX29mZmljaWFsX2Zvb3RhZ2UoKToKICAgIHRvcGljcyA9IFsKICAgICAgICBUb3BpYyh0aXRsZT0nSHVnZSBydW1vcicsIHVybD0naHR0cHM6Ly9ydW1vci50ZXN0Jywgc291cmNlPSdibG9nJyksCiAgICAgICAgVG9waWModGl0bGU9J0ZyZWUgZ2FtZSBvZmZpY2lhbCcsIHVybD0naHR0cHM6Ly9zdG9yZS50ZXN0Jywgc291cmNlPSdlcGljJywgb2ZmaWNpYWxfZm9vdGFnZV91cmw9J2h0dHBzOi8vb2ZmaWNpYWwudGVzdC92aWRlby5tcDQnLCB0YWdzPVsnZnJlZS1nYW1lJ10pLAogICAgXQogICAgc2VsZWN0ZWQgPSBzZWxlY3RfYmVzdF90b3BpYyh0b3BpY3MsIHJlY2VudF9zbHVncz1zZXQoKSkKICAgIGFzc2VydCBzZWxlY3RlZC50b3BpYy50aXRsZSA9PSAnRnJlZSBnYW1lIG9mZmljaWFsJwoKCmRlZiB0ZXN0X3NlbGVjdF9iZXN0X3RvcGljX2FjY2VwdHNfc3RlYW1fYXNfb2ZmaWNpYWxfZm9vdGFnZV9zaWduYWwoKToKICAgIHRvcGljcyA9IFsKICAgICAgICBUb3BpYyh0aXRsZT0nU3RlYW0gb2ZmaWNpYWwnLCB1cmw9J2h0dHBzOi8vc3RvcmUuc3RlYW1wb3dlcmVkLmNvbS9hcHAvMTIzJywgc291cmNlPSdzdGVhbScsIHN0ZWFtX2FwcF9pZD0xMjMpLAogICAgXQogICAgc2VsZWN0ZWQgPSBzZWxlY3RfYmVzdF90b3BpYyh0b3BpY3MsIHJlY2VudF9zbHVncz1zZXQoKSwgbWluX3Njb3JlPTApCiAgICBhc3NlcnQgc2VsZWN0ZWQudG9waWMudGl0bGUgPT0gJ1N0ZWFtIG9mZmljaWFsJwo=
+from app.models import Topic
+from agent.select import select_best_topic
+
+def test_select_best_topic_requires_official_footage():
+    topics = [
+        Topic(title='Huge rumor', url='https://rumor.test', source='blog'),
+        Topic(title='Free game official', url='https://store.test', source='epic', official_footage_url='https://official.test/video.mp4', tags=['free-game']),
+    ]
+    selected = select_best_topic(topics, recent_slugs=set())
+    assert selected.topic.title == 'Free game official'
+
+
+def test_select_best_topic_accepts_steam_as_official_footage_signal():
+    topics = [
+        Topic(title='Steam official', url='https://store.steampowered.com/app/123', source='steam', steam_app_id=123),
+    ]
+    selected = select_best_topic(topics, recent_slugs=set(), min_score=0)
+    assert selected.topic.title == 'Steam official'

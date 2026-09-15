@@ -1,1 +1,122 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KZnJvbSBjb2xsZWN0aW9ucy5hYmMgaW1wb3J0IENhbGxhYmxlLCBJdGVyYWJsZQpmcm9tIHVybGxpYi5wYXJzZSBpbXBvcnQgdXJsZW5jb2RlCmZyb20gdXJsbGliLnJlcXVlc3QgaW1wb3J0IHVybG9wZW4KCmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMKZnJvbSAuZm9vdGFnZV92YWxpZGF0b3IgaW1wb3J0IEZvb3RhZ2VDYW5kaWRhdGUKCgpkZWYgX2ZldGNoX2pzb24odXJsOiBzdHIpIC0+IGRpY3Q6CiAgICB3aXRoIHVybG9wZW4odXJsLCB0aW1lb3V0PTIwKSBhcyByZXNwb25zZToKICAgICAgICByZXR1cm4ganNvbi5sb2FkcyhyZXNwb25zZS5yZWFkKCkuZGVjb2RlKCJ1dGYtOCIpKQoKCmNsYXNzIFN0ZWFtVHJhaWxlclByb3ZpZGVyOgogICAgIiIiQmVzdC1lZmZvcnQgZGlzY292ZXJ5IG9mIGRpcmVjdCB0cmFpbGVyIGZpbGVzIGV4cG9zZWQgYnkgYSBTdGVhbSBzdG9yZSBwYWdlLiIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCBmZXRjaF9qc29uOiBDYWxsYWJsZVtbc3RyXSwgZGljdF0gPSBfZmV0Y2hfanNvbik6CiAgICAgICAgc2VsZi5mZXRjaF9qc29uID0gZmV0Y2hfanNvbgoKICAgIGRlZiBzZWFyY2goc2VsZiwgYXBwX2lkOiBpbnQpIC0+IGxpc3RbRm9vdGFnZUNhbmRpZGF0ZV06CiAgICAgICAgdXJsID0gZiJodHRwczovL3N0b3JlLnN0ZWFtcG93ZXJlZC5jb20vYXBpL2FwcGRldGFpbHM/YXBwaWRzPXtpbnQoYXBwX2lkKX0iCiAgICAgICAgcGF5bG9hZCA9IHNlbGYuZmV0Y2hfanNvbih1cmwpCiAgICAgICAgYXBwID0gcGF5bG9hZC5nZXQoc3RyKGFwcF9pZCksIHt9KQogICAgICAgIGlmIG5vdCBhcHAuZ2V0KCJzdWNjZXNzIik6CiAgICAgICAgICAgIHJldHVybiBbXQogICAgICAgIG1vdmllcyA9IChhcHAuZ2V0KCJkYXRhIikgb3Ige30pLmdldCgibW92aWVzIikgb3IgW10KICAgICAgICByZXN1bHRzOiBsaXN0W0Zvb3RhZ2VDYW5kaWRhdGVdID0gW10KICAgICAgICBmb3IgbW92aWUgaW4gbW92aWVzOgogICAgICAgICAgICBtcDQgPSBtb3ZpZS5nZXQoIm1wNCIpIG9yIHt9CiAgICAgICAgICAgIG1lZGlhX3VybCA9IG1wNC5nZXQoIm1heCIpIG9yIG1wNC5nZXQoIjQ4MCIpCiAgICAgICAgICAgIGlmIG5vdCBtZWRpYV91cmw6CiAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICByZXN1bHRzLmFwcGVuZCgKICAgICAgICAgICAgICAgIEZvb3RhZ2VDYW5kaWRhdGUoCiAgICAgICAgICAgICAgICAgICAgdXJsPW1lZGlhX3VybCwKICAgICAgICAgICAgICAgICAgICBzb3VyY2VfbmFtZT1mIlN0ZWFtOiB7bW92aWUuZ2V0KCduYW1lJykgb3IgJ09mZmljaWFsIHRyYWlsZXInfSIsCiAgICAgICAgICAgICAgICAgICAgaXNfb2ZmaWNpYWw9VHJ1ZSwKICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgKQogICAgICAgIHJldHVybiByZXN1bHRzCgoKY2xhc3MgWW91VHViZU9mZmljaWFsU2VhcmNoOgogICAgIiIiU2VhcmNoZXMgb25seSBjaGFubmVsIElEcyBleHBsaWNpdGx5IHRydXN0ZWQgYXMgcHVibGlzaGVyL2RldmVsb3BlciBjaGFubmVscy4iIiIKCiAgICBkZWYgX19pbml0X18oc2VsZiwgYXBpX2tleTogc3RyLCBmZXRjaF9qc29uOiBDYWxsYWJsZVtbc3RyXSwgZGljdF0gPSBfZmV0Y2hfanNvbik6CiAgICAgICAgc2VsZi5hcGlfa2V5ID0gYXBpX2tleQogICAgICAgIHNlbGYuZmV0Y2hfanNvbiA9IGZldGNoX2pzb24KCiAgICBkZWYgc2VhcmNoKHNlbGYsIHF1ZXJ5OiBzdHIsIGNoYW5uZWxfaWRzOiBJdGVyYWJsZVtzdHJdKSAtPiBsaXN0W0Zvb3RhZ2VDYW5kaWRhdGVdOgogICAgICAgIGlmIG5vdCBzZWxmLmFwaV9rZXk6CiAgICAgICAgICAgIHJldHVybiBbXQogICAgICAgIHJlc3VsdHM6IGxpc3RbRm9vdGFnZUNhbmRpZGF0ZV0gPSBbXQogICAgICAgIGZvciBjaGFubmVsX2lkIGluIGNoYW5uZWxfaWRzOgogICAgICAgICAgICBjaGFubmVsX2lkID0gY2hhbm5lbF9pZC5zdHJpcCgpCiAgICAgICAgICAgIGlmIG5vdCBjaGFubmVsX2lkOgogICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgcGFyYW1zID0gdXJsZW5jb2RlKAogICAgICAgICAgICAgICAgewogICAgICAgICAgICAgICAgICAgICJwYXJ0IjogInNuaXBwZXQiLAogICAgICAgICAgICAgICAgICAgICJ0eXBlIjogInZpZGVvIiwKICAgICAgICAgICAgICAgICAgICAibWF4UmVzdWx0cyI6IDUsCiAgICAgICAgICAgICAgICAgICAgInEiOiBxdWVyeSwKICAgICAgICAgICAgICAgICAgICAiY2hhbm5lbElkIjogY2hhbm5lbF9pZCwKICAgICAgICAgICAgICAgICAgICAidmlkZW9FbWJlZGRhYmxlIjogInRydWUiLAogICAgICAgICAgICAgICAgICAgICJrZXkiOiBzZWxmLmFwaV9rZXksCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICkKICAgICAgICAgICAgcGF5bG9hZCA9IHNlbGYuZmV0Y2hfanNvbihmImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL3lvdXR1YmUvdjMvc2VhcmNoP3twYXJhbXN9IikKICAgICAgICAgICAgZm9yIGl0ZW0gaW4gcGF5bG9hZC5nZXQoIml0ZW1zIiwgW10pOgogICAgICAgICAgICAgICAgdmlkZW9faWQgPSAoaXRlbS5nZXQoImlkIikgb3Ige30pLmdldCgidmlkZW9JZCIpCiAgICAgICAgICAgICAgICBpZiBub3QgdmlkZW9faWQ6CiAgICAgICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgICAgIGNoYW5uZWxfdGl0bGUgPSAoaXRlbS5nZXQoInNuaXBwZXQiKSBvciB7fSkuZ2V0KCJjaGFubmVsVGl0bGUiKSBvciBjaGFubmVsX2lkCiAgICAgICAgICAgICAgICByZXN1bHRzLmFwcGVuZCgKICAgICAgICAgICAgICAgICAgICBGb290YWdlQ2FuZGlkYXRlKAogICAgICAgICAgICAgICAgICAgICAgICB1cmw9ZiJodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXt2aWRlb19pZH0iLAogICAgICAgICAgICAgICAgICAgICAgICBzb3VyY2VfbmFtZT1mIllvdVR1YmUgb2ZmaWNpYWw6IHtjaGFubmVsX3RpdGxlfSIsCiAgICAgICAgICAgICAgICAgICAgICAgIGlzX29mZmljaWFsPVRydWUsCiAgICAgICAgICAgICAgICAgICAgKQogICAgICAgICAgICAgICAgKQogICAgICAgIHJldHVybiByZXN1bHRzCgoKY2xhc3MgT2ZmaWNpYWxGb290YWdlRGlzY292ZXJ5OgogICAgZGVmIF9faW5pdF9fKAogICAgICAgIHNlbGYsCiAgICAgICAgc3RlYW06IFN0ZWFtVHJhaWxlclByb3ZpZGVyIHwgTm9uZSA9IE5vbmUsCiAgICAgICAgeW91dHViZTogWW91VHViZU9mZmljaWFsU2VhcmNoIHwgTm9uZSA9IE5vbmUsCiAgICApOgogICAgICAgIHNlbGYuc3RlYW0gPSBzdGVhbQogICAgICAgIHNlbGYueW91dHViZSA9IHlvdXR1YmUKCiAgICBkZWYgZGlzY292ZXIoc2VsZiwgdG9waWM6IFRvcGljKSAtPiBsaXN0W0Zvb3RhZ2VDYW5kaWRhdGVdOgogICAgICAgIHJlc3VsdHM6IGxpc3RbRm9vdGFnZUNhbmRpZGF0ZV0gPSBbXQogICAgICAgIGlmIHRvcGljLm9mZmljaWFsX2Zvb3RhZ2VfdXJsOgogICAgICAgICAgICByZXN1bHRzLmFwcGVuZCgKICAgICAgICAgICAgICAgIEZvb3RhZ2VDYW5kaWRhdGUoCiAgICAgICAgICAgICAgICAgICAgdXJsPXRvcGljLm9mZmljaWFsX2Zvb3RhZ2VfdXJsLAogICAgICAgICAgICAgICAgICAgIHNvdXJjZV9uYW1lPWYiT2ZmaWNpYWwgc291cmNlOiB7dG9waWMucHVibGlzaGVyIG9yIHRvcGljLnNvdXJjZX0iLAogICAgICAgICAgICAgICAgICAgIGlzX29mZmljaWFsPVRydWUsCiAgICAgICAgICAgICAgICApCiAgICAgICAgICAgICkKICAgICAgICBpZiB0b3BpYy5zdGVhbV9hcHBfaWQgYW5kIHNlbGYuc3RlYW06CiAgICAgICAgICAgIHJlc3VsdHMuZXh0ZW5kKHNlbGYuc3RlYW0uc2VhcmNoKHRvcGljLnN0ZWFtX2FwcF9pZCkpCiAgICAgICAgaWYgdG9waWMub2ZmaWNpYWxfY2hhbm5lbF9pZHMgYW5kIHNlbGYueW91dHViZToKICAgICAgICAgICAgcmVzdWx0cy5leHRlbmQoc2VsZi55b3V0dWJlLnNlYXJjaChmInt0b3BpYy50aXRsZX0gb2ZmaWNpYWwgdHJhaWxlciIsIHRvcGljLm9mZmljaWFsX2NoYW5uZWxfaWRzKSkKICAgICAgICByZXR1cm4gX2RlZHVwZShyZXN1bHRzKQoKCmRlZiBfZGVkdXBlKGl0ZW1zOiBsaXN0W0Zvb3RhZ2VDYW5kaWRhdGVdKSAtPiBsaXN0W0Zvb3RhZ2VDYW5kaWRhdGVdOgogICAgc2Vlbjogc2V0W3N0cl0gPSBzZXQoKQogICAgb3V0cHV0OiBsaXN0W0Zvb3RhZ2VDYW5kaWRhdGVdID0gW10KICAgIGZvciBpdGVtIGluIGl0ZW1zOgogICAgICAgIGlmIGl0ZW0udXJsIGluIHNlZW46CiAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgc2Vlbi5hZGQoaXRlbS51cmwpCiAgICAgICAgb3V0cHV0LmFwcGVuZChpdGVtKQogICAgcmV0dXJuIG91dHB1dAo=
+from __future__ import annotations
+
+import json
+from collections.abc import Callable, Iterable
+from urllib.parse import urlencode
+from urllib.request import urlopen
+
+from app.models import Topic
+from .footage_validator import FootageCandidate
+
+
+def _fetch_json(url: str) -> dict:
+    with urlopen(url, timeout=20) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+class SteamTrailerProvider:
+    """Best-effort discovery of direct trailer files exposed by a Steam store page."""
+
+    def __init__(self, fetch_json: Callable[[str], dict] = _fetch_json):
+        self.fetch_json = fetch_json
+
+    def search(self, app_id: int) -> list[FootageCandidate]:
+        url = f"https://store.steampowered.com/api/appdetails?appids={int(app_id)}"
+        payload = self.fetch_json(url)
+        app = payload.get(str(app_id), {})
+        if not app.get("success"):
+            return []
+        movies = (app.get("data") or {}).get("movies") or []
+        results: list[FootageCandidate] = []
+        for movie in movies:
+            mp4 = movie.get("mp4") or {}
+            media_url = mp4.get("max") or mp4.get("480")
+            if not media_url:
+                continue
+            results.append(
+                FootageCandidate(
+                    url=media_url,
+                    source_name=f"Steam: {movie.get('name') or 'Official trailer'}",
+                    is_official=True,
+                )
+            )
+        return results
+
+
+class YouTubeOfficialSearch:
+    """Searches only channel IDs explicitly trusted as publisher/developer channels."""
+
+    def __init__(self, api_key: str, fetch_json: Callable[[str], dict] = _fetch_json):
+        self.api_key = api_key
+        self.fetch_json = fetch_json
+
+    def search(self, query: str, channel_ids: Iterable[str]) -> list[FootageCandidate]:
+        if not self.api_key:
+            return []
+        results: list[FootageCandidate] = []
+        for channel_id in channel_ids:
+            channel_id = channel_id.strip()
+            if not channel_id:
+                continue
+            params = urlencode(
+                {
+                    "part": "snippet",
+                    "type": "video",
+                    "maxResults": 5,
+                    "q": query,
+                    "channelId": channel_id,
+                    "videoEmbeddable": "true",
+                    "key": self.api_key,
+                }
+            )
+            payload = self.fetch_json(f"https://www.googleapis.com/youtube/v3/search?{params}")
+            for item in payload.get("items", []):
+                video_id = (item.get("id") or {}).get("videoId")
+                if not video_id:
+                    continue
+                channel_title = (item.get("snippet") or {}).get("channelTitle") or channel_id
+                results.append(
+                    FootageCandidate(
+                        url=f"https://www.youtube.com/watch?v={video_id}",
+                        source_name=f"YouTube official: {channel_title}",
+                        is_official=True,
+                    )
+                )
+        return results
+
+
+class OfficialFootageDiscovery:
+    def __init__(
+        self,
+        steam: SteamTrailerProvider | None = None,
+        youtube: YouTubeOfficialSearch | None = None,
+    ):
+        self.steam = steam
+        self.youtube = youtube
+
+    def discover(self, topic: Topic) -> list[FootageCandidate]:
+        results: list[FootageCandidate] = []
+        if topic.official_footage_url:
+            results.append(
+                FootageCandidate(
+                    url=topic.official_footage_url,
+                    source_name=f"Official source: {topic.publisher or topic.source}",
+                    is_official=True,
+                )
+            )
+        if topic.steam_app_id and self.steam:
+            results.extend(self.steam.search(topic.steam_app_id))
+        if topic.official_channel_ids and self.youtube:
+            results.extend(self.youtube.search(f"{topic.title} official trailer", topic.official_channel_ids))
+        return _dedupe(results)
+
+
+def _dedupe(items: list[FootageCandidate]) -> list[FootageCandidate]:
+    seen: set[str] = set()
+    output: list[FootageCandidate] = []
+    for item in items:
+        if item.url in seen:
+            continue
+        seen.add(item.url)
+        output.append(item)
+    return output

@@ -1,1 +1,40 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSBjb2xsZWN0aW9ucy5hYmMgaW1wb3J0IENhbGxhYmxlCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIHVybGxpYi5wYXJzZSBpbXBvcnQgdXJscGFyc2UKZnJvbSB1cmxsaWIucmVxdWVzdCBpbXBvcnQgdXJsb3BlbgoKZnJvbSAuZm9vdGFnZV92YWxpZGF0b3IgaW1wb3J0IEZvb3RhZ2VDYW5kaWRhdGUsIEZvb3RhZ2VWYWxpZGF0b3IKCgpkZWYgX2ZldGNoX2J5dGVzKHVybDogc3RyKSAtPiBieXRlczoKICAgIHdpdGggdXJsb3Blbih1cmwsIHRpbWVvdXQ9MTIwKSBhcyByZXNwb25zZToKICAgICAgICByZXR1cm4gcmVzcG9uc2UucmVhZCgpCgoKY2xhc3MgRm9vdGFnZURvd25sb2FkZXI6CiAgICBkZWYgX19pbml0X18oc2VsZiwgZmV0Y2hfYnl0ZXM6IENhbGxhYmxlW1tzdHJdLCBieXRlc10gPSBfZmV0Y2hfYnl0ZXMsIHZhbGlkYXRvcjogRm9vdGFnZVZhbGlkYXRvciB8IE5vbmUgPSBOb25lKToKICAgICAgICBzZWxmLmZldGNoX2J5dGVzID0gZmV0Y2hfYnl0ZXMKICAgICAgICBzZWxmLnZhbGlkYXRvciA9IHZhbGlkYXRvciBvciBGb290YWdlVmFsaWRhdG9yKCkKCiAgICBkZWYgZG93bmxvYWQoc2VsZiwgY2FuZGlkYXRlOiBGb290YWdlQ2FuZGlkYXRlLCBvdXRwdXRfZGlyOiBQYXRoKSAtPiBQYXRoOgogICAgICAgIHZhbGlkYXRpb24gPSBzZWxmLnZhbGlkYXRvci52YWxpZGF0ZShjYW5kaWRhdGUpCiAgICAgICAgaWYgbm90IHZhbGlkYXRpb24ub2s6CiAgICAgICAgICAgIHJhaXNlIFZhbHVlRXJyb3IodmFsaWRhdGlvbi5yZWFzb24pCiAgICAgICAgcGFyc2VkID0gdXJscGFyc2UoY2FuZGlkYXRlLnVybCkKICAgICAgICBob3N0ID0gcGFyc2VkLm5ldGxvYy5sb3dlcigpCiAgICAgICAgcGF0aCA9IHBhcnNlZC5wYXRoLmxvd2VyKCkKICAgICAgICBpZiAieW91dHViZS5jb20iIGluIGhvc3Qgb3IgInlvdXR1LmJlIiBpbiBob3N0OgogICAgICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJjYW5kaWRhdGUgaXMgbm90IGEgZGlyZWN0IG1lZGlhIFVSTCIpCiAgICAgICAgaWYgbm90IHBhdGguZW5kc3dpdGgoKCIubXA0IiwgIi53ZWJtIiwgIi5tb3YiLCAiLm00diIpKToKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigiY2FuZGlkYXRlIGlzIG5vdCBhIGRpcmVjdCBtZWRpYSBVUkwiKQogICAgICAgIGRhdGEgPSBzZWxmLmZldGNoX2J5dGVzKGNhbmRpZGF0ZS51cmwpCiAgICAgICAgaWYgbm90IGRhdGE6CiAgICAgICAgICAgIHJhaXNlIFJ1bnRpbWVFcnJvcigiZG93bmxvYWRlZCBmb290YWdlIGlzIGVtcHR5IikKICAgICAgICBvdXRwdXRfZGlyID0gUGF0aChvdXRwdXRfZGlyKQogICAgICAgIG91dHB1dF9kaXIubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQogICAgICAgIHN1ZmZpeCA9IFBhdGgocGFyc2VkLnBhdGgpLnN1ZmZpeC5sb3dlcigpIG9yICIubXA0IgogICAgICAgIG91dHB1dCA9IG91dHB1dF9kaXIgLyBmImZvb3RhZ2V7c3VmZml4fSIKICAgICAgICBvdXRwdXQud3JpdGVfYnl0ZXMoZGF0YSkKICAgICAgICByZXR1cm4gb3V0cHV0Cg==
+from __future__ import annotations
+
+from collections.abc import Callable
+from pathlib import Path
+from urllib.parse import urlparse
+from urllib.request import urlopen
+
+from .footage_validator import FootageCandidate, FootageValidator
+
+
+def _fetch_bytes(url: str) -> bytes:
+    with urlopen(url, timeout=120) as response:
+        return response.read()
+
+
+class FootageDownloader:
+    def __init__(self, fetch_bytes: Callable[[str], bytes] = _fetch_bytes, validator: FootageValidator | None = None):
+        self.fetch_bytes = fetch_bytes
+        self.validator = validator or FootageValidator()
+
+    def download(self, candidate: FootageCandidate, output_dir: Path) -> Path:
+        validation = self.validator.validate(candidate)
+        if not validation.ok:
+            raise ValueError(validation.reason)
+        parsed = urlparse(candidate.url)
+        host = parsed.netloc.lower()
+        path = parsed.path.lower()
+        if "youtube.com" in host or "youtu.be" in host:
+            raise ValueError("candidate is not a direct media URL")
+        if not path.endswith((".mp4", ".webm", ".mov", ".m4v")):
+            raise ValueError("candidate is not a direct media URL")
+        data = self.fetch_bytes(candidate.url)
+        if not data:
+            raise RuntimeError("downloaded footage is empty")
+        output_dir = Path(output_dir)
+        output_dir.mkdir(parents=True, exist_ok=True)
+        suffix = Path(parsed.path).suffix.lower() or ".mp4"
+        output = output_dir / f"footage{suffix}"
+        output.write_bytes(data)
+        return output

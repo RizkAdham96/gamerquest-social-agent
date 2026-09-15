@@ -1,1 +1,47 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpmcm9tIHN0b3JhZ2UuZ2l0aHViX3JlbGVhc2Vfc3RhZ2UgaW1wb3J0IEdpdEh1YlJlbGVhc2VTdGFnZQoKCmNsYXNzIEZha2VUcmFuc3BvcnQ6CiAgICBkZWYgX19pbml0X18oc2VsZik6CiAgICAgICAgc2VsZi5nZXRfY2FsbHM9W107IHNlbGYucG9zdF9qc29uX2NhbGxzPVtdOyBzZWxmLnVwbG9hZF9jYWxscz1bXTsgc2VsZi5kZWxldGVfY2FsbHM9W10KICAgICAgICBzZWxmLnJlbGVhc2VfZXhpc3RzPUZhbHNlCiAgICBkZWYgZ2V0X2pzb24oc2VsZiwgdXJsLCBoZWFkZXJzKToKICAgICAgICBzZWxmLmdldF9jYWxscy5hcHBlbmQoKHVybCxoZWFkZXJzKSkKICAgICAgICBpZiBub3Qgc2VsZi5yZWxlYXNlX2V4aXN0czoKICAgICAgICAgICAgcmFpc2UgRmlsZU5vdEZvdW5kRXJyb3IoJ25vdCBmb3VuZCcpCiAgICAgICAgcmV0dXJuIHsnaWQnOjc3LCd1cGxvYWRfdXJsJzonaHR0cHM6Ly91cGxvYWRzLmdpdGh1Yi5jb20vcmVwb3MvYS9iL3JlbGVhc2VzLzc3L2Fzc2V0c3s/bmFtZSxsYWJlbH0nfQogICAgZGVmIHBvc3RfanNvbihzZWxmLCB1cmwsIGhlYWRlcnMsIHBheWxvYWQpOgogICAgICAgIHNlbGYucG9zdF9qc29uX2NhbGxzLmFwcGVuZCgodXJsLGhlYWRlcnMscGF5bG9hZCkpOyBzZWxmLnJlbGVhc2VfZXhpc3RzPVRydWUKICAgICAgICByZXR1cm4geydpZCc6NzcsJ3VwbG9hZF91cmwnOidodHRwczovL3VwbG9hZHMuZ2l0aHViLmNvbS9yZXBvcy9hL2IvcmVsZWFzZXMvNzcvYXNzZXRzez9uYW1lLGxhYmVsfSd9CiAgICBkZWYgdXBsb2FkX2JpbmFyeShzZWxmLCB1cmwsIGhlYWRlcnMsIGZpbGVfcGF0aCwgY29udGVudF90eXBlKToKICAgICAgICBzZWxmLnVwbG9hZF9jYWxscy5hcHBlbmQoKHVybCxoZWFkZXJzLGZpbGVfcGF0aCxjb250ZW50X3R5cGUpKQogICAgICAgIHJldHVybiB7J2lkJzo5OSwnYnJvd3Nlcl9kb3dubG9hZF91cmwnOidodHRwczovL2dpdGh1Yi5jb20vYS9iL3JlbGVhc2VzL2Rvd25sb2FkL2dxLW1lZGlhLXN0YWdpbmcvcmVlbC5tcDQnfQogICAgZGVmIGRlbGV0ZShzZWxmLCB1cmwsIGhlYWRlcnMpOgogICAgICAgIHNlbGYuZGVsZXRlX2NhbGxzLmFwcGVuZCgodXJsLGhlYWRlcnMpKTsgcmV0dXJuIE5vbmUKCgpkZWYgdGVzdF9zdGFnZV9jcmVhdGVzX2ZpeGVkX3JlbGVhc2Vfb25jZV9hbmRfdXBsb2Fkc19hc3NldCh0bXBfcGF0aCk6CiAgICB2aWRlbz10bXBfcGF0aC8ncmVlbC5tcDQnOyB2aWRlby53cml0ZV9ieXRlcyhiJ3ZpZGVvJykKICAgIHQ9RmFrZVRyYW5zcG9ydCgpCiAgICBzdGFnZT1HaXRIdWJSZWxlYXNlU3RhZ2UocmVwb3NpdG9yeT0nYS9iJywgdG9rZW49J3RvaycsIHRyYW5zcG9ydD10KQogICAgc3RhZ2VkPXN0YWdlLnN0YWdlKHZpZGVvKQogICAgYXNzZXJ0IHN0YWdlZC5hc3NldF9pZD09OTkKICAgIGFzc2VydCBzdGFnZWQucHVibGljX3VybC5lbmRzd2l0aCgnL3JlZWwubXA0JykKICAgIGFzc2VydCB0LnBvc3RfanNvbl9jYWxsc1swXVsyXVsndGFnX25hbWUnXT09J2dxLW1lZGlhLXN0YWdpbmcnCiAgICBhc3NlcnQgJ25hbWU9cmVlbC5tcDQnIGluIHQudXBsb2FkX2NhbGxzWzBdWzBdCgoKZGVmIHRlc3Rfc3RhZ2VfcmV1c2VzX2V4aXN0aW5nX3JlbGVhc2UodG1wX3BhdGgpOgogICAgdmlkZW89dG1wX3BhdGgvJ3JlZWwubXA0JzsgdmlkZW8ud3JpdGVfYnl0ZXMoYid2aWRlbycpCiAgICB0PUZha2VUcmFuc3BvcnQoKTsgdC5yZWxlYXNlX2V4aXN0cz1UcnVlCiAgICBzdGFnZT1HaXRIdWJSZWxlYXNlU3RhZ2UocmVwb3NpdG9yeT0nYS9iJywgdG9rZW49J3RvaycsIHRyYW5zcG9ydD10KQogICAgc3RhZ2Uuc3RhZ2UodmlkZW8pCiAgICBhc3NlcnQgdC5wb3N0X2pzb25fY2FsbHM9PVtdCgoKZGVmIHRlc3RfY2xlYW51cF9kZWxldGVzX29ubHlfc3RhZ2VkX2Fzc2V0KCk6CiAgICB0PUZha2VUcmFuc3BvcnQoKTsgc3RhZ2U9R2l0SHViUmVsZWFzZVN0YWdlKHJlcG9zaXRvcnk9J2EvYicsIHRva2VuPSd0b2snLCB0cmFuc3BvcnQ9dCkKICAgIHN0YWdlLmNsZWFudXAoOTkpCiAgICBhc3NlcnQgdC5kZWxldGVfY2FsbHNbMF1bMF09PSdodHRwczovL2FwaS5naXRodWIuY29tL3JlcG9zL2EvYi9yZWxlYXNlcy9hc3NldHMvOTknCg==
+from pathlib import Path
+
+from storage.github_release_stage import GitHubReleaseStage
+
+
+class FakeTransport:
+    def __init__(self):
+        self.get_calls=[]; self.post_json_calls=[]; self.upload_calls=[]; self.delete_calls=[]
+        self.release_exists=False
+    def get_json(self, url, headers):
+        self.get_calls.append((url,headers))
+        if not self.release_exists:
+            raise FileNotFoundError('not found')
+        return {'id':77,'upload_url':'https://uploads.github.com/repos/a/b/releases/77/assets{?name,label}'}
+    def post_json(self, url, headers, payload):
+        self.post_json_calls.append((url,headers,payload)); self.release_exists=True
+        return {'id':77,'upload_url':'https://uploads.github.com/repos/a/b/releases/77/assets{?name,label}'}
+    def upload_binary(self, url, headers, file_path, content_type):
+        self.upload_calls.append((url,headers,file_path,content_type))
+        return {'id':99,'browser_download_url':'https://github.com/a/b/releases/download/gq-media-staging/reel.mp4'}
+    def delete(self, url, headers):
+        self.delete_calls.append((url,headers)); return None
+
+
+def test_stage_creates_fixed_release_once_and_uploads_asset(tmp_path):
+    video=tmp_path/'reel.mp4'; video.write_bytes(b'video')
+    t=FakeTransport()
+    stage=GitHubReleaseStage(repository='a/b', token='tok', transport=t)
+    staged=stage.stage(video)
+    assert staged.asset_id==99
+    assert staged.public_url.endswith('/reel.mp4')
+    assert t.post_json_calls[0][2]['tag_name']=='gq-media-staging'
+    assert 'name=reel.mp4' in t.upload_calls[0][0]
+
+
+def test_stage_reuses_existing_release(tmp_path):
+    video=tmp_path/'reel.mp4'; video.write_bytes(b'video')
+    t=FakeTransport(); t.release_exists=True
+    stage=GitHubReleaseStage(repository='a/b', token='tok', transport=t)
+    stage.stage(video)
+    assert t.post_json_calls==[]
+
+
+def test_cleanup_deletes_only_staged_asset():
+    t=FakeTransport(); stage=GitHubReleaseStage(repository='a/b', token='tok', transport=t)
+    stage.cleanup(99)
+    assert t.delete_calls[0][0]=='https://api.github.com/repos/a/b/releases/assets/99'

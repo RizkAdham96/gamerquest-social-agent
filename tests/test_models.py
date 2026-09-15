@@ -1,1 +1,7 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwoKZGVmIHRlc3RfdG9waWNfbm9ybWFsaXplc19zbHVnX2FuZF90ZXh0KCk6CiAgICB0b3BpYyA9IFRvcGljKHRpdGxlPScgIEdUQSBWSSA6IE5vdXZlYXUgdHJhaWxlciAhICAnLCB1cmw9J2h0dHBzOi8vZXhhbXBsZS5jb20veCcsIHNvdXJjZT0ncm9ja3N0YXInKQogICAgYXNzZXJ0IHRvcGljLnRpdGxlID09ICdHVEEgVkkgOiBOb3V2ZWF1IHRyYWlsZXIgIScKICAgIGFzc2VydCB0b3BpYy5zbHVnID09ICdndGEtdmktbm91dmVhdS10cmFpbGVyJwogICAgYXNzZXJ0IHRvcGljLnRvcGljX2lkCg==
+from app.models import Topic
+
+def test_topic_normalizes_slug_and_text():
+    topic = Topic(title='  GTA VI : Nouveau trailer !  ', url='https://example.com/x', source='rockstar')
+    assert topic.title == 'GTA VI : Nouveau trailer !'
+    assert topic.slug == 'gta-vi-nouveau-trailer'
+    assert topic.topic_id

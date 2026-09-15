@@ -1,1 +1,86 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAoKZnJvbSBhZ2VudC5kaXNjb3ZlciBpbXBvcnQgbG9hZF90b3BpY3NfZnJvbV9qc29uCmZyb20gYWdlbnQuc2VsZWN0IGltcG9ydCBzZWxlY3RfYmVzdF90b3BpYwpmcm9tIGNvbnRlbnQuY2FwdGlvbl93cml0ZXIgaW1wb3J0IGJ1aWxkX2NhcHRpb24KZnJvbSBjb250ZW50LnNjcmlwdF93cml0ZXIgaW1wb3J0IGJ1aWxkX3JlZWxfc2NyaXB0CmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMsIFJlZWxTY3JpcHQKCgpAZGF0YWNsYXNzKGZyb3plbj1UcnVlKQpjbGFzcyBQcmVwYXJlZENvbnRlbnQ6CiAgICB0b3BpYzogVG9waWMKICAgIHNjcmlwdDogUmVlbFNjcmlwdAogICAgY2FwdGlvbjogc3RyCiAgICBzY29yZTogaW50CgoKQGRhdGFjbGFzcyhmcm96ZW49VHJ1ZSkKY2xhc3MgUnVuUmVzdWx0OgogICAgc3RhdHVzOiBzdHIKICAgIHRvcGljX2lkOiBzdHIKICAgIHJlZWxfcGF0aDogUGF0aAogICAgbWVkaWFfaWQ6IHN0ciB8IE5vbmUgPSBOb25lCiAgICBjb250YWluZXJfaWQ6IHN0ciB8IE5vbmUgPSBOb25lCiAgICBkcml2ZV9maWxlX2lkOiBzdHIgfCBOb25lID0gTm9uZQoKCmRlZiBwcmVwYXJlX2NvbnRlbnQodG9waWNzX3BhdGg6IHN0ciB8IFBhdGgsICosIG1pbl9zY29yZTogaW50ID0gMCwgcmVjZW50X3NsdWdzOiBzZXRbc3RyXSB8IE5vbmUgPSBOb25lKSAtPiBQcmVwYXJlZENvbnRlbnQ6CiAgICBzZWxlY3RlZCA9IHNlbGVjdF9iZXN0X3RvcGljKAogICAgICAgIGxvYWRfdG9waWNzX2Zyb21fanNvbih0b3BpY3NfcGF0aCksCiAgICAgICAgcmVjZW50X3NsdWdzPXJlY2VudF9zbHVncyBvciBzZXQoKSwKICAgICAgICBtaW5fc2NvcmU9bWluX3Njb3JlLAogICAgKQogICAgc2NyaXB0ID0gYnVpbGRfcmVlbF9zY3JpcHQoc2VsZWN0ZWQudG9waWMpCiAgICByZXR1cm4gUHJlcGFyZWRDb250ZW50KAogICAgICAgIHRvcGljPXNlbGVjdGVkLnRvcGljLAogICAgICAgIHNjcmlwdD1zY3JpcHQsCiAgICAgICAgY2FwdGlvbj1idWlsZF9jYXB0aW9uKHNlbGVjdGVkLnRvcGljKSwKICAgICAgICBzY29yZT1zZWxlY3RlZC5zY29yZS50b3RhbCwKICAgICkKCgpkZWYgcnVuX29uY2UoCiAgICAqLAogICAgdG9waWNzX3BhdGg6IHN0ciB8IFBhdGgsCiAgICBvdXRwdXRfZGlyOiBzdHIgfCBQYXRoLAogICAgcHJvZHVjdGlvbl9waXBlbGluZSwKICAgIHB1Ymxpc2hfb3JjaGVzdHJhdG9yLAogICAgbGl2ZV9wdWJsaXNoOiBib29sLAogICAgbWluX3Njb3JlOiBpbnQgPSAwLAogICAgZHVyYXRpb25fc2Vjb25kczogZmxvYXQgPSAxNi4wLAogICAgYmFja2dyb3VuZF9tdXNpYzogc3RyIHwgUGF0aCB8IE5vbmUgPSBOb25lLAopIC0+IFJ1blJlc3VsdDoKICAgIHByZXBhcmVkID0gcHJlcGFyZV9jb250ZW50KHRvcGljc19wYXRoLCBtaW5fc2NvcmU9bWluX3Njb3JlKQogICAgcHJvZHVjZWQgPSBwcm9kdWN0aW9uX3BpcGVsaW5lLnByb2R1Y2UoCiAgICAgICAgdG9waWM9cHJlcGFyZWQudG9waWMsCiAgICAgICAgdm9pY2VvdmVyX3RleHQ9cHJlcGFyZWQuc2NyaXB0LnZvaWNlb3ZlciwKICAgICAgICBvdXRwdXRfZGlyPVBhdGgob3V0cHV0X2RpciksCiAgICAgICAgZHVyYXRpb25fc2Vjb25kcz1kdXJhdGlvbl9zZWNvbmRzLAogICAgICAgIGJhY2tncm91bmRfbXVzaWM9UGF0aChiYWNrZ3JvdW5kX211c2ljKSBpZiBiYWNrZ3JvdW5kX211c2ljIGVsc2UgTm9uZSwKICAgICkKCiAgICBpZiBub3QgbGl2ZV9wdWJsaXNoOgogICAgICAgIHJldHVybiBSdW5SZXN1bHQoCiAgICAgICAgICAgIHN0YXR1cz0iZHJ5LXJ1biIsCiAgICAgICAgICAgIHRvcGljX2lkPXByZXBhcmVkLnRvcGljLnRvcGljX2lkLAogICAgICAgICAgICByZWVsX3BhdGg9UGF0aChwcm9kdWNlZC5yZWVsX3BhdGgpLAogICAgICAgICAgICBkcml2ZV9maWxlX2lkPWdldGF0dHIocHJvZHVjZWQsICJkcml2ZV9maWxlX2lkIiwgTm9uZSksCiAgICAgICAgKQoKICAgIHB1Ymxpc2hlZCA9IHB1Ymxpc2hfb3JjaGVzdHJhdG9yLnB1Ymxpc2hfcmVlbCgKICAgICAgICB0b3BpY19pZD1wcmVwYXJlZC50b3BpYy50b3BpY19pZCwKICAgICAgICByZWVsX3BhdGg9cHJvZHVjZWQucmVlbF9wYXRoLAogICAgICAgIGNhcHRpb249cHJlcGFyZWQuY2FwdGlvbiwKICAgICkKICAgIHJldHVybiBSdW5SZXN1bHQoCiAgICAgICAgc3RhdHVzPSJwdWJsaXNoZWQiLAogICAgICAgIHRvcGljX2lkPXByZXBhcmVkLnRvcGljLnRvcGljX2lkLAogICAgICAgIHJlZWxfcGF0aD1QYXRoKHByb2R1Y2VkLnJlZWxfcGF0aCksCiAgICAgICAgbWVkaWFfaWQ9cHVibGlzaGVkLm1lZGlhX2lkLAogICAgICAgIGNvbnRhaW5lcl9pZD1wdWJsaXNoZWQuY29udGFpbmVyX2lkLAogICAgICAgIGRyaXZlX2ZpbGVfaWQ9cHVibGlzaGVkLmRyaXZlX2ZpbGVfaWQsCiAgICApCg==
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import Path
+
+from agent.discover import load_topics_from_json
+from agent.select import select_best_topic
+from content.caption_writer import build_caption
+from content.script_writer import build_reel_script
+from app.models import Topic, ReelScript
+
+
+@dataclass(frozen=True)
+class PreparedContent:
+    topic: Topic
+    script: ReelScript
+    caption: str
+    score: int
+
+
+@dataclass(frozen=True)
+class RunResult:
+    status: str
+    topic_id: str
+    reel_path: Path
+    media_id: str | None = None
+    container_id: str | None = None
+    drive_file_id: str | None = None
+
+
+def prepare_content(topics_path: str | Path, *, min_score: int = 0, recent_slugs: set[str] | None = None) -> PreparedContent:
+    selected = select_best_topic(
+        load_topics_from_json(topics_path),
+        recent_slugs=recent_slugs or set(),
+        min_score=min_score,
+    )
+    script = build_reel_script(selected.topic)
+    return PreparedContent(
+        topic=selected.topic,
+        script=script,
+        caption=build_caption(selected.topic),
+        score=selected.score.total,
+    )
+
+
+def run_once(
+    *,
+    topics_path: str | Path,
+    output_dir: str | Path,
+    production_pipeline,
+    publish_orchestrator,
+    live_publish: bool,
+    min_score: int = 0,
+    duration_seconds: float = 16.0,
+    background_music: str | Path | None = None,
+) -> RunResult:
+    prepared = prepare_content(topics_path, min_score=min_score)
+    produced = production_pipeline.produce(
+        topic=prepared.topic,
+        voiceover_text=prepared.script.voiceover,
+        output_dir=Path(output_dir),
+        duration_seconds=duration_seconds,
+        background_music=Path(background_music) if background_music else None,
+    )
+
+    if not live_publish:
+        return RunResult(
+            status="dry-run",
+            topic_id=prepared.topic.topic_id,
+            reel_path=Path(produced.reel_path),
+            drive_file_id=getattr(produced, "drive_file_id", None),
+        )
+
+    published = publish_orchestrator.publish_reel(
+        topic_id=prepared.topic.topic_id,
+        reel_path=produced.reel_path,
+        caption=prepared.caption,
+    )
+    return RunResult(
+        status="published",
+        topic_id=prepared.topic.topic_id,
+        reel_path=Path(produced.reel_path),
+        media_id=published.media_id,
+        container_id=published.container_id,
+        drive_file_id=published.drive_file_id,
+    )

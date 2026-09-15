@@ -1,1 +1,47 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwpmcm9tIG1lZGlhLm9mZmljaWFsX2Zvb3RhZ2UgaW1wb3J0IE9mZmljaWFsRm9vdGFnZURpc2NvdmVyeSwgU3RlYW1UcmFpbGVyUHJvdmlkZXIsIFlvdVR1YmVPZmZpY2lhbFNlYXJjaAoKCmRlZiB0ZXN0X3N0ZWFtX3Byb3ZpZGVyX2V4dHJhY3RzX2RpcmVjdF9vZmZpY2lhbF90cmFpbGVyX3VybHMoKToKICAgIHBheWxvYWQgPSB7CiAgICAgICAgIjEyMyI6IHsKICAgICAgICAgICAgInN1Y2Nlc3MiOiBUcnVlLAogICAgICAgICAgICAiZGF0YSI6IHsKICAgICAgICAgICAgICAgICJtb3ZpZXMiOiBbCiAgICAgICAgICAgICAgICAgICAgeyJuYW1lIjogIkxhdW5jaCBUcmFpbGVyIiwgIm1wNCI6IHsibWF4IjogImh0dHBzOi8vY2RuLmFrYW1haS5zdGVhbXN0YXRpYy5jb20vdHJhaWxlci5tcDQifX0KICAgICAgICAgICAgICAgIF0KICAgICAgICAgICAgfSwKICAgICAgICB9CiAgICB9CiAgICBwcm92aWRlciA9IFN0ZWFtVHJhaWxlclByb3ZpZGVyKGZldGNoX2pzb249bGFtYmRhIHVybDogcGF5bG9hZCkKICAgIHJlc3VsdHMgPSBwcm92aWRlci5zZWFyY2goMTIzKQogICAgYXNzZXJ0IHJlc3VsdHNbMF0udXJsID09ICJodHRwczovL2Nkbi5ha2FtYWkuc3RlYW1zdGF0aWMuY29tL3RyYWlsZXIubXA0IgogICAgYXNzZXJ0IHJlc3VsdHNbMF0uaXNfb2ZmaWNpYWwgaXMgVHJ1ZQogICAgYXNzZXJ0IHJlc3VsdHNbMF0uc291cmNlX25hbWUgPT0gIlN0ZWFtOiBMYXVuY2ggVHJhaWxlciIKCgpkZWYgdGVzdF95b3V0dWJlX3NlYXJjaF9vbmx5X3F1ZXJpZXNfY29uZmlndXJlZF9vZmZpY2lhbF9jaGFubmVsKCk6CiAgICBjYXB0dXJlZCA9IHt9CiAgICBkZWYgZmFrZV9mZXRjaCh1cmwpOgogICAgICAgIGNhcHR1cmVkWyJ1cmwiXSA9IHVybAogICAgICAgIHJldHVybiB7Iml0ZW1zIjogW3siaWQiOiB7InZpZGVvSWQiOiAiYWJjIn0sICJzbmlwcGV0IjogeyJjaGFubmVsVGl0bGUiOiAiT2ZmaWNpYWwgU3R1ZGlvIn19XX0KCiAgICBwcm92aWRlciA9IFlvdVR1YmVPZmZpY2lhbFNlYXJjaChhcGlfa2V5PSJrZXkiLCBmZXRjaF9qc29uPWZha2VfZmV0Y2gpCiAgICByZXN1bHRzID0gcHJvdmlkZXIuc2VhcmNoKCJFeGFtcGxlIEdhbWUgdHJhaWxlciIsIFsiVUMtb2ZmaWNpYWwiXSkKICAgIGFzc2VydCAiY2hhbm5lbElkPVVDLW9mZmljaWFsIiBpbiBjYXB0dXJlZFsidXJsIl0KICAgIGFzc2VydCByZXN1bHRzWzBdLmlzX29mZmljaWFsIGlzIFRydWUKICAgIGFzc2VydCByZXN1bHRzWzBdLnVybCA9PSAiaHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1hYmMiCgoKZGVmIHRlc3RfZGlzY292ZXJ5X3ByZWZlcnNfZXhwbGljaXRfdGhlbl9zdGVhbV90aGVuX3lvdXR1YmUoKToKICAgIHRvcGljID0gVG9waWMoCiAgICAgICAgdGl0bGU9IkV4YW1wbGUgR2FtZSIsCiAgICAgICAgdXJsPSJodHRwczovL2V4YW1wbGUuY29tL25ld3MiLAogICAgICAgIHNvdXJjZT0iR1EiLAogICAgICAgIG9mZmljaWFsX2Zvb3RhZ2VfdXJsPSJodHRwczovL3B1Ymxpc2hlci5leGFtcGxlL3RyYWlsZXIubXA0IiwKICAgICAgICBzdGVhbV9hcHBfaWQ9MTIzLAogICAgICAgIG9mZmljaWFsX2NoYW5uZWxfaWRzPVsiVUMxIl0sCiAgICApCiAgICBkaXNjb3ZlcnkgPSBPZmZpY2lhbEZvb3RhZ2VEaXNjb3ZlcnkoKQogICAgcmVzdWx0ID0gZGlzY292ZXJ5LmRpc2NvdmVyKHRvcGljKQogICAgYXNzZXJ0IHJlc3VsdFswXS51cmwgPT0gImh0dHBzOi8vcHVibGlzaGVyLmV4YW1wbGUvdHJhaWxlci5tcDQiCg==
+from app.models import Topic
+from media.official_footage import OfficialFootageDiscovery, SteamTrailerProvider, YouTubeOfficialSearch
+
+
+def test_steam_provider_extracts_direct_official_trailer_urls():
+    payload = {
+        "123": {
+            "success": True,
+            "data": {
+                "movies": [
+                    {"name": "Launch Trailer", "mp4": {"max": "https://cdn.akamai.steamstatic.com/trailer.mp4"}}
+                ]
+            },
+        }
+    }
+    provider = SteamTrailerProvider(fetch_json=lambda url: payload)
+    results = provider.search(123)
+    assert results[0].url == "https://cdn.akamai.steamstatic.com/trailer.mp4"
+    assert results[0].is_official is True
+    assert results[0].source_name == "Steam: Launch Trailer"
+
+
+def test_youtube_search_only_queries_configured_official_channel():
+    captured = {}
+    def fake_fetch(url):
+        captured["url"] = url
+        return {"items": [{"id": {"videoId": "abc"}, "snippet": {"channelTitle": "Official Studio"}}]}
+
+    provider = YouTubeOfficialSearch(api_key="key", fetch_json=fake_fetch)
+    results = provider.search("Example Game trailer", ["UC-official"])
+    assert "channelId=UC-official" in captured["url"]
+    assert results[0].is_official is True
+    assert results[0].url == "https://www.youtube.com/watch?v=abc"
+
+
+def test_discovery_prefers_explicit_then_steam_then_youtube():
+    topic = Topic(
+        title="Example Game",
+        url="https://example.com/news",
+        source="GQ",
+        official_footage_url="https://publisher.example/trailer.mp4",
+        steam_app_id=123,
+        official_channel_ids=["UC1"],
+    )
+    discovery = OfficialFootageDiscovery()
+    result = discovery.discover(topic)
+    assert result[0].url == "https://publisher.example/trailer.mp4"

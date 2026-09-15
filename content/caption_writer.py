@@ -1,1 +1,8 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwoKCmRlZiBidWlsZF9jYXB0aW9uKHRvcGljOiBUb3BpYykgLT4gc3RyOgogICAgZnJlZSA9ICJmcmVlLWdhbWUiIGluIHt0Lmxvd2VyKCkgZm9yIHQgaW4gdG9waWMudGFnc30gb3IgImdyYXR1aXQiIGluIHRvcGljLnRpdGxlLmxvd2VyKCkKICAgIGlmIGZyZWU6CiAgICAgICAgcmV0dXJuIGYi8J+OriB7dG9waWMudGl0bGV9XG5cbkdhcmRlIGwnxZNpbCBzdXIgR2FtZXJRdWVzdEZSIHBvdXIgbGVzIHByb2NoYWlucyBqZXV4IGdyYXR1aXRzLiBUdSBsZSByw6ljdXDDqHJlcyA/ICNnYW1pbmcgI2pldXh2aWRlbyIKICAgIHJldHVybiBmIvCfjq4ge3RvcGljLnRpdGxlfVxuXG5MJ2Vzc2VudGllbCBnYW1pbmcgc3VyIEdhbWVyUXVlc3RGUi4gVHUgZW4gcGVuc2VzIHF1b2kgPyAjZ2FtaW5nICNqZXV4dmlkZW8iCg==
+from app.models import Topic
+
+
+def build_caption(topic: Topic) -> str:
+    free = "free-game" in {t.lower() for t in topic.tags} or "gratuit" in topic.title.lower()
+    if free:
+        return f"🎮 {topic.title}\n\nGarde l'œil sur GamerQuestFR pour les prochains jeux gratuits. Tu le récupères ? #gaming #jeuxvideo"
+    return f"🎮 {topic.title}\n\nL'essentiel gaming sur GamerQuestFR. Tu en penses quoi ? #gaming #jeuxvideo"

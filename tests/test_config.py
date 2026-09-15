@@ -1,1 +1,18 @@
-aW1wb3J0IG9zCmZyb20gYXBwLmNvbmZpZyBpbXBvcnQgU2V0dGluZ3MKCmRlZiB0ZXN0X3NldHRpbmdzX2xvYWRfZGVmYXVsdHMobW9ua2V5cGF0Y2gpOgogICAgbW9ua2V5cGF0Y2guZGVsZW52KCdHUV9NQVhfUkVFTFNfUEVSX1dFRUsnLCByYWlzaW5nPUZhbHNlKQogICAgcyA9IFNldHRpbmdzLmZyb21fZW52KCkKICAgIGFzc2VydCBzLm1heF9yZWVsc19wZXJfd2VlayA9PSAzCiAgICBhc3NlcnQgcy5kZWR1cGVfZGF5cyA9PSAzMAogICAgYXNzZXJ0IHMubGFuZ3VhZ2UgPT0gJ2ZyJwoKZGVmIHRlc3Rfc2V0dGluZ3NfbG9hZHNfbWV0YV9wdWJsaXNoaW5nX2NvbmZpZ3VyYXRpb24obW9ua2V5cGF0Y2gpOgogICAgbW9ua2V5cGF0Y2guc2V0ZW52KCdHUV9NRVRBX0FQSV9WRVJTSU9OJywndjI2LjAnKQogICAgbW9ua2V5cGF0Y2guc2V0ZW52KCdHUV9JTlNUQUdSQU1fVVNFUl9JRCcsJzE3ODQxNDAwMDAwMDAwMDAwJykKICAgIG1vbmtleXBhdGNoLnNldGVudignR1FfSU5TVEFHUkFNX0FDQ0VTU19UT0tFTicsJ3Rva2VuLXZhbHVlJykKICAgIHM9U2V0dGluZ3MuZnJvbV9lbnYoKQogICAgYXNzZXJ0IHMubWV0YV9hcGlfdmVyc2lvbj09J3YyNi4wJwogICAgYXNzZXJ0IHMuaW5zdGFncmFtX3VzZXJfaWQ9PScxNzg0MTQwMDAwMDAwMDAwMCcKICAgIGFzc2VydCBzLmluc3RhZ3JhbV9hY2Nlc3NfdG9rZW49PSd0b2tlbi12YWx1ZScK
+import os
+from app.config import Settings
+
+def test_settings_load_defaults(monkeypatch):
+    monkeypatch.delenv('GQ_MAX_REELS_PER_WEEK', raising=False)
+    s = Settings.from_env()
+    assert s.max_reels_per_week == 3
+    assert s.dedupe_days == 30
+    assert s.language == 'fr'
+
+def test_settings_loads_meta_publishing_configuration(monkeypatch):
+    monkeypatch.setenv('GQ_META_API_VERSION','v26.0')
+    monkeypatch.setenv('GQ_INSTAGRAM_USER_ID','17841400000000000')
+    monkeypatch.setenv('GQ_INSTAGRAM_ACCESS_TOKEN','token-value')
+    s=Settings.from_env()
+    assert s.meta_api_version=='v26.0'
+    assert s.instagram_user_id=='17841400000000000'
+    assert s.instagram_access_token=='token-value'

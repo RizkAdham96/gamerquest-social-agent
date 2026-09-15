@@ -1,1 +1,19 @@
-ZnJvbSBhdXRvbWF0aW9uLm1haW4gaW1wb3J0IGVudl9mbGFnLCBidWlsZF9kcml2ZV9zdG9yZQoKCmRlZiB0ZXN0X2Vudl9mbGFnX2FjY2VwdHNfY29tbW9uX3RydWVfdmFsdWVzKG1vbmtleXBhdGNoKToKICAgIG1vbmtleXBhdGNoLnNldGVudignRkxBRycsICd5ZXMnKQogICAgYXNzZXJ0IGVudl9mbGFnKCdGTEFHJykgaXMgVHJ1ZQogICAgbW9ua2V5cGF0Y2guc2V0ZW52KCdGTEFHJywgJ1RSVUUnKQogICAgYXNzZXJ0IGVudl9mbGFnKCdGTEFHJykgaXMgVHJ1ZQoKCmRlZiB0ZXN0X2Vudl9mbGFnX2RlZmF1bHRzX2ZhbHNlKG1vbmtleXBhdGNoKToKICAgIG1vbmtleXBhdGNoLmRlbGVudignRkxBRycsIHJhaXNpbmc9RmFsc2UpCiAgICBhc3NlcnQgZW52X2ZsYWcoJ0ZMQUcnKSBpcyBGYWxzZQoKCmRlZiB0ZXN0X2J1aWxkX2RyaXZlX3N0b3JlX3JldHVybnNfbm9uZV93aXRob3V0X2NyZWRlbnRpYWxzKG1vbmtleXBhdGNoKToKICAgIG1vbmtleXBhdGNoLmRlbGVudignR1FfR09PR0xFX1NFUlZJQ0VfQUNDT1VOVF9GSUxFJywgcmFpc2luZz1GYWxzZSkKICAgIG1vbmtleXBhdGNoLmRlbGVudignR1FfR09PR0xFX0RSSVZFX0FDQ0VTU19UT0tFTicsIHJhaXNpbmc9RmFsc2UpCiAgICBhc3NlcnQgYnVpbGRfZHJpdmVfc3RvcmUoKSBpcyBOb25lCg==
+from automation.main import env_flag, build_drive_store
+
+
+def test_env_flag_accepts_common_true_values(monkeypatch):
+    monkeypatch.setenv('FLAG', 'yes')
+    assert env_flag('FLAG') is True
+    monkeypatch.setenv('FLAG', 'TRUE')
+    assert env_flag('FLAG') is True
+
+
+def test_env_flag_defaults_false(monkeypatch):
+    monkeypatch.delenv('FLAG', raising=False)
+    assert env_flag('FLAG') is False
+
+
+def test_build_drive_store_returns_none_without_credentials(monkeypatch):
+    monkeypatch.delenv('GQ_GOOGLE_SERVICE_ACCOUNT_FILE', raising=False)
+    monkeypatch.delenv('GQ_GOOGLE_DRIVE_ACCESS_TOKEN', raising=False)
+    assert build_drive_store() is None

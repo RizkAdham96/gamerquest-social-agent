@@ -1,1 +1,79 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KaW1wb3J0IG1pbWV0eXBlcwpmcm9tIGRhdGFjbGFzc2VzIGltcG9ydCBkYXRhY2xhc3MKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBQcm90b2NvbApmcm9tIHVybGxpYi5lcnJvciBpbXBvcnQgSFRUUEVycm9yCmZyb20gdXJsbGliLnBhcnNlIGltcG9ydCB1cmxlbmNvZGUKZnJvbSB1cmxsaWIucmVxdWVzdCBpbXBvcnQgUmVxdWVzdCwgdXJsb3BlbgoKCmNsYXNzIEdpdEh1YlN0YWdlVHJhbnNwb3J0KFByb3RvY29sKToKICAgIGRlZiBnZXRfanNvbihzZWxmLCB1cmw6IHN0ciwgaGVhZGVyczogZGljdFtzdHIsIHN0cl0pIC0+IGRpY3Q6IC4uLgogICAgZGVmIHBvc3RfanNvbihzZWxmLCB1cmw6IHN0ciwgaGVhZGVyczogZGljdFtzdHIsIHN0cl0sIHBheWxvYWQ6IGRpY3QpIC0+IGRpY3Q6IC4uLgogICAgZGVmIHVwbG9hZF9iaW5hcnkoc2VsZiwgdXJsOiBzdHIsIGhlYWRlcnM6IGRpY3Rbc3RyLCBzdHJdLCBmaWxlX3BhdGg6IFBhdGgsIGNvbnRlbnRfdHlwZTogc3RyKSAtPiBkaWN0OiAuLi4KICAgIGRlZiBkZWxldGUoc2VsZiwgdXJsOiBzdHIsIGhlYWRlcnM6IGRpY3Rbc3RyLCBzdHJdKSAtPiBOb25lOiAuLi4KCgpjbGFzcyBVcmxsaWJHaXRIdWJTdGFnZVRyYW5zcG9ydDoKICAgIGRlZiBnZXRfanNvbihzZWxmLCB1cmwsIGhlYWRlcnMpOgogICAgICAgIHRyeToKICAgICAgICAgICAgd2l0aCB1cmxvcGVuKFJlcXVlc3QodXJsLCBoZWFkZXJzPWhlYWRlcnMpLCB0aW1lb3V0PTMwKSBhcyByOgogICAgICAgICAgICAgICAgcmV0dXJuIGpzb24ubG9hZHMoci5yZWFkKCkuZGVjb2RlKCkpCiAgICAgICAgZXhjZXB0IEhUVFBFcnJvciBhcyBleGM6CiAgICAgICAgICAgIGlmIGV4Yy5jb2RlID09IDQwNDoKICAgICAgICAgICAgICAgIHJhaXNlIEZpbGVOb3RGb3VuZEVycm9yKHVybCkgZnJvbSBleGMKICAgICAgICAgICAgcmFpc2UKICAgIGRlZiBwb3N0X2pzb24oc2VsZiwgdXJsLCBoZWFkZXJzLCBwYXlsb2FkKToKICAgICAgICByZXE9UmVxdWVzdCh1cmwsZGF0YT1qc29uLmR1bXBzKHBheWxvYWQpLmVuY29kZSgpLGhlYWRlcnM9eyoqaGVhZGVycywnQ29udGVudC1UeXBlJzonYXBwbGljYXRpb24vanNvbid9LG1ldGhvZD0nUE9TVCcpCiAgICAgICAgd2l0aCB1cmxvcGVuKHJlcSwgdGltZW91dD0zMCkgYXMgcjoKICAgICAgICAgICAgcmV0dXJuIGpzb24ubG9hZHMoci5yZWFkKCkuZGVjb2RlKCkpCiAgICBkZWYgdXBsb2FkX2JpbmFyeShzZWxmLCB1cmwsIGhlYWRlcnMsIGZpbGVfcGF0aCwgY29udGVudF90eXBlKToKICAgICAgICByZXE9UmVxdWVzdCh1cmwsZGF0YT1QYXRoKGZpbGVfcGF0aCkucmVhZF9ieXRlcygpLGhlYWRlcnM9eyoqaGVhZGVycywnQ29udGVudC1UeXBlJzpjb250ZW50X3R5cGV9LG1ldGhvZD0nUE9TVCcpCiAgICAgICAgd2l0aCB1cmxvcGVuKHJlcSwgdGltZW91dD0xMjApIGFzIHI6CiAgICAgICAgICAgIHJldHVybiBqc29uLmxvYWRzKHIucmVhZCgpLmRlY29kZSgpKQogICAgZGVmIGRlbGV0ZShzZWxmLCB1cmwsIGhlYWRlcnMpOgogICAgICAgIHdpdGggdXJsb3BlbihSZXF1ZXN0KHVybCxoZWFkZXJzPWhlYWRlcnMsbWV0aG9kPSdERUxFVEUnKSwgdGltZW91dD0zMCk6CiAgICAgICAgICAgIHJldHVybiBOb25lCgoKQGRhdGFjbGFzcyhmcm96ZW49VHJ1ZSkKY2xhc3MgU3RhZ2VkQXNzZXQ6CiAgICBhc3NldF9pZDogaW50CiAgICBwdWJsaWNfdXJsOiBzdHIKCgpjbGFzcyBHaXRIdWJSZWxlYXNlU3RhZ2U6CiAgICBBUEk9J2h0dHBzOi8vYXBpLmdpdGh1Yi5jb20nCiAgICBkZWYgX19pbml0X18oc2VsZiwgKiwgcmVwb3NpdG9yeTogc3RyLCB0b2tlbjogc3RyLCByZWxlYXNlX3RhZzogc3RyPSdncS1tZWRpYS1zdGFnaW5nJywgdHJhbnNwb3J0OiBHaXRIdWJTdGFnZVRyYW5zcG9ydHxOb25lPU5vbmUpOgogICAgICAgIHNlbGYucmVwb3NpdG9yeT1yZXBvc2l0b3J5LnN0cmlwKCk7IHNlbGYudG9rZW49dG9rZW4uc3RyaXAoKTsgc2VsZi5yZWxlYXNlX3RhZz1yZWxlYXNlX3RhZwogICAgICAgIGlmICcvJyBub3QgaW4gc2VsZi5yZXBvc2l0b3J5OiByYWlzZSBWYWx1ZUVycm9yKCdyZXBvc2l0b3J5IG11c3QgYmUgb3duZXIvbmFtZScpCiAgICAgICAgaWYgbm90IHNlbGYudG9rZW46IHJhaXNlIFZhbHVlRXJyb3IoJ3Rva2VuIGlzIHJlcXVpcmVkJykKICAgICAgICBzZWxmLnRyYW5zcG9ydD10cmFuc3BvcnQgb3IgVXJsbGliR2l0SHViU3RhZ2VUcmFuc3BvcnQoKQogICAgQHByb3BlcnR5CiAgICBkZWYgaGVhZGVycyhzZWxmKToKICAgICAgICByZXR1cm4geydBY2NlcHQnOidhcHBsaWNhdGlvbi92bmQuZ2l0aHViK2pzb24nLCdBdXRob3JpemF0aW9uJzpmJ0JlYXJlciB7c2VsZi50b2tlbn0nLCdYLUdpdEh1Yi1BcGktVmVyc2lvbic6JzIwMjYtMDMtMTAnfQogICAgZGVmIF9yZWxlYXNlKHNlbGYpOgogICAgICAgIHVybD1mJ3tzZWxmLkFQSX0vcmVwb3Mve3NlbGYucmVwb3NpdG9yeX0vcmVsZWFzZXMvdGFncy97c2VsZi5yZWxlYXNlX3RhZ30nCiAgICAgICAgdHJ5OgogICAgICAgICAgICByZXR1cm4gc2VsZi50cmFuc3BvcnQuZ2V0X2pzb24odXJsLHNlbGYuaGVhZGVycykKICAgICAgICBleGNlcHQgRmlsZU5vdEZvdW5kRXJyb3I6CiAgICAgICAgICAgIHJldHVybiBzZWxmLnRyYW5zcG9ydC5wb3N0X2pzb24oCiAgICAgICAgICAgICAgICBmJ3tzZWxmLkFQSX0vcmVwb3Mve3NlbGYucmVwb3NpdG9yeX0vcmVsZWFzZXMnLCBzZWxmLmhlYWRlcnMsCiAgICAgICAgICAgICAgICB7J3RhZ19uYW1lJzpzZWxmLnJlbGVhc2VfdGFnLCduYW1lJzonR2FtZXJRdWVzdCB0ZW1wb3JhcnkgbWVkaWEgc3RhZ2luZycsJ2JvZHknOidUZW1wb3JhcnkgYXNzZXRzIGZvciBJbnN0YWdyYW0gcHVibGlzaGluZy4nLCdkcmFmdCc6RmFsc2UsJ3ByZXJlbGVhc2UnOlRydWV9CiAgICAgICAgICAgICkKICAgIGRlZiBzdGFnZShzZWxmLCBmaWxlX3BhdGg6IHN0cnxQYXRoKSAtPiBTdGFnZWRBc3NldDoKICAgICAgICBmaWxlX3BhdGg9UGF0aChmaWxlX3BhdGgpCiAgICAgICAgaWYgbm90IGZpbGVfcGF0aC5pc19maWxlKCk6IHJhaXNlIEZpbGVOb3RGb3VuZEVycm9yKGZpbGVfcGF0aCkKICAgICAgICByZWxlYXNlPXNlbGYuX3JlbGVhc2UoKQogICAgICAgIHVwbG9hZF91cmw9cmVsZWFzZVsndXBsb2FkX3VybCddLnNwbGl0KCd7JywxKVswXQogICAgICAgIHVybD1mInt1cGxvYWRfdXJsfT97dXJsZW5jb2RlKHsnbmFtZSc6ZmlsZV9wYXRoLm5hbWV9KX0iCiAgICAgICAgY29udGVudF90eXBlPW1pbWV0eXBlcy5ndWVzc190eXBlKGZpbGVfcGF0aC5uYW1lKVswXSBvciAnYXBwbGljYXRpb24vb2N0ZXQtc3RyZWFtJwogICAgICAgIGFzc2V0PXNlbGYudHJhbnNwb3J0LnVwbG9hZF9iaW5hcnkodXJsLHNlbGYuaGVhZGVycyxmaWxlX3BhdGgsY29udGVudF90eXBlKQogICAgICAgIGlmIG5vdCBhc3NldC5nZXQoJ2lkJykgb3Igbm90IGFzc2V0LmdldCgnYnJvd3Nlcl9kb3dubG9hZF91cmwnKToKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCdHaXRIdWIgYXNzZXQgdXBsb2FkIHJldHVybmVkIGluY29tcGxldGUgcmVzcG9uc2UnKQogICAgICAgIHJldHVybiBTdGFnZWRBc3NldChpbnQoYXNzZXRbJ2lkJ10pLHN0cihhc3NldFsnYnJvd3Nlcl9kb3dubG9hZF91cmwnXSkpCiAgICBkZWYgY2xlYW51cChzZWxmLCBhc3NldF9pZDogaW50KSAtPiBOb25lOgogICAgICAgIHNlbGYudHJhbnNwb3J0LmRlbGV0ZShmJ3tzZWxmLkFQSX0vcmVwb3Mve3NlbGYucmVwb3NpdG9yeX0vcmVsZWFzZXMvYXNzZXRzL3thc3NldF9pZH0nLHNlbGYuaGVhZGVycykK
+from __future__ import annotations
+
+import json
+import mimetypes
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Protocol
+from urllib.error import HTTPError
+from urllib.parse import urlencode
+from urllib.request import Request, urlopen
+
+
+class GitHubStageTransport(Protocol):
+    def get_json(self, url: str, headers: dict[str, str]) -> dict: ...
+    def post_json(self, url: str, headers: dict[str, str], payload: dict) -> dict: ...
+    def upload_binary(self, url: str, headers: dict[str, str], file_path: Path, content_type: str) -> dict: ...
+    def delete(self, url: str, headers: dict[str, str]) -> None: ...
+
+
+class UrllibGitHubStageTransport:
+    def get_json(self, url, headers):
+        try:
+            with urlopen(Request(url, headers=headers), timeout=30) as r:
+                return json.loads(r.read().decode())
+        except HTTPError as exc:
+            if exc.code == 404:
+                raise FileNotFoundError(url) from exc
+            raise
+    def post_json(self, url, headers, payload):
+        req=Request(url,data=json.dumps(payload).encode(),headers={**headers,'Content-Type':'application/json'},method='POST')
+        with urlopen(req, timeout=30) as r:
+            return json.loads(r.read().decode())
+    def upload_binary(self, url, headers, file_path, content_type):
+        req=Request(url,data=Path(file_path).read_bytes(),headers={**headers,'Content-Type':content_type},method='POST')
+        with urlopen(req, timeout=120) as r:
+            return json.loads(r.read().decode())
+    def delete(self, url, headers):
+        with urlopen(Request(url,headers=headers,method='DELETE'), timeout=30):
+            return None
+
+
+@dataclass(frozen=True)
+class StagedAsset:
+    asset_id: int
+    public_url: str
+
+
+class GitHubReleaseStage:
+    API='https://api.github.com'
+    def __init__(self, *, repository: str, token: str, release_tag: str='gq-media-staging', transport: GitHubStageTransport|None=None):
+        self.repository=repository.strip(); self.token=token.strip(); self.release_tag=release_tag
+        if '/' not in self.repository: raise ValueError('repository must be owner/name')
+        if not self.token: raise ValueError('token is required')
+        self.transport=transport or UrllibGitHubStageTransport()
+    @property
+    def headers(self):
+        return {'Accept':'application/vnd.github+json','Authorization':f'Bearer {self.token}','X-GitHub-Api-Version':'2026-03-10'}
+    def _release(self):
+        url=f'{self.API}/repos/{self.repository}/releases/tags/{self.release_tag}'
+        try:
+            return self.transport.get_json(url,self.headers)
+        except FileNotFoundError:
+            return self.transport.post_json(
+                f'{self.API}/repos/{self.repository}/releases', self.headers,
+                {'tag_name':self.release_tag,'name':'GamerQuest temporary media staging','body':'Temporary assets for Instagram publishing.','draft':False,'prerelease':True}
+            )
+    def stage(self, file_path: str|Path) -> StagedAsset:
+        file_path=Path(file_path)
+        if not file_path.is_file(): raise FileNotFoundError(file_path)
+        release=self._release()
+        upload_url=release['upload_url'].split('{',1)[0]
+        url=f"{upload_url}?{urlencode({'name':file_path.name})}"
+        content_type=mimetypes.guess_type(file_path.name)[0] or 'application/octet-stream'
+        asset=self.transport.upload_binary(url,self.headers,file_path,content_type)
+        if not asset.get('id') or not asset.get('browser_download_url'):
+            raise RuntimeError('GitHub asset upload returned incomplete response')
+        return StagedAsset(int(asset['id']),str(asset['browser_download_url']))
+    def cleanup(self, asset_id: int) -> None:
+        self.transport.delete(f'{self.API}/repos/{self.repository}/releases/assets/{asset_id}',self.headers)

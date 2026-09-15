@@ -1,1 +1,10 @@
-WwogIHsKICAgICJ0aXRsZSI6ICJIYWRlcyBlc3QgZ3JhdHVpdCBwZW5kYW50IDQ4IGhldXJlcyIsCiAgICAidXJsIjogImh0dHBzOi8vZXhhbXBsZS5jb20vaGFkZXMiLAogICAgInNvdXJjZSI6ICJlcGljIiwKICAgICJwdWJsaXNoZWRfYXQiOiAiMjAyNi0wOS0xNFQwODowMDowMCswMDowMCIsCiAgICAib2ZmaWNpYWxfZm9vdGFnZV91cmwiOiAiaHR0cHM6Ly9wdWJsaXNoZXIuZXhhbXBsZS9oYWRlcy1vZmZpY2lhbC5tcDQiLAogICAgInRhZ3MiOiBbImZyZWUtZ2FtZSIsICJwYyJdCiAgfQpdCg==
+[
+  {
+    "title": "Hades est gratuit pendant 48 heures",
+    "url": "https://example.com/hades",
+    "source": "epic",
+    "published_at": "2026-09-14T08:00:00+00:00",
+    "official_footage_url": "https://publisher.example/hades-official.mp4",
+    "tags": ["free-game", "pc"]
+  }
+]

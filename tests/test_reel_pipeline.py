@@ -1,1 +1,31 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gbWVkaWEucmVlbF9waXBlbGluZSBpbXBvcnQgUmVlbFBpcGVsaW5lCgoKY2xhc3MgRmFrZVRUUzoKICAgIGRlZiBzeW50aGVzaXplKHNlbGYsIHRleHQ6IHN0ciwgb3V0cHV0OiBQYXRoKSAtPiBQYXRoOgogICAgICAgIG91dHB1dC5wYXJlbnQubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQogICAgICAgIG91dHB1dC53cml0ZV9ieXRlcyhiImZha2UtYXVkaW8iKQogICAgICAgIHJldHVybiBvdXRwdXQKCgpjbGFzcyBGYWtlQnVpbGRlcjoKICAgIGRlZiBidWlsZChzZWxmLCBzcGVjKToKICAgICAgICBzcGVjLm91dHB1dC5wYXJlbnQubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQogICAgICAgIHNwZWMub3V0cHV0LndyaXRlX2J5dGVzKGIiZmFrZS12aWRlbyIpCiAgICAgICAgcmV0dXJuIHNwZWMub3V0cHV0CgoKZGVmIHRlc3RfcGlwZWxpbmVfd3JpdGVzX3N1YnRpdGxlc19hbmRfcmV0dXJuc19vdXRwdXQodG1wX3BhdGg6IFBhdGgpOgogICAgZm9vdGFnZSA9IHRtcF9wYXRoIC8gImlucHV0Lm1wNCIKICAgIGZvb3RhZ2Uud3JpdGVfYnl0ZXMoYiJjbGlwIikKICAgIHBpcGVsaW5lID0gUmVlbFBpcGVsaW5lKHR0cz1GYWtlVFRTKCksIGJ1aWxkZXI9RmFrZUJ1aWxkZXIoKSkKICAgIG91dHB1dCA9IHBpcGVsaW5lLnJlbmRlcigKICAgICAgICBmb290YWdlPWZvb3RhZ2UsCiAgICAgICAgdm9pY2VvdmVyX3RleHQ9IlVuZSBhbm5vbmNlIEdhbWVyUXVlc3QgYXJyaXZlIG1haW50ZW5hbnQuIiwKICAgICAgICBvdXRwdXRfZGlyPXRtcF9wYXRoIC8gIm91dCIsCiAgICAgICAgZHVyYXRpb25fc2Vjb25kcz02LjAsCiAgICApCiAgICBhc3NlcnQgb3V0cHV0LmV4aXN0cygpCiAgICBhc3NlcnQgKHRtcF9wYXRoIC8gIm91dCIgLyAic3VidGl0bGVzLnNydCIpLmV4aXN0cygpCiAgICBhc3NlcnQgKHRtcF9wYXRoIC8gIm91dCIgLyAidm9pY2Uud2F2IikuZXhpc3RzKCkK
+from pathlib import Path
+from media.reel_pipeline import ReelPipeline
+
+
+class FakeTTS:
+    def synthesize(self, text: str, output: Path) -> Path:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_bytes(b"fake-audio")
+        return output
+
+
+class FakeBuilder:
+    def build(self, spec):
+        spec.output.parent.mkdir(parents=True, exist_ok=True)
+        spec.output.write_bytes(b"fake-video")
+        return spec.output
+
+
+def test_pipeline_writes_subtitles_and_returns_output(tmp_path: Path):
+    footage = tmp_path / "input.mp4"
+    footage.write_bytes(b"clip")
+    pipeline = ReelPipeline(tts=FakeTTS(), builder=FakeBuilder())
+    output = pipeline.render(
+        footage=footage,
+        voiceover_text="Une annonce GamerQuest arrive maintenant.",
+        output_dir=tmp_path / "out",
+        duration_seconds=6.0,
+    )
+    assert output.exists()
+    assert (tmp_path / "out" / "subtitles.srt").exists()
+    assert (tmp_path / "out" / "voice.wav").exists()

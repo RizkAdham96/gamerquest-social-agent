@@ -1,1 +1,94 @@
-aW1wb3J0IGpzb24KZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpmcm9tIGF1dG9tYXRpb24ucnVubmVyIGltcG9ydCBwcmVwYXJlX2NvbnRlbnQsIHJ1bl9vbmNlCgoKY2xhc3MgRmFrZVByb2R1Y2VyOgogICAgZGVmIF9faW5pdF9fKHNlbGYsIHJlZWxfcGF0aDogUGF0aCk6CiAgICAgICAgc2VsZi5yZWVsX3BhdGggPSByZWVsX3BhdGgKICAgICAgICBzZWxmLmNhbGxzID0gW10KCiAgICBkZWYgcHJvZHVjZShzZWxmLCAqKmt3YXJncyk6CiAgICAgICAgc2VsZi5jYWxscy5hcHBlbmQoa3dhcmdzKQogICAgICAgIHJldHVybiB0eXBlKCdQcm9kdWN0aW9uUmVzdWx0JywgKCksIHsKICAgICAgICAgICAgJ3NvdXJjZV9uYW1lJzogJ09mZmljaWFsIHNvdXJjZScsCiAgICAgICAgICAgICdyZWVsX3BhdGgnOiBzZWxmLnJlZWxfcGF0aCwKICAgICAgICAgICAgJ2RyaXZlX2ZpbGVfaWQnOiBOb25lLAogICAgICAgIH0pKCkKCgpjbGFzcyBGYWtlUHVibGlzaGVyOgogICAgZGVmIF9faW5pdF9fKHNlbGYpOgogICAgICAgIHNlbGYuY2FsbHMgPSBbXQoKICAgIGRlZiBwdWJsaXNoX3JlZWwoc2VsZiwgKiprd2FyZ3MpOgogICAgICAgIHNlbGYuY2FsbHMuYXBwZW5kKGt3YXJncykKICAgICAgICByZXR1cm4gdHlwZSgnUHVibGlzaFJlc3VsdCcsICgpLCB7CiAgICAgICAgICAgICdtZWRpYV9pZCc6ICdtZWRpYS0xJywKICAgICAgICAgICAgJ2NvbnRhaW5lcl9pZCc6ICdjb250YWluZXItMScsCiAgICAgICAgICAgICdkcml2ZV9maWxlX2lkJzogJ2RyaXZlLTEnLAogICAgICAgIH0pKCkKCgpkZWYgX3RvcGljc19maWxlKHRtcF9wYXRoOiBQYXRoKSAtPiBQYXRoOgogICAgcCA9IHRtcF9wYXRoIC8gJ3RvcGljcy5qc29uJwogICAgcC53cml0ZV90ZXh0KGpzb24uZHVtcHMoWwogICAgICAgIHsKICAgICAgICAgICAgJ3RpdGxlJzogJ0ZyZWUgZ2FtZSBvZmZpY2lhbCcsCiAgICAgICAgICAgICd1cmwnOiAnaHR0cHM6Ly9leGFtcGxlLmNvbS9mcmVlLWdhbWUnLAogICAgICAgICAgICAnc291cmNlJzogJ3B1Ymxpc2hlcicsCiAgICAgICAgICAgICdvZmZpY2lhbF9mb290YWdlX3VybCc6ICdodHRwczovL2Nkbi5leGFtcGxlLmNvbS90cmFpbGVyLm1wNCcsCiAgICAgICAgICAgICd0YWdzJzogWydmcmVlLWdhbWUnXSwKICAgICAgICAgICAgJ3B1Ymxpc2hlcic6ICdFeGFtcGxlIFN0dWRpbycKICAgICAgICB9CiAgICBdKSwgZW5jb2Rpbmc9J3V0Zi04JykKICAgIHJldHVybiBwCgoKZGVmIHRlc3RfcHJlcGFyZV9jb250ZW50X2J1aWxkc19zZWxlY3RlZF90b3BpY19zY3JpcHRfYW5kX2NhcHRpb24odG1wX3BhdGgpOgogICAgcHJlcGFyZWQgPSBwcmVwYXJlX2NvbnRlbnQoX3RvcGljc19maWxlKHRtcF9wYXRoKSwgbWluX3Njb3JlPTApCiAgICBhc3NlcnQgcHJlcGFyZWQudG9waWMudGl0bGUgPT0gJ0ZyZWUgZ2FtZSBvZmZpY2lhbCcKICAgIGFzc2VydCBwcmVwYXJlZC5zY3JpcHQudm9pY2VvdmVyCiAgICBhc3NlcnQgJ0ZyZWUgZ2FtZSBvZmZpY2lhbCcgaW4gcHJlcGFyZWQuY2FwdGlvbgoKCmRlZiB0ZXN0X3J1bl9vbmNlX2RyeV9ydW5fcHJvZHVjZXNfcmVlbF93aXRob3V0X3B1Ymxpc2hpbmcodG1wX3BhdGgpOgogICAgcmVlbCA9IHRtcF9wYXRoIC8gJ3JlZWwubXA0JwogICAgcmVlbC53cml0ZV9ieXRlcyhiJ3ZpZGVvJykKICAgIHByb2R1Y2VyID0gRmFrZVByb2R1Y2VyKHJlZWwpCiAgICBwdWJsaXNoZXIgPSBGYWtlUHVibGlzaGVyKCkKCiAgICByZXN1bHQgPSBydW5fb25jZSgKICAgICAgICB0b3BpY3NfcGF0aD1fdG9waWNzX2ZpbGUodG1wX3BhdGgpLAogICAgICAgIG91dHB1dF9kaXI9dG1wX3BhdGggLyAnb3V0JywKICAgICAgICBwcm9kdWN0aW9uX3BpcGVsaW5lPXByb2R1Y2VyLAogICAgICAgIHB1Ymxpc2hfb3JjaGVzdHJhdG9yPXB1Ymxpc2hlciwKICAgICAgICBsaXZlX3B1Ymxpc2g9RmFsc2UsCiAgICAgICAgbWluX3Njb3JlPTAsCiAgICApCgogICAgYXNzZXJ0IHJlc3VsdC5zdGF0dXMgPT0gJ2RyeS1ydW4nCiAgICBhc3NlcnQgcmVzdWx0LnJlZWxfcGF0aCA9PSByZWVsCiAgICBhc3NlcnQgcHVibGlzaGVyLmNhbGxzID09IFtdCgoKZGVmIHRlc3RfcnVuX29uY2VfbGl2ZV9wdWJsaXNoX2NhbGxzX29yY2hlc3RyYXRvcih0bXBfcGF0aCk6CiAgICByZWVsID0gdG1wX3BhdGggLyAncmVlbC5tcDQnCiAgICByZWVsLndyaXRlX2J5dGVzKGIndmlkZW8nKQogICAgcHJvZHVjZXIgPSBGYWtlUHJvZHVjZXIocmVlbCkKICAgIHB1Ymxpc2hlciA9IEZha2VQdWJsaXNoZXIoKQoKICAgIHJlc3VsdCA9IHJ1bl9vbmNlKAogICAgICAgIHRvcGljc19wYXRoPV90b3BpY3NfZmlsZSh0bXBfcGF0aCksCiAgICAgICAgb3V0cHV0X2Rpcj10bXBfcGF0aCAvICdvdXQnLAogICAgICAgIHByb2R1Y3Rpb25fcGlwZWxpbmU9cHJvZHVjZXIsCiAgICAgICAgcHVibGlzaF9vcmNoZXN0cmF0b3I9cHVibGlzaGVyLAogICAgICAgIGxpdmVfcHVibGlzaD1UcnVlLAogICAgICAgIG1pbl9zY29yZT0wLAogICAgKQoKICAgIGFzc2VydCByZXN1bHQuc3RhdHVzID09ICdwdWJsaXNoZWQnCiAgICBhc3NlcnQgcmVzdWx0Lm1lZGlhX2lkID09ICdtZWRpYS0xJwogICAgYXNzZXJ0IHB1Ymxpc2hlci5jYWxsc1swXVsndG9waWNfaWQnXQogICAgYXNzZXJ0IHB1Ymxpc2hlci5jYWxsc1swXVsncmVlbF9wYXRoJ10gPT0gcmVlbAo=
+import json
+from pathlib import Path
+
+from automation.runner import prepare_content, run_once
+
+
+class FakeProducer:
+    def __init__(self, reel_path: Path):
+        self.reel_path = reel_path
+        self.calls = []
+
+    def produce(self, **kwargs):
+        self.calls.append(kwargs)
+        return type('ProductionResult', (), {
+            'source_name': 'Official source',
+            'reel_path': self.reel_path,
+            'drive_file_id': None,
+        })()
+
+
+class FakePublisher:
+    def __init__(self):
+        self.calls = []
+
+    def publish_reel(self, **kwargs):
+        self.calls.append(kwargs)
+        return type('PublishResult', (), {
+            'media_id': 'media-1',
+            'container_id': 'container-1',
+            'drive_file_id': 'drive-1',
+        })()
+
+
+def _topics_file(tmp_path: Path) -> Path:
+    p = tmp_path / 'topics.json'
+    p.write_text(json.dumps([
+        {
+            'title': 'Free game official',
+            'url': 'https://example.com/free-game',
+            'source': 'publisher',
+            'official_footage_url': 'https://cdn.example.com/trailer.mp4',
+            'tags': ['free-game'],
+            'publisher': 'Example Studio'
+        }
+    ]), encoding='utf-8')
+    return p
+
+
+def test_prepare_content_builds_selected_topic_script_and_caption(tmp_path):
+    prepared = prepare_content(_topics_file(tmp_path), min_score=0)
+    assert prepared.topic.title == 'Free game official'
+    assert prepared.script.voiceover
+    assert 'Free game official' in prepared.caption
+
+
+def test_run_once_dry_run_produces_reel_without_publishing(tmp_path):
+    reel = tmp_path / 'reel.mp4'
+    reel.write_bytes(b'video')
+    producer = FakeProducer(reel)
+    publisher = FakePublisher()
+
+    result = run_once(
+        topics_path=_topics_file(tmp_path),
+        output_dir=tmp_path / 'out',
+        production_pipeline=producer,
+        publish_orchestrator=publisher,
+        live_publish=False,
+        min_score=0,
+    )
+
+    assert result.status == 'dry-run'
+    assert result.reel_path == reel
+    assert publisher.calls == []
+
+
+def test_run_once_live_publish_calls_orchestrator(tmp_path):
+    reel = tmp_path / 'reel.mp4'
+    reel.write_bytes(b'video')
+    producer = FakeProducer(reel)
+    publisher = FakePublisher()
+
+    result = run_once(
+        topics_path=_topics_file(tmp_path),
+        output_dir=tmp_path / 'out',
+        production_pipeline=producer,
+        publish_orchestrator=publisher,
+        live_publish=True,
+        min_score=0,
+    )
+
+    assert result.status == 'published'
+    assert result.media_id == 'media-1'
+    assert publisher.calls[0]['topic_id']
+    assert publisher.calls[0]['reel_path'] == reel

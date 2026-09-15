@@ -1,1 +1,17 @@
-ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUsIHRpbWVkZWx0YSwgdGltZXpvbmUKZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwpmcm9tIGFnZW50LnNjb3JlIGltcG9ydCBzY29yZV90b3BpYwoKZGVmIHRlc3Rfc2NvcmVfdG9waWNfcmV3YXJkc19mcmVzaF9vZmZpY2lhbF9yZWxldmFudF90b3BpYygpOgogICAgdG9waWMgPSBUb3BpYygKICAgICAgICB0aXRsZT0nR1RBIFZJIG5vdXZlYXUgdHJhaWxlciBvZmZpY2llbCcsCiAgICAgICAgdXJsPSdodHRwczovL3d3dy5yb2Nrc3RhcmdhbWVzLmNvbS9ndGE2JywKICAgICAgICBzb3VyY2U9J3JvY2tzdGFyJywKICAgICAgICBwdWJsaXNoZWRfYXQ9ZGF0ZXRpbWUubm93KHRpbWV6b25lLnV0YykgLSB0aW1lZGVsdGEoaG91cnM9MiksCiAgICAgICAgb2ZmaWNpYWxfZm9vdGFnZV91cmw9J2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9b2ZmaWNpYWwnLAogICAgICAgIHRhZ3M9WydndGEnLCAncm9ja3N0YXInLCAncHM1J10sCiAgICApCiAgICByZXN1bHQgPSBzY29yZV90b3BpYyh0b3BpYykKICAgIGFzc2VydCByZXN1bHQudG90YWwgPj0gNzAKICAgIGFzc2VydCByZXN1bHQuYnJlYWtkb3duWydmcmVzaG5lc3MnXSA+PSAxNQogICAgYXNzZXJ0IHJlc3VsdC5icmVha2Rvd25bJ29mZmljaWFsX2Zvb3RhZ2UnXSA9PSAyMAo=
+from datetime import datetime, timedelta, timezone
+from app.models import Topic
+from agent.score import score_topic
+
+def test_score_topic_rewards_fresh_official_relevant_topic():
+    topic = Topic(
+        title='GTA VI nouveau trailer officiel',
+        url='https://www.rockstargames.com/gta6',
+        source='rockstar',
+        published_at=datetime.now(timezone.utc) - timedelta(hours=2),
+        official_footage_url='https://www.youtube.com/watch?v=official',
+        tags=['gta', 'rockstar', 'ps5'],
+    )
+    result = score_topic(topic)
+    assert result.total >= 70
+    assert result.breakdown['freshness'] >= 15
+    assert result.breakdown['official_footage'] == 20

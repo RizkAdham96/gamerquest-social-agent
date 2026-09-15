@@ -1,1 +1,121 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGpzb24KaW1wb3J0IG1pbWV0eXBlcwppbXBvcnQgb3MKaW1wb3J0IHV1aWQKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gdHlwaW5nIGltcG9ydCBDYWxsYWJsZSwgUHJvdG9jb2wKZnJvbSB1cmxsaWIucmVxdWVzdCBpbXBvcnQgUmVxdWVzdCwgdXJsb3BlbgoKCmNsYXNzIERyaXZlVHJhbnNwb3J0KFByb3RvY29sKToKICAgIGRlZiBwb3N0X2pzb24oc2VsZiwgdXJsOiBzdHIsIHRva2VuOiBzdHIsIHBheWxvYWQ6IGRpY3QpIC0+IGRpY3Q6IC4uLgogICAgZGVmIHBvc3RfbXVsdGlwYXJ0KHNlbGYsIHVybDogc3RyLCB0b2tlbjogc3RyLCBtZXRhZGF0YTogZGljdCwgZmlsZV9wYXRoOiBQYXRoLCBtaW1lX3R5cGU6IHN0cikgLT4gZGljdDogLi4uCgoKY2xhc3MgVXJsbGliRHJpdmVUcmFuc3BvcnQ6CiAgICBkZWYgcG9zdF9qc29uKHNlbGYsIHVybDogc3RyLCB0b2tlbjogc3RyLCBwYXlsb2FkOiBkaWN0KSAtPiBkaWN0OgogICAgICAgIGRhdGEgPSBqc29uLmR1bXBzKHBheWxvYWQpLmVuY29kZSgidXRmLTgiKQogICAgICAgIHJlcXVlc3QgPSBSZXF1ZXN0KAogICAgICAgICAgICB1cmwsCiAgICAgICAgICAgIGRhdGE9ZGF0YSwKICAgICAgICAgICAgbWV0aG9kPSJQT1NUIiwKICAgICAgICAgICAgaGVhZGVycz17CiAgICAgICAgICAgICAgICAiQXV0aG9yaXphdGlvbiI6IGYiQmVhcmVyIHt0b2tlbn0iLAogICAgICAgICAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uOyBjaGFyc2V0PVVURi04IiwKICAgICAgICAgICAgfSwKICAgICAgICApCiAgICAgICAgd2l0aCB1cmxvcGVuKHJlcXVlc3QsIHRpbWVvdXQ9MzApIGFzIHJlc3BvbnNlOgogICAgICAgICAgICByZXR1cm4ganNvbi5sb2FkcyhyZXNwb25zZS5yZWFkKCkuZGVjb2RlKCJ1dGYtOCIpKQoKICAgIGRlZiBwb3N0X211bHRpcGFydChzZWxmLCB1cmw6IHN0ciwgdG9rZW46IHN0ciwgbWV0YWRhdGE6IGRpY3QsIGZpbGVfcGF0aDogUGF0aCwgbWltZV90eXBlOiBzdHIpIC0+IGRpY3Q6CiAgICAgICAgYm91bmRhcnkgPSBmImdxX3t1dWlkLnV1aWQ0KCkuaGV4fSIKICAgICAgICBtZWRpYSA9IGZpbGVfcGF0aC5yZWFkX2J5dGVzKCkKICAgICAgICBjaHVua3MgPSBbCiAgICAgICAgICAgIGYiLS17Ym91bmRhcnl9XHJcbkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vanNvbjsgY2hhcnNldD1VVEYtOFxyXG5cclxuIi5lbmNvZGUoKSwKICAgICAgICAgICAganNvbi5kdW1wcyhtZXRhZGF0YSkuZW5jb2RlKCJ1dGYtOCIpLAogICAgICAgICAgICBmIlxyXG4tLXtib3VuZGFyeX1cclxuQ29udGVudC1UeXBlOiB7bWltZV90eXBlfVxyXG5cclxuIi5lbmNvZGUoKSwKICAgICAgICAgICAgbWVkaWEsCiAgICAgICAgICAgIGYiXHJcbi0te2JvdW5kYXJ5fS0tXHJcbiIuZW5jb2RlKCksCiAgICAgICAgXQogICAgICAgIHJlcXVlc3QgPSBSZXF1ZXN0KAogICAgICAgICAgICB1cmwsCiAgICAgICAgICAgIGRhdGE9YiIiLmpvaW4oY2h1bmtzKSwKICAgICAgICAgICAgbWV0aG9kPSJQT1NUIiwKICAgICAgICAgICAgaGVhZGVycz17CiAgICAgICAgICAgICAgICAiQXV0aG9yaXphdGlvbiI6IGYiQmVhcmVyIHt0b2tlbn0iLAogICAgICAgICAgICAgICAgIkNvbnRlbnQtVHlwZSI6IGYibXVsdGlwYXJ0L3JlbGF0ZWQ7IGJvdW5kYXJ5PXtib3VuZGFyeX0iLAogICAgICAgICAgICB9LAogICAgICAgICkKICAgICAgICB3aXRoIHVybG9wZW4ocmVxdWVzdCwgdGltZW91dD0xMjApIGFzIHJlc3BvbnNlOgogICAgICAgICAgICByZXR1cm4ganNvbi5sb2FkcyhyZXNwb25zZS5yZWFkKCkuZGVjb2RlKCJ1dGYtOCIpKQoKCmNsYXNzIEVudkFjY2Vzc1Rva2VuUHJvdmlkZXI6CiAgICBkZWYgX19pbml0X18oc2VsZiwgZW52X25hbWU6IHN0ciA9ICJHUV9HT09HTEVfRFJJVkVfQUNDRVNTX1RPS0VOIik6CiAgICAgICAgc2VsZi5lbnZfbmFtZSA9IGVudl9uYW1lCgogICAgZGVmIF9fY2FsbF9fKHNlbGYpIC0+IHN0cjoKICAgICAgICB0b2tlbiA9IG9zLmdldGVudihzZWxmLmVudl9uYW1lLCAiIikuc3RyaXAoKQogICAgICAgIGlmIG5vdCB0b2tlbjoKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKGYiTWlzc2luZyB7c2VsZi5lbnZfbmFtZX0iKQogICAgICAgIHJldHVybiB0b2tlbgoKCmNsYXNzIFNlcnZpY2VBY2NvdW50VG9rZW5Qcm92aWRlcjoKICAgICIiIlJlZnJlc2hlcyBhIERyaXZlIHRva2VuIGZyb20gYSBHb29nbGUgc2VydmljZS1hY2NvdW50IEpTT04gZmlsZSB3aGVuIGdvb2dsZS1hdXRoIGlzIGluc3RhbGxlZC4iIiIKCiAgICBkZWYgX19pbml0X18oc2VsZiwgY3JlZGVudGlhbHNfZmlsZTogc3RyIHwgUGF0aCwgc2NvcGVzOiB0dXBsZVtzdHIsIC4uLl0gPSAoImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZHJpdmUuZmlsZSIsKSk6CiAgICAgICAgc2VsZi5jcmVkZW50aWFsc19maWxlID0gc3RyKGNyZWRlbnRpYWxzX2ZpbGUpCiAgICAgICAgc2VsZi5zY29wZXMgPSBzY29wZXMKCiAgICBkZWYgX19jYWxsX18oc2VsZikgLT4gc3RyOgogICAgICAgIHRyeToKICAgICAgICAgICAgZnJvbSBnb29nbGUuYXV0aC50cmFuc3BvcnQucmVxdWVzdHMgaW1wb3J0IFJlcXVlc3QgYXMgR29vZ2xlQXV0aFJlcXVlc3QKICAgICAgICAgICAgZnJvbSBnb29nbGUub2F1dGgyIGltcG9ydCBzZXJ2aWNlX2FjY291bnQKICAgICAgICBleGNlcHQgSW1wb3J0RXJyb3IgYXMgZXhjOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoImdvb2dsZS1hdXRoIGlzIHJlcXVpcmVkIGZvciBzZXJ2aWNlLWFjY291bnQgRHJpdmUgYXV0aCIpIGZyb20gZXhjCiAgICAgICAgY3JlZGVudGlhbHMgPSBzZXJ2aWNlX2FjY291bnQuQ3JlZGVudGlhbHMuZnJvbV9zZXJ2aWNlX2FjY291bnRfZmlsZShzZWxmLmNyZWRlbnRpYWxzX2ZpbGUsIHNjb3Blcz1zZWxmLnNjb3BlcykKICAgICAgICBjcmVkZW50aWFscy5yZWZyZXNoKEdvb2dsZUF1dGhSZXF1ZXN0KCkpCiAgICAgICAgaWYgbm90IGNyZWRlbnRpYWxzLnRva2VuOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoIkdvb2dsZSBhdXRoZW50aWNhdGlvbiBkaWQgbm90IHJldHVybiBhIHRva2VuIikKICAgICAgICByZXR1cm4gY3JlZGVudGlhbHMudG9rZW4KCgpjbGFzcyBEcml2ZVN0b3JlOgogICAgRklMRVNfVVJMID0gImh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2RyaXZlL3YzL2ZpbGVzIgogICAgVVBMT0FEX1VSTCA9ICJodHRwczovL3d3dy5nb29nbGVhcGlzLmNvbS91cGxvYWQvZHJpdmUvdjMvZmlsZXM/dXBsb2FkVHlwZT1tdWx0aXBhcnQiCgogICAgZGVmIF9faW5pdF9fKHNlbGYsIHRva2VuX3Byb3ZpZGVyOiBDYWxsYWJsZVtbXSwgc3RyXSwgdHJhbnNwb3J0OiBEcml2ZVRyYW5zcG9ydCB8IE5vbmUgPSBOb25lKToKICAgICAgICBzZWxmLnRva2VuX3Byb3ZpZGVyID0gdG9rZW5fcHJvdmlkZXIKICAgICAgICBzZWxmLnRyYW5zcG9ydCA9IHRyYW5zcG9ydCBvciBVcmxsaWJEcml2ZVRyYW5zcG9ydCgpCgogICAgZGVmIGNyZWF0ZV9mb2xkZXIoc2VsZiwgbmFtZTogc3RyLCBwYXJlbnRfaWQ6IHN0ciB8IE5vbmUgPSBOb25lKSAtPiBzdHI6CiAgICAgICAgbWV0YWRhdGE6IGRpY3QgPSB7Im5hbWUiOiBuYW1lLCAibWltZVR5cGUiOiAiYXBwbGljYXRpb24vdm5kLmdvb2dsZS1hcHBzLmZvbGRlciJ9CiAgICAgICAgaWYgcGFyZW50X2lkOgogICAgICAgICAgICBtZXRhZGF0YVsicGFyZW50cyJdID0gW3BhcmVudF9pZF0KICAgICAgICByZXNwb25zZSA9IHNlbGYudHJhbnNwb3J0LnBvc3RfanNvbihzZWxmLkZJTEVTX1VSTCwgc2VsZi50b2tlbl9wcm92aWRlcigpLCBtZXRhZGF0YSkKICAgICAgICBmb2xkZXJfaWQgPSByZXNwb25zZS5nZXQoImlkIikKICAgICAgICBpZiBub3QgZm9sZGVyX2lkOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoIkRyaXZlIGZvbGRlciBjcmVhdGlvbiByZXR1cm5lZCBubyBpZCIpCiAgICAgICAgcmV0dXJuIGZvbGRlcl9pZAoKICAgIGRlZiB1cGxvYWRfZmlsZShzZWxmLCBmaWxlX3BhdGg6IFBhdGgsIHBhcmVudF9pZDogc3RyIHwgTm9uZSA9IE5vbmUsIG1pbWVfdHlwZTogc3RyIHwgTm9uZSA9IE5vbmUpIC0+IGRpY3Q6CiAgICAgICAgZmlsZV9wYXRoID0gUGF0aChmaWxlX3BhdGgpCiAgICAgICAgaWYgbm90IGZpbGVfcGF0aC5pc19maWxlKCk6CiAgICAgICAgICAgIHJhaXNlIEZpbGVOb3RGb3VuZEVycm9yKGZpbGVfcGF0aCkKICAgICAgICBtZXRhZGF0YTogZGljdCA9IHsibmFtZSI6IGZpbGVfcGF0aC5uYW1lfQogICAgICAgIGlmIHBhcmVudF9pZDoKICAgICAgICAgICAgbWV0YWRhdGFbInBhcmVudHMiXSA9IFtwYXJlbnRfaWRdCiAgICAgICAgcmVzb2x2ZWRfbWltZSA9IG1pbWVfdHlwZSBvciBtaW1ldHlwZXMuZ3Vlc3NfdHlwZShmaWxlX3BhdGgubmFtZSlbMF0gb3IgImFwcGxpY2F0aW9uL29jdGV0LXN0cmVhbSIKICAgICAgICByZXNwb25zZSA9IHNlbGYudHJhbnNwb3J0LnBvc3RfbXVsdGlwYXJ0KAogICAgICAgICAgICBzZWxmLlVQTE9BRF9VUkwsCiAgICAgICAgICAgIHNlbGYudG9rZW5fcHJvdmlkZXIoKSwKICAgICAgICAgICAgbWV0YWRhdGEsCiAgICAgICAgICAgIGZpbGVfcGF0aCwKICAgICAgICAgICAgcmVzb2x2ZWRfbWltZSwKICAgICAgICApCiAgICAgICAgaWYgbm90IHJlc3BvbnNlLmdldCgiaWQiKToKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCJEcml2ZSB1cGxvYWQgcmV0dXJuZWQgbm8gaWQiKQogICAgICAgIHJldHVybiByZXNwb25zZQo=
+from __future__ import annotations
+
+import json
+import mimetypes
+import os
+import uuid
+from pathlib import Path
+from typing import Callable, Protocol
+from urllib.request import Request, urlopen
+
+
+class DriveTransport(Protocol):
+    def post_json(self, url: str, token: str, payload: dict) -> dict: ...
+    def post_multipart(self, url: str, token: str, metadata: dict, file_path: Path, mime_type: str) -> dict: ...
+
+
+class UrllibDriveTransport:
+    def post_json(self, url: str, token: str, payload: dict) -> dict:
+        data = json.dumps(payload).encode("utf-8")
+        request = Request(
+            url,
+            data=data,
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+        )
+        with urlopen(request, timeout=30) as response:
+            return json.loads(response.read().decode("utf-8"))
+
+    def post_multipart(self, url: str, token: str, metadata: dict, file_path: Path, mime_type: str) -> dict:
+        boundary = f"gq_{uuid.uuid4().hex}"
+        media = file_path.read_bytes()
+        chunks = [
+            f"--{boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n".encode(),
+            json.dumps(metadata).encode("utf-8"),
+            f"\r\n--{boundary}\r\nContent-Type: {mime_type}\r\n\r\n".encode(),
+            media,
+            f"\r\n--{boundary}--\r\n".encode(),
+        ]
+        request = Request(
+            url,
+            data=b"".join(chunks),
+            method="POST",
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Content-Type": f"multipart/related; boundary={boundary}",
+            },
+        )
+        with urlopen(request, timeout=120) as response:
+            return json.loads(response.read().decode("utf-8"))
+
+
+class EnvAccessTokenProvider:
+    def __init__(self, env_name: str = "GQ_GOOGLE_DRIVE_ACCESS_TOKEN"):
+        self.env_name = env_name
+
+    def __call__(self) -> str:
+        token = os.getenv(self.env_name, "").strip()
+        if not token:
+            raise RuntimeError(f"Missing {self.env_name}")
+        return token
+
+
+class ServiceAccountTokenProvider:
+    """Refreshes a Drive token from a Google service-account JSON file when google-auth is installed."""
+
+    def __init__(self, credentials_file: str | Path, scopes: tuple[str, ...] = ("https://www.googleapis.com/auth/drive.file",)):
+        self.credentials_file = str(credentials_file)
+        self.scopes = scopes
+
+    def __call__(self) -> str:
+        try:
+            from google.auth.transport.requests import Request as GoogleAuthRequest
+            from google.oauth2 import service_account
+        except ImportError as exc:
+            raise RuntimeError("google-auth is required for service-account Drive auth") from exc
+        credentials = service_account.Credentials.from_service_account_file(self.credentials_file, scopes=self.scopes)
+        credentials.refresh(GoogleAuthRequest())
+        if not credentials.token:
+            raise RuntimeError("Google authentication did not return a token")
+        return credentials.token
+
+
+class DriveStore:
+    FILES_URL = "https://www.googleapis.com/drive/v3/files"
+    UPLOAD_URL = "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart"
+
+    def __init__(self, token_provider: Callable[[], str], transport: DriveTransport | None = None):
+        self.token_provider = token_provider
+        self.transport = transport or UrllibDriveTransport()
+
+    def create_folder(self, name: str, parent_id: str | None = None) -> str:
+        metadata: dict = {"name": name, "mimeType": "application/vnd.google-apps.folder"}
+        if parent_id:
+            metadata["parents"] = [parent_id]
+        response = self.transport.post_json(self.FILES_URL, self.token_provider(), metadata)
+        folder_id = response.get("id")
+        if not folder_id:
+            raise RuntimeError("Drive folder creation returned no id")
+        return folder_id
+
+    def upload_file(self, file_path: Path, parent_id: str | None = None, mime_type: str | None = None) -> dict:
+        file_path = Path(file_path)
+        if not file_path.is_file():
+            raise FileNotFoundError(file_path)
+        metadata: dict = {"name": file_path.name}
+        if parent_id:
+            metadata["parents"] = [parent_id]
+        resolved_mime = mime_type or mimetypes.guess_type(file_path.name)[0] or "application/octet-stream"
+        response = self.transport.post_multipart(
+            self.UPLOAD_URL,
+            self.token_provider(),
+            metadata,
+            file_path,
+            resolved_mime,
+        )
+        if not response.get("id"):
+            raise RuntimeError("Drive upload returned no id")
+        return response

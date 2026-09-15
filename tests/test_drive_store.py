@@ -1,1 +1,27 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpmcm9tIHN0b3JhZ2UuZHJpdmVfc3RvcmUgaW1wb3J0IERyaXZlU3RvcmUKCgpkZWYgdGVzdF9kcml2ZV9zdG9yZV9jcmVhdGVzX2ZvbGRlcl9hbmRfdXBsb2Fkc19maWxlKHRtcF9wYXRoKToKICAgIGNhbGxzID0gW10KCiAgICBjbGFzcyBGYWtlVHJhbnNwb3J0OgogICAgICAgIGRlZiBwb3N0X2pzb24oc2VsZiwgdXJsLCB0b2tlbiwgcGF5bG9hZCk6CiAgICAgICAgICAgIGNhbGxzLmFwcGVuZCgoImpzb24iLCB1cmwsIHBheWxvYWQpKQogICAgICAgICAgICByZXR1cm4geyJpZCI6ICJmb2xkZXIxMjMifQoKICAgICAgICBkZWYgcG9zdF9tdWx0aXBhcnQoc2VsZiwgdXJsLCB0b2tlbiwgbWV0YWRhdGEsIGZpbGVfcGF0aCwgbWltZV90eXBlKToKICAgICAgICAgICAgY2FsbHMuYXBwZW5kKCgibXVsdGlwYXJ0IiwgdXJsLCBtZXRhZGF0YSwgZmlsZV9wYXRoLm5hbWUsIG1pbWVfdHlwZSkpCiAgICAgICAgICAgIHJldHVybiB7ImlkIjogImZpbGUxMjMiLCAibmFtZSI6IGZpbGVfcGF0aC5uYW1lfQoKICAgIGZpbGVfcGF0aCA9IHRtcF9wYXRoIC8gInJlZWwubXA0IgogICAgZmlsZV9wYXRoLndyaXRlX2J5dGVzKGIidmlkZW8iKQogICAgc3RvcmUgPSBEcml2ZVN0b3JlKHRva2VuX3Byb3ZpZGVyPWxhbWJkYTogInRva2VuIiwgdHJhbnNwb3J0PUZha2VUcmFuc3BvcnQoKSkKICAgIGZvbGRlcl9pZCA9IHN0b3JlLmNyZWF0ZV9mb2xkZXIoIlB1Ymxpc2hlZCIsIHBhcmVudF9pZD0icm9vdDEyMyIpCiAgICB1cGxvYWRlZCA9IHN0b3JlLnVwbG9hZF9maWxlKGZpbGVfcGF0aCwgcGFyZW50X2lkPWZvbGRlcl9pZCwgbWltZV90eXBlPSJ2aWRlby9tcDQiKQoKICAgIGFzc2VydCBmb2xkZXJfaWQgPT0gImZvbGRlcjEyMyIKICAgIGFzc2VydCB1cGxvYWRlZFsiaWQiXSA9PSAiZmlsZTEyMyIKICAgIGFzc2VydCBjYWxsc1swXVsyXVsibWltZVR5cGUiXSA9PSAiYXBwbGljYXRpb24vdm5kLmdvb2dsZS1hcHBzLmZvbGRlciIKICAgIGFzc2VydCBjYWxsc1sxXVsyXVsicGFyZW50cyJdID09IFsiZm9sZGVyMTIzIl0K
+from pathlib import Path
+
+from storage.drive_store import DriveStore
+
+
+def test_drive_store_creates_folder_and_uploads_file(tmp_path):
+    calls = []
+
+    class FakeTransport:
+        def post_json(self, url, token, payload):
+            calls.append(("json", url, payload))
+            return {"id": "folder123"}
+
+        def post_multipart(self, url, token, metadata, file_path, mime_type):
+            calls.append(("multipart", url, metadata, file_path.name, mime_type))
+            return {"id": "file123", "name": file_path.name}
+
+    file_path = tmp_path / "reel.mp4"
+    file_path.write_bytes(b"video")
+    store = DriveStore(token_provider=lambda: "token", transport=FakeTransport())
+    folder_id = store.create_folder("Published", parent_id="root123")
+    uploaded = store.upload_file(file_path, parent_id=folder_id, mime_type="video/mp4")
+
+    assert folder_id == "folder123"
+    assert uploaded["id"] == "file123"
+    assert calls[0][2]["mimeType"] == "application/vnd.google-apps.folder"
+    assert calls[1][2]["parents"] == ["folder123"]

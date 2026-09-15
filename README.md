@@ -1,1 +1,87 @@
-IyBHYW1lclF1ZXN0IFNvY2lhbCBBZ2VudAoKU3RhbmRhbG9uZSBJbnN0YWdyYW0gZ3Jvd3RoIGF1dG9tYXRpb24gZm9yIEdhbWVyUXVlc3RGUi4gVGhpcyByZXBvc2l0b3J5IGlzIGludGVudGlvbmFsbHkgaXNvbGF0ZWQgZnJvbSB0aGUgZXhpc3RpbmcgY2Fyb3VzZWwgYXV0b21hdGlvbi4KCiMjIFNwcmludCAxCgpJbXBsZW1lbnRlZCBmb3VuZGF0aW9uczoKLSBlbnZpcm9ubWVudC1iYXNlZCBjb25maWd1cmF0aW9uCi0gdG9waWMgbW9kZWwgYW5kIEpTT04gaW50YWtlCi0gZGV0ZXJtaW5pc3RpYyB0b3BpYyBzY29yaW5nCi0gZHVwbGljYXRlLXRvcGljIG1lbW9yeQotIGJlc3QtdG9waWMgc2VsZWN0aW9uIHJlcXVpcmluZyBvZmZpY2lhbCBmb290YWdlCi0gRnJlbmNoIFJlZWwgc2NyaXB0IGFuZCBjYXB0aW9uIGdlbmVyYXRpb24KLSBDTEkgcHJldmlldyBjb21tYW5kCgojIyBQcmV2aWV3CgpgYGBiYXNoCnB5dGhvbiAtbSBhcHAubWFpbiB0b3BpY3MuanNvbgpgYGAKCkV4YW1wbGUgYHRvcGljcy5qc29uYDoKCmBgYGpzb24KWwogIHsKICAgICJ0aXRsZSI6ICJIYWRlcyBlc3QgZ3JhdHVpdCBwZW5kYW50IDQ4IGhldXJlcyIsCiAgICAidXJsIjogImh0dHBzOi8vZXhhbXBsZS5jb20vaGFkZXMiLAogICAgInNvdXJjZSI6ICJlcGljIiwKICAgICJvZmZpY2lhbF9mb290YWdlX3VybCI6ICJodHRwczovL3B1Ymxpc2hlci5leGFtcGxlL3ZpZGVvLm1wNCIsCiAgICAidGFncyI6IFsiZnJlZS1nYW1lIl0KICB9Cl0KYGBgCgojIyBTcHJpbnQgMiDigJQgUmVlbCBnZW5lcmF0aW9uIGxheWVyCgpTcHJpbnQgMiBhZGRzIHRoZSBmaXJzdCBjb21wbGV0ZSBsb2NhbCBSZWVsLWdlbmVyYXRpb24gcGF0aDoKCi0gb2ZmaWNpYWwtc291cmNlIGZvb3RhZ2UgY2FuZGlkYXRlIHZhbGlkYXRpb24KLSBvZmZpY2lhbCBmb290YWdlIGNhbmRpZGF0ZSBzZWxlY3Rpb24KLSBGcmVuY2ggc3VidGl0bGUgc2VnbWVudGF0aW9uIGFuZCBTUlQgZXhwb3J0Ci0gZnJlZSBvZmZsaW5lIEZyZW5jaCBUVFMgZmFsbGJhY2sgdGhyb3VnaCBgZXNwZWFrYAotIEZGbXBlZyB2ZXJ0aWNhbCA5OjE2IHJlbmRlcmluZyAoMTA4MHgxOTIwLCBILjI2NC9BQUMpCi0gb3B0aW9uYWwgYmFja2dyb3VuZC1tdXNpYyBtaXhpbmcKLSByZXVzYWJsZSBgUmVlbFBpcGVsaW5lYCB0aGF0IHRpZXMgbmFycmF0aW9uLCBzdWJ0aXRsZXMgYW5kIHJlbmRlcmluZyB0b2dldGhlcgoKIyMjIExvY2FsIHJlbmRlciBleGFtcGxlCgpgYGBweXRob24KZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gbWVkaWEucmVlbF9waXBlbGluZSBpbXBvcnQgUmVlbFBpcGVsaW5lCgpSZWVsUGlwZWxpbmUoKS5yZW5kZXIoCiAgICBmb290YWdlPVBhdGgoImlucHV0Lm1wNCIpLAogICAgdm9pY2VvdmVyX3RleHQ9IlRvbiB0ZXh0ZSBmcmFuw6dhaXMgaWNpLiIsCiAgICBvdXRwdXRfZGlyPVBhdGgoIm91dHB1dCIpLAogICAgZHVyYXRpb25fc2Vjb25kcz0xNS4wLAopCmBgYAoKYG91dHB1dC9gIHdpbGwgY29udGFpbiBgdm9pY2Uud2F2YCwgYHN1YnRpdGxlcy5zcnRgLCBhbmQgYHJlZWwubXA0YC4KClRoZSBvZmZsaW5lIGBlc3BlYWtgIHZvaWNlIGlzIGludGVudGlvbmFsbHkgYSB6ZXJvLWNvc3QgZmFsbGJhY2suIEEgaGlnaGVyLXF1YWxpdHkgbmV1cmFsL0FJIEZyZW5jaCBUVFMgcHJvdmlkZXIgY2FuIHBsdWcgaW50byB0aGUgc2FtZSBgVFRTUHJvdmlkZXJgIGludGVyZmFjZSB3aXRob3V0IGNoYW5naW5nIHRoZSBSZWVsIGJ1aWxkZXIuCgojIyBTcHJpbnQgMyBhZGRpdGlvbnMKClNwcmludCAzIGFkZHMgcHJvZHVjdGlvbiBpbnRlZ3JhdGlvbnM6IG9mZmljaWFsLWZvb3RhZ2UgZGlzY292ZXJ5LCBkaXJlY3Qgb2ZmaWNpYWwtbWVkaWEgZG93bmxvYWRzLCBuYXR1cmFsIEZyZW5jaCBFZGdlIFRUUyB3aXRoIGFuIG9mZmxpbmUgZmFsbGJhY2ssIEdvb2dsZSBEcml2ZSB1cGxvYWRzLCBhbmQgYSBzaW5nbGUgYFJlZWxQcm9kdWN0aW9uUGlwZWxpbmVgIHRoYXQgam9pbnMgdGhlIG1lZGlhIHN0ZXBzIHRvZ2V0aGVyLgoKRm9yIHVuYXR0ZW5kZWQgRHJpdmUgam9icywgcHJlZmVyIGEgc2VydmljZSBhY2NvdW50IG9yIGFub3RoZXIgcmVuZXdhYmxlIGNyZWRlbnRpYWwgZmxvdyByYXRoZXIgdGhhbiBjb21taXR0aW5nIGFjY2VzcyB0b2tlbnMuIE5ldmVyIGNvbW1pdCBjcmVkZW50aWFscyB0byB0aGlzIHJlcG9zaXRvcnkuCgoKIyMgU3ByaW50IDQgYWRkaXRpb25zCgpTcHJpbnQgNCBhZGRzIE1ldGEvSW5zdGFncmFtIFJlZWwgcHVibGlzaGluZzogY29udGFpbmVyIGNyZWF0aW9uLCBzdGF0dXMgcG9sbGluZywgZmluYWwgcHVibGlzaGluZywgbG9jYWwgcHVibGlzaCBsb2dnaW5nLCBkdXBsaWNhdGUtdG9waWMgcHJvdGVjdGlvbiwgYW5kIHRoZSByb2xsaW5nIDMtUmVlbHMtcGVyLXdlZWsgZ3VhcmQuCgpNZXRhIG11c3QgYmUgYWJsZSB0byBmZXRjaCB0aGUgUmVlbCBmcm9tIGEgcHVibGljbHkgYWNjZXNzaWJsZSBgdmlkZW9fdXJsYC4gR29vZ2xlIERyaXZlIHJlbWFpbnMgdGhlIGFyY2hpdmFsIHN0b3JlOyBkbyBub3QgYXNzdW1lIGEgcHJpdmF0ZSBEcml2ZSBsaW5rIGlzIGEgdmFsaWQgTWV0YSBpbmdlc3Rpb24gVVJMLiBTZWUgYFNQUklOVDQubWRgLgoKCiMjIFNwcmludCA1IGFkZGl0aW9ucwoKU3ByaW50IDUgY2xvc2VzIE1ldGEncyBwdWJsaWMtbWVkaWEgVVJMIHJlcXVpcmVtZW50IHdpdGggYSB0ZW1wb3JhcnkgR2l0SHViIFJlbGVhc2Ugc3RhZ2luZyBhc3NldC4gVGhlIE1QNCBpcyBzdGFnZWQgcHVibGljbHksIHB1Ymxpc2hlZCB0byBJbnN0YWdyYW0sIGFyY2hpdmVkIHBlcm1hbmVudGx5IGluIEdvb2dsZSBEcml2ZSwgdGhlbiByZW1vdmVkIGZyb20gR2l0SHViLiBTZWUgYFNQUklOVDUubWRgLgoKCiMjIFNwcmludCA2IOKAlCBzY2hlZHVsZWQgYXV0b21hdGlvbgoKVGhlIHN0YW5kYWxvbmUgYWdlbnQgbm93IGluY2x1ZGVzIGAuZ2l0aHViL3dvcmtmbG93cy9zb2NpYWwtYWdlbnQueW1sYCwgYSBNb25kYXkvV2VkbmVzZGF5L0ZyaWRheSBHaXRIdWIgQWN0aW9ucyB3b3JrZmxvdy4gSXQgZGVmYXVsdHMgdG8gZHJ5LXJ1biBtb2RlLCBydW5zIHRlc3RzIGZpcnN0LCByZW5kZXJzIGEgUmVlbCwgYW5kIHNhdmVzIHRoZSBvdXRwdXQgYXMgYW4gQWN0aW9ucyBhcnRpZmFjdC4gTGl2ZSBwdWJsaXNoaW5nIGlzIGVuYWJsZWQgb25seSB3aXRoIGBHUV9MSVZFX1BVQkxJU0g9dHJ1ZWAgcGx1cyB0aGUgcmVxdWlyZWQgTWV0YS9Ecml2ZSBjb25maWd1cmF0aW9uLiBTZWUgYFNQUklOVDYubWRgLgo=
+# GamerQuest Social Agent
+
+Standalone Instagram growth automation for GamerQuestFR. This repository is intentionally isolated from the existing carousel automation.
+
+## Sprint 1
+
+Implemented foundations:
+- environment-based configuration
+- topic model and JSON intake
+- deterministic topic scoring
+- duplicate-topic memory
+- best-topic selection requiring official footage
+- French Reel script and caption generation
+- CLI preview command
+
+## Preview
+
+```bash
+python -m app.main topics.json
+```
+
+Example `topics.json`:
+
+```json
+[
+  {
+    "title": "Hades est gratuit pendant 48 heures",
+    "url": "https://example.com/hades",
+    "source": "epic",
+    "official_footage_url": "https://publisher.example/video.mp4",
+    "tags": ["free-game"]
+  }
+]
+```
+
+## Sprint 2 — Reel generation layer
+
+Sprint 2 adds the first complete local Reel-generation path:
+
+- official-source footage candidate validation
+- official footage candidate selection
+- French subtitle segmentation and SRT export
+- free offline French TTS fallback through `espeak`
+- FFmpeg vertical 9:16 rendering (1080x1920, H.264/AAC)
+- optional background-music mixing
+- reusable `ReelPipeline` that ties narration, subtitles and rendering together
+
+### Local render example
+
+```python
+from pathlib import Path
+from media.reel_pipeline import ReelPipeline
+
+ReelPipeline().render(
+    footage=Path("input.mp4"),
+    voiceover_text="Ton texte français ici.",
+    output_dir=Path("output"),
+    duration_seconds=15.0,
+)
+```
+
+`output/` will contain `voice.wav`, `subtitles.srt`, and `reel.mp4`.
+
+The offline `espeak` voice is intentionally a zero-cost fallback. A higher-quality neural/AI French TTS provider can plug into the same `TTSProvider` interface without changing the Reel builder.
+
+## Sprint 3 additions
+
+Sprint 3 adds production integrations: official-footage discovery, direct official-media downloads, natural French Edge TTS with an offline fallback, Google Drive uploads, and a single `ReelProductionPipeline` that joins the media steps together.
+
+For unattended Drive jobs, prefer a service account or another renewable credential flow rather than committing access tokens. Never commit credentials to this repository.
+
+
+## Sprint 4 additions
+
+Sprint 4 adds Meta/Instagram Reel publishing: container creation, status polling, final publishing, local publish logging, duplicate-topic protection, and the rolling 3-Reels-per-week guard.
+
+Meta must be able to fetch the Reel from a publicly accessible `video_url`. Google Drive remains the archival store; do not assume a private Drive link is a valid Meta ingestion URL. See `SPRINT4.md`.
+
+
+## Sprint 5 additions
+
+Sprint 5 closes Meta's public-media URL requirement with a temporary GitHub Release staging asset. The MP4 is staged publicly, published to Instagram, archived permanently in Google Drive, then removed from GitHub. See `SPRINT5.md`.
+
+
+## Sprint 6 — scheduled automation
+
+The standalone agent now includes `.github/workflows/social-agent.yml`, a Monday/Wednesday/Friday GitHub Actions workflow. It defaults to dry-run mode, runs tests first, renders a Reel, and saves the output as an Actions artifact. Live publishing is enabled only with `GQ_LIVE_PUBLISH=true` plus the required Meta/Drive configuration. See `SPRINT6.md`.

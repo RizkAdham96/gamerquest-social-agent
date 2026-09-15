@@ -1,1 +1,73 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lLCB0aW1lZGVsdGEsIHRpbWV6b25lCgpmcm9tIHN0b3JhZ2UucHVibGlzaF9sb2cgaW1wb3J0IFB1Ymxpc2hMb2cKCgpjbGFzcyBEdXBsaWNhdGVQdWJsaXNoRXJyb3IoUnVudGltZUVycm9yKToKICAgIHBhc3MKCgpjbGFzcyBXZWVrbHlMaW1pdEVycm9yKFJ1bnRpbWVFcnJvcik6CiAgICBwYXNzCgoKQGRhdGFjbGFzcyhmcm96ZW49VHJ1ZSkKY2xhc3MgUHVibGlzaFJlc3VsdDoKICAgIHRvcGljX2lkOiBzdHIKICAgIGNvbnRhaW5lcl9pZDogc3RyCiAgICBtZWRpYV9pZDogc3RyCiAgICBtZWRpYV91cmw6IHN0cgogICAgcHVibGlzaGVkX2F0OiBkYXRldGltZQoKCmNsYXNzIEluc3RhZ3JhbVB1Ymxpc2hQaXBlbGluZToKICAgIGRlZiBfX2luaXRfXyhzZWxmLCAqLCBwdWJsaXNoZXIsIHB1Ymxpc2hfbG9nOiBQdWJsaXNoTG9nLCBtYXhfcmVlbHNfcGVyX3dlZWs6IGludCA9IDMpOgogICAgICAgIGlmIG1heF9yZWVsc19wZXJfd2VlayA8IDE6CiAgICAgICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoIm1heF9yZWVsc19wZXJfd2VlayBtdXN0IGJlID49IDEiKQogICAgICAgIHNlbGYucHVibGlzaGVyID0gcHVibGlzaGVyCiAgICAgICAgc2VsZi5wdWJsaXNoX2xvZyA9IHB1Ymxpc2hfbG9nCiAgICAgICAgc2VsZi5tYXhfcmVlbHNfcGVyX3dlZWsgPSBtYXhfcmVlbHNfcGVyX3dlZWsKCiAgICBkZWYgcHVibGlzaCgKICAgICAgICBzZWxmLAogICAgICAgICosCiAgICAgICAgdG9waWNfaWQ6IHN0ciwKICAgICAgICBtZWRpYV91cmw6IHN0ciwKICAgICAgICBjYXB0aW9uOiBzdHIsCiAgICAgICAgbm93OiBkYXRldGltZSB8IE5vbmUgPSBOb25lLAogICAgICAgIHNoYXJlX3RvX2ZlZWQ6IGJvb2wgPSBUcnVlLAogICAgKSAtPiBQdWJsaXNoUmVzdWx0OgogICAgICAgIG5vdyA9IG5vdyBvciBkYXRldGltZS5ub3codGltZXpvbmUudXRjKQogICAgICAgIGlmIG5vdy50emluZm8gaXMgTm9uZToKICAgICAgICAgICAgbm93ID0gbm93LnJlcGxhY2UodHppbmZvPXRpbWV6b25lLnV0YykKCiAgICAgICAgaWYgc2VsZi5wdWJsaXNoX2xvZy5oYXNfdG9waWModG9waWNfaWQpOgogICAgICAgICAgICByYWlzZSBEdXBsaWNhdGVQdWJsaXNoRXJyb3IoZiJ0b3BpYyB7dG9waWNfaWR9IGhhcyBhbHJlYWR5IGJlZW4gcHVibGlzaGVkIikKCiAgICAgICAgaWYgc2VsZi5wdWJsaXNoX2xvZy5jb3VudF9zaW5jZShub3cgLSB0aW1lZGVsdGEoZGF5cz03KSkgPj0gc2VsZi5tYXhfcmVlbHNfcGVyX3dlZWs6CiAgICAgICAgICAgIHJhaXNlIFdlZWtseUxpbWl0RXJyb3IoZiJ3ZWVrbHkgUmVlbCBsaW1pdCBvZiB7c2VsZi5tYXhfcmVlbHNfcGVyX3dlZWt9IHJlYWNoZWQiKQoKICAgICAgICBjb250YWluZXJfaWQgPSBzZWxmLnB1Ymxpc2hlci5jcmVhdGVfcmVlbF9jb250YWluZXIoCiAgICAgICAgICAgIG1lZGlhX3VybCwKICAgICAgICAgICAgY2FwdGlvbiwKICAgICAgICAgICAgc2hhcmVfdG9fZmVlZD1zaGFyZV90b19mZWVkLAogICAgICAgICkKICAgICAgICBzZWxmLnB1Ymxpc2hlci53YWl0X3VudGlsX3JlYWR5KGNvbnRhaW5lcl9pZCkKICAgICAgICBtZWRpYV9pZCA9IHNlbGYucHVibGlzaGVyLnB1Ymxpc2hfY29udGFpbmVyKGNvbnRhaW5lcl9pZCkKICAgICAgICBzZWxmLnB1Ymxpc2hfbG9nLnJlY29yZCgKICAgICAgICAgICAgdG9waWNfaWQ9dG9waWNfaWQsCiAgICAgICAgICAgIGNvbnRhaW5lcl9pZD1jb250YWluZXJfaWQsCiAgICAgICAgICAgIG1lZGlhX2lkPW1lZGlhX2lkLAogICAgICAgICAgICBtZWRpYV91cmw9bWVkaWFfdXJsLAogICAgICAgICAgICBwdWJsaXNoZWRfYXQ9bm93LAogICAgICAgICkKICAgICAgICByZXR1cm4gUHVibGlzaFJlc3VsdCgKICAgICAgICAgICAgdG9waWNfaWQ9dG9waWNfaWQsCiAgICAgICAgICAgIGNvbnRhaW5lcl9pZD1jb250YWluZXJfaWQsCiAgICAgICAgICAgIG1lZGlhX2lkPW1lZGlhX2lkLAogICAgICAgICAgICBtZWRpYV91cmw9bWVkaWFfdXJsLAogICAgICAgICAgICBwdWJsaXNoZWRfYXQ9bm93LAogICAgICAgICkK
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
+
+from storage.publish_log import PublishLog
+
+
+class DuplicatePublishError(RuntimeError):
+    pass
+
+
+class WeeklyLimitError(RuntimeError):
+    pass
+
+
+@dataclass(frozen=True)
+class PublishResult:
+    topic_id: str
+    container_id: str
+    media_id: str
+    media_url: str
+    published_at: datetime
+
+
+class InstagramPublishPipeline:
+    def __init__(self, *, publisher, publish_log: PublishLog, max_reels_per_week: int = 3):
+        if max_reels_per_week < 1:
+            raise ValueError("max_reels_per_week must be >= 1")
+        self.publisher = publisher
+        self.publish_log = publish_log
+        self.max_reels_per_week = max_reels_per_week
+
+    def publish(
+        self,
+        *,
+        topic_id: str,
+        media_url: str,
+        caption: str,
+        now: datetime | None = None,
+        share_to_feed: bool = True,
+    ) -> PublishResult:
+        now = now or datetime.now(timezone.utc)
+        if now.tzinfo is None:
+            now = now.replace(tzinfo=timezone.utc)
+
+        if self.publish_log.has_topic(topic_id):
+            raise DuplicatePublishError(f"topic {topic_id} has already been published")
+
+        if self.publish_log.count_since(now - timedelta(days=7)) >= self.max_reels_per_week:
+            raise WeeklyLimitError(f"weekly Reel limit of {self.max_reels_per_week} reached")
+
+        container_id = self.publisher.create_reel_container(
+            media_url,
+            caption,
+            share_to_feed=share_to_feed,
+        )
+        self.publisher.wait_until_ready(container_id)
+        media_id = self.publisher.publish_container(container_id)
+        self.publish_log.record(
+            topic_id=topic_id,
+            container_id=container_id,
+            media_id=media_id,
+            media_url=media_url,
+            published_at=now,
+        )
+        return PublishResult(
+            topic_id=topic_id,
+            container_id=container_id,
+            media_id=media_id,
+            media_url=media_url,
+            published_at=now,
+        )

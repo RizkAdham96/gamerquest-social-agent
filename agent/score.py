@@ -1,1 +1,43 @@
-ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUsIHRpbWV6b25lCmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMsIFRvcGljU2NvcmUKCkhJR0hfSU5URVJFU1QgPSB7Imd0YSIsICJndGEtdmkiLCAicm9ja3N0YXIiLCAicHM1IiwgInhib3giLCAibmludGVuZG8iLCAic3RlYW0iLCAiZnJlZS1nYW1lIiwgImRlYWwiLCAiZm9ydG5pdGUiLCAiY2FsbC1vZi1kdXR5In0KCgpkZWYgc2NvcmVfdG9waWModG9waWM6IFRvcGljLCBub3c6IGRhdGV0aW1lIHwgTm9uZSA9IE5vbmUpIC0+IFRvcGljU2NvcmU6CiAgICBub3cgPSBub3cgb3IgZGF0ZXRpbWUubm93KHRpbWV6b25lLnV0YykKICAgIGZyZXNobmVzcyA9IDUKICAgIGlmIHRvcGljLnB1Ymxpc2hlZF9hdDoKICAgICAgICBhZ2VfaG91cnMgPSBtYXgoMCwgKG5vdyAtIHRvcGljLnB1Ymxpc2hlZF9hdCkudG90YWxfc2Vjb25kcygpIC8gMzYwMCkKICAgICAgICBpZiBhZ2VfaG91cnMgPD0gNjoKICAgICAgICAgICAgZnJlc2huZXNzID0gMjAKICAgICAgICBlbGlmIGFnZV9ob3VycyA8PSAyNDoKICAgICAgICAgICAgZnJlc2huZXNzID0gMTYKICAgICAgICBlbGlmIGFnZV9ob3VycyA8PSA3MjoKICAgICAgICAgICAgZnJlc2huZXNzID0gMTAKICAgICAgICBlbHNlOgogICAgICAgICAgICBmcmVzaG5lc3MgPSA0CgogICAgb2ZmaWNpYWwgPSAyMCBpZiB0b3BpYy5vZmZpY2lhbF9mb290YWdlX3VybCBlbHNlIDAKICAgIHRhZ3NldCA9IHt0Lmxvd2VyKCkgZm9yIHQgaW4gdG9waWMudGFnc30KICAgIHJlbGV2YW5jZSA9IG1pbigyMCwgNiArIDUgKiBsZW4odGFnc2V0ICYgSElHSF9JTlRFUkVTVCkpCgogICAgbG93ZXJlZCA9IHRvcGljLnRpdGxlLmxvd2VyKCkKICAgIGVuZ2FnZW1lbnQgPSAxMAogICAgaWYgYW55KGsgaW4gbG93ZXJlZCBmb3IgayBpbiAoImdyYXR1aXQiLCAiZnJlZSIsICJ0cmFpbGVyIiwgImFubm9uY2UiLCAic29ydGllIiwgIm5vdXZlYXUiLCAibWlzZSDDoCBqb3VyIikpOgogICAgICAgIGVuZ2FnZW1lbnQgKz0gOAogICAgaWYgYW55KHQgaW4gdGFnc2V0IGZvciB0IGluICgiZnJlZS1nYW1lIiwgImRlYWwiKSk6CiAgICAgICAgZW5nYWdlbWVudCArPSA0CiAgICBlbmdhZ2VtZW50ID0gbWluKDIwLCBlbmdhZ2VtZW50KQoKICAgIGNsYXJpdHkgPSAxMCBpZiBsZW4odG9waWMudGl0bGUpIDw9IDkwIGVsc2UgNgogICAgbm92ZWx0eSA9IDEwCiAgICBicmVha2Rvd24gPSB7CiAgICAgICAgImZyZXNobmVzcyI6IGZyZXNobmVzcywKICAgICAgICAib2ZmaWNpYWxfZm9vdGFnZSI6IG9mZmljaWFsLAogICAgICAgICJyZWxldmFuY2UiOiByZWxldmFuY2UsCiAgICAgICAgImVuZ2FnZW1lbnQiOiBlbmdhZ2VtZW50LAogICAgICAgICJjbGFyaXR5IjogY2xhcml0eSwKICAgICAgICAibm92ZWx0eSI6IG5vdmVsdHksCiAgICB9CiAgICByZXR1cm4gVG9waWNTY29yZSh0b3RhbD1zdW0oYnJlYWtkb3duLnZhbHVlcygpKSwgYnJlYWtkb3duPWJyZWFrZG93bikK
+from datetime import datetime, timezone
+from app.models import Topic, TopicScore
+
+HIGH_INTEREST = {"gta", "gta-vi", "rockstar", "ps5", "xbox", "nintendo", "steam", "free-game", "deal", "fortnite", "call-of-duty"}
+
+
+def score_topic(topic: Topic, now: datetime | None = None) -> TopicScore:
+    now = now or datetime.now(timezone.utc)
+    freshness = 5
+    if topic.published_at:
+        age_hours = max(0, (now - topic.published_at).total_seconds() / 3600)
+        if age_hours <= 6:
+            freshness = 20
+        elif age_hours <= 24:
+            freshness = 16
+        elif age_hours <= 72:
+            freshness = 10
+        else:
+            freshness = 4
+
+    official = 20 if topic.official_footage_url else 0
+    tagset = {t.lower() for t in topic.tags}
+    relevance = min(20, 6 + 5 * len(tagset & HIGH_INTEREST))
+
+    lowered = topic.title.lower()
+    engagement = 10
+    if any(k in lowered for k in ("gratuit", "free", "trailer", "annonce", "sortie", "nouveau", "mise à jour")):
+        engagement += 8
+    if any(t in tagset for t in ("free-game", "deal")):
+        engagement += 4
+    engagement = min(20, engagement)
+
+    clarity = 10 if len(topic.title) <= 90 else 6
+    novelty = 10
+    breakdown = {
+        "freshness": freshness,
+        "official_footage": official,
+        "relevance": relevance,
+        "engagement": engagement,
+        "clarity": clarity,
+        "novelty": novelty,
+    }
+    return TopicScore(total=sum(breakdown.values()), breakdown=breakdown)

@@ -1,1 +1,20 @@
-ZnJvbSBjb250ZW50LnN1YnRpdGxlX3dyaXRlciBpbXBvcnQgYnVpbGRfc3VidGl0bGVfY3VlcywgY3Vlc190b19zcnQKCgpkZWYgdGVzdF9zdWJ0aXRsZV9jdWVzX2NvdmVyX2Z1bGxfZHVyYXRpb25fd2l0aG91dF9vdmVybGFwKCk6CiAgICBjdWVzID0gYnVpbGRfc3VidGl0bGVfY3VlcygKICAgICAgICAiVm9pY2kgdW5lIGdyYW5kZSBhbm5vbmNlIGdhbWluZyBxdWkgYXJyaXZlIGNldHRlIHNlbWFpbmUgcG91ciB0b3VzIGxlcyBqb3VldXJzIGZyYW7Dp2Fpcy4iLAogICAgICAgIGR1cmF0aW9uX3NlY29uZHM9OC4wLAogICAgICAgIG1heF93b3Jkcz00LAogICAgKQogICAgYXNzZXJ0IGN1ZXNbMF0uc3RhcnQgPT0gMC4wCiAgICBhc3NlcnQgY3Vlc1stMV0uZW5kID09IDguMAogICAgYXNzZXJ0IGFsbChhLmVuZCA8PSBiLnN0YXJ0IGZvciBhLCBiIGluIHppcChjdWVzLCBjdWVzWzE6XSkpCiAgICBhc3NlcnQgYWxsKGxlbihjdWUudGV4dC5zcGxpdCgpKSA8PSA0IGZvciBjdWUgaW4gY3VlcykKCgpkZWYgdGVzdF9zcnRfY29udGFpbnNfbnVtYmVyZWRfY3Vlc19hbmRfdGltZXN0YW1wKCk6CiAgICBjdWVzID0gYnVpbGRfc3VidGl0bGVfY3VlcygiVW5lIGFubm9uY2UgaW1wb3J0YW50ZSBhcnJpdmUgbWFpbnRlbmFudCIsIDQuMCwgbWF4X3dvcmRzPTMpCiAgICBzcnQgPSBjdWVzX3RvX3NydChjdWVzKQogICAgYXNzZXJ0ICIxXG4wMDowMDowMCwwMDAgLS0+IiBpbiBzcnQKICAgIGFzc2VydCAiVW5lIGFubm9uY2UgaW1wb3J0YW50ZSIgaW4gc3J0Cg==
+from content.subtitle_writer import build_subtitle_cues, cues_to_srt
+
+
+def test_subtitle_cues_cover_full_duration_without_overlap():
+    cues = build_subtitle_cues(
+        "Voici une grande annonce gaming qui arrive cette semaine pour tous les joueurs français.",
+        duration_seconds=8.0,
+        max_words=4,
+    )
+    assert cues[0].start == 0.0
+    assert cues[-1].end == 8.0
+    assert all(a.end <= b.start for a, b in zip(cues, cues[1:]))
+    assert all(len(cue.text.split()) <= 4 for cue in cues)
+
+
+def test_srt_contains_numbered_cues_and_timestamp():
+    cues = build_subtitle_cues("Une annonce importante arrive maintenant", 4.0, max_words=3)
+    srt = cues_to_srt(cues)
+    assert "1\n00:00:00,000 -->" in srt
+    assert "Une annonce importante" in srt

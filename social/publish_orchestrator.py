@@ -1,1 +1,28 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAoKCkBkYXRhY2xhc3MoZnJvemVuPVRydWUpCmNsYXNzIE9yY2hlc3RyYXRlZFB1Ymxpc2hSZXN1bHQ6CiAgICBtZWRpYV9pZDogc3RyCiAgICBjb250YWluZXJfaWQ6IHN0cgogICAgZHJpdmVfZmlsZV9pZDogc3RyfE5vbmUKCgpjbGFzcyBQdWJsaXNoT3JjaGVzdHJhdG9yOgogICAgZGVmIF9faW5pdF9fKHNlbGYsICosIHN0YWdlLCBpbnN0YWdyYW1fcGlwZWxpbmUsIGRyaXZlX3N0b3JlPU5vbmUsIGRyaXZlX3B1Ymxpc2hlZF9mb2xkZXJfaWQ6IHN0cnxOb25lPU5vbmUpOgogICAgICAgIHNlbGYuc3RhZ2U9c3RhZ2U7IHNlbGYuaW5zdGFncmFtX3BpcGVsaW5lPWluc3RhZ3JhbV9waXBlbGluZTsgc2VsZi5kcml2ZV9zdG9yZT1kcml2ZV9zdG9yZTsgc2VsZi5kcml2ZV9wdWJsaXNoZWRfZm9sZGVyX2lkPWRyaXZlX3B1Ymxpc2hlZF9mb2xkZXJfaWQKICAgIGRlZiBwdWJsaXNoX3JlZWwoc2VsZiwgKiwgdG9waWNfaWQ6IHN0ciwgcmVlbF9wYXRoOiBzdHJ8UGF0aCwgY2FwdGlvbjogc3RyKSAtPiBPcmNoZXN0cmF0ZWRQdWJsaXNoUmVzdWx0OgogICAgICAgIHJlZWxfcGF0aD1QYXRoKHJlZWxfcGF0aCkKICAgICAgICBzdGFnZWQ9c2VsZi5zdGFnZS5zdGFnZShyZWVsX3BhdGgpCiAgICAgICAgdHJ5OgogICAgICAgICAgICBwdWJsaXNoZWQ9c2VsZi5pbnN0YWdyYW1fcGlwZWxpbmUucHVibGlzaCh0b3BpY19pZD10b3BpY19pZCxtZWRpYV91cmw9c3RhZ2VkLnB1YmxpY191cmwsY2FwdGlvbj1jYXB0aW9uKQogICAgICAgICAgICBkcml2ZV9maWxlX2lkPU5vbmUKICAgICAgICAgICAgaWYgc2VsZi5kcml2ZV9zdG9yZToKICAgICAgICAgICAgICAgIHVwbG9hZGVkPXNlbGYuZHJpdmVfc3RvcmUudXBsb2FkX2ZpbGUocmVlbF9wYXRoLHBhcmVudF9pZD1zZWxmLmRyaXZlX3B1Ymxpc2hlZF9mb2xkZXJfaWQsbWltZV90eXBlPSd2aWRlby9tcDQnKQogICAgICAgICAgICAgICAgZHJpdmVfZmlsZV9pZD11cGxvYWRlZC5nZXQoJ2lkJykKICAgICAgICAgICAgcmV0dXJuIE9yY2hlc3RyYXRlZFB1Ymxpc2hSZXN1bHQocHVibGlzaGVkLm1lZGlhX2lkLHB1Ymxpc2hlZC5jb250YWluZXJfaWQsZHJpdmVfZmlsZV9pZCkKICAgICAgICBmaW5hbGx5OgogICAgICAgICAgICBzZWxmLnN0YWdlLmNsZWFudXAoc3RhZ2VkLmFzc2V0X2lkKQo=
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import Path
+
+
+@dataclass(frozen=True)
+class OrchestratedPublishResult:
+    media_id: str
+    container_id: str
+    drive_file_id: str|None
+
+
+class PublishOrchestrator:
+    def __init__(self, *, stage, instagram_pipeline, drive_store=None, drive_published_folder_id: str|None=None):
+        self.stage=stage; self.instagram_pipeline=instagram_pipeline; self.drive_store=drive_store; self.drive_published_folder_id=drive_published_folder_id
+    def publish_reel(self, *, topic_id: str, reel_path: str|Path, caption: str) -> OrchestratedPublishResult:
+        reel_path=Path(reel_path)
+        staged=self.stage.stage(reel_path)
+        try:
+            published=self.instagram_pipeline.publish(topic_id=topic_id,media_url=staged.public_url,caption=caption)
+            drive_file_id=None
+            if self.drive_store:
+                uploaded=self.drive_store.upload_file(reel_path,parent_id=self.drive_published_folder_id,mime_type='video/mp4')
+                drive_file_id=uploaded.get('id')
+            return OrchestratedPublishResult(published.media_id,published.container_id,drive_file_id)
+        finally:
+            self.stage.cleanup(staged.asset_id)

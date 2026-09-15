@@ -1,1 +1,28 @@
-aW1wb3J0IGpzb24KZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lCmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMKCgpkZWYgX3BhcnNlX2R0KHZhbHVlKToKICAgIGlmIG5vdCB2YWx1ZToKICAgICAgICByZXR1cm4gTm9uZQogICAgcmV0dXJuIGRhdGV0aW1lLmZyb21pc29mb3JtYXQodmFsdWUucmVwbGFjZSgiWiIsICIrMDA6MDAiKSkKCgpkZWYgbG9hZF90b3BpY3NfZnJvbV9qc29uKHBhdGg6IHN0ciB8IFBhdGgpIC0+IGxpc3RbVG9waWNdOgogICAgcGF5bG9hZCA9IGpzb24ubG9hZHMoUGF0aChwYXRoKS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikpCiAgICBpZiBub3QgaXNpbnN0YW5jZShwYXlsb2FkLCBsaXN0KToKICAgICAgICByYWlzZSBWYWx1ZUVycm9yKCJ0b3BpY3MgSlNPTiBtdXN0IGJlIGEgbGlzdCIpCiAgICByZXR1cm4gW1RvcGljKAogICAgICAgIHRpdGxlPWl0ZW1bInRpdGxlIl0sCiAgICAgICAgdXJsPWl0ZW1bInVybCJdLAogICAgICAgIHNvdXJjZT1pdGVtLmdldCgic291cmNlIiwgInVua25vd24iKSwKICAgICAgICBwdWJsaXNoZWRfYXQ9X3BhcnNlX2R0KGl0ZW0uZ2V0KCJwdWJsaXNoZWRfYXQiKSksCiAgICAgICAgb2ZmaWNpYWxfZm9vdGFnZV91cmw9aXRlbS5nZXQoIm9mZmljaWFsX2Zvb3RhZ2VfdXJsIiksCiAgICAgICAgcHVibGlzaGVyPWl0ZW0uZ2V0KCJwdWJsaXNoZXIiLCAiIiksCiAgICAgICAgc3RlYW1fYXBwX2lkPWl0ZW0uZ2V0KCJzdGVhbV9hcHBfaWQiKSwKICAgICAgICBvZmZpY2lhbF9jaGFubmVsX2lkcz1saXN0KGl0ZW0uZ2V0KCJvZmZpY2lhbF9jaGFubmVsX2lkcyIsIFtdKSksCiAgICAgICAgdGFncz1saXN0KGl0ZW0uZ2V0KCJ0YWdzIiwgW10pKSwKICAgICAgICBzdW1tYXJ5PWl0ZW0uZ2V0KCJzdW1tYXJ5IiwgIiIpLAogICAgKSBmb3IgaXRlbSBpbiBwYXlsb2FkXQo=
+import json
+from pathlib import Path
+from datetime import datetime
+from app.models import Topic
+
+
+def _parse_dt(value):
+    if not value:
+        return None
+    return datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+
+def load_topics_from_json(path: str | Path) -> list[Topic]:
+    payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(payload, list):
+        raise ValueError("topics JSON must be a list")
+    return [Topic(
+        title=item["title"],
+        url=item["url"],
+        source=item.get("source", "unknown"),
+        published_at=_parse_dt(item.get("published_at")),
+        official_footage_url=item.get("official_footage_url"),
+        publisher=item.get("publisher", ""),
+        steam_app_id=item.get("steam_app_id"),
+        official_channel_ids=list(item.get("official_channel_ids", [])),
+        tags=list(item.get("tags", [])),
+        summary=item.get("summary", ""),
+    ) for item in payload]

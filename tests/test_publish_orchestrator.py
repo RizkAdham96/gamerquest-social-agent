@@ -1,1 +1,45 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpmcm9tIHNvY2lhbC5wdWJsaXNoX29yY2hlc3RyYXRvciBpbXBvcnQgUHVibGlzaE9yY2hlc3RyYXRvcgoKCmNsYXNzIEZha2VTdGFnZToKICAgIGRlZiBfX2luaXRfXyhzZWxmKTogc2VsZi5jbGVhbmVkPVtdCiAgICBkZWYgc3RhZ2Uoc2VsZiwgcGF0aCk6CiAgICAgICAgY2xhc3MgUzogYXNzZXRfaWQ9NDQ7IHB1YmxpY191cmw9J2h0dHBzOi8vZ2l0aHViLmNvbS9vL3IvcmVsZWFzZXMvZG93bmxvYWQvZ3EtbWVkaWEtc3RhZ2luZy9yZWVsLm1wNCcKICAgICAgICByZXR1cm4gUygpCiAgICBkZWYgY2xlYW51cChzZWxmLCBhc3NldF9pZCk6IHNlbGYuY2xlYW5lZC5hcHBlbmQoYXNzZXRfaWQpCgpjbGFzcyBGYWtlUGlwZWxpbmU6CiAgICBkZWYgcHVibGlzaChzZWxmLCAqKmt3YXJncyk6CiAgICAgICAgc2VsZi5rd2FyZ3M9a3dhcmdzCiAgICAgICAgY2xhc3MgUjogbWVkaWFfaWQ9J20xJzsgY29udGFpbmVyX2lkPSdjMScKICAgICAgICByZXR1cm4gUigpCgpjbGFzcyBGYWtlQXJjaGl2ZToKICAgIGRlZiBfX2luaXRfXyhzZWxmKTogc2VsZi51cGxvYWRlZD1bXQogICAgZGVmIHVwbG9hZF9maWxlKHNlbGYsIGZpbGVfcGF0aCwgcGFyZW50X2lkPU5vbmUsIG1pbWVfdHlwZT1Ob25lKToKICAgICAgICBzZWxmLnVwbG9hZGVkLmFwcGVuZCgoZmlsZV9wYXRoLHBhcmVudF9pZCxtaW1lX3R5cGUpKTsgcmV0dXJuIHsnaWQnOidkcml2ZTEnfQoKCmRlZiB0ZXN0X29yY2hlc3RyYXRvcl9zdGFnZXNfcHVibGlzaGVzX2FyY2hpdmVzX2FuZF9jbGVhbnModG1wX3BhdGgpOgogICAgcmVlbD10bXBfcGF0aC8ncmVlbC5tcDQnOyByZWVsLndyaXRlX2J5dGVzKGIndmlkZW8nKQogICAgc3RhZ2U9RmFrZVN0YWdlKCk7IHBpcGVsaW5lPUZha2VQaXBlbGluZSgpOyBkcml2ZT1GYWtlQXJjaGl2ZSgpCiAgICBvPVB1Ymxpc2hPcmNoZXN0cmF0b3Ioc3RhZ2U9c3RhZ2UsIGluc3RhZ3JhbV9waXBlbGluZT1waXBlbGluZSwgZHJpdmVfc3RvcmU9ZHJpdmUsIGRyaXZlX3B1Ymxpc2hlZF9mb2xkZXJfaWQ9J2ZvbGRlcicpCiAgICByZXN1bHQ9by5wdWJsaXNoX3JlZWwodG9waWNfaWQ9J3QxJywgcmVlbF9wYXRoPXJlZWwsIGNhcHRpb249J1NhbHV0JykKICAgIGFzc2VydCBwaXBlbGluZS5rd2FyZ3NbJ21lZGlhX3VybCddLnN0YXJ0c3dpdGgoJ2h0dHBzOi8vZ2l0aHViLmNvbS8nKQogICAgYXNzZXJ0IHJlc3VsdC5kcml2ZV9maWxlX2lkPT0nZHJpdmUxJwogICAgYXNzZXJ0IHN0YWdlLmNsZWFuZWQ9PVs0NF0KCgpkZWYgdGVzdF9vcmNoZXN0cmF0b3JfY2xlYW5zX3N0YWdpbmdfZXZlbl9pZl9wdWJsaXNoX2ZhaWxzKHRtcF9wYXRoKToKICAgIHJlZWw9dG1wX3BhdGgvJ3JlZWwubXA0JzsgcmVlbC53cml0ZV9ieXRlcyhiJ3ZpZGVvJykKICAgIHN0YWdlPUZha2VTdGFnZSgpCiAgICBjbGFzcyBCYWRQaXBlbGluZToKICAgICAgICBkZWYgcHVibGlzaChzZWxmLCAqKmt3YXJncyk6IHJhaXNlIFJ1bnRpbWVFcnJvcignbWV0YSBmYWlsZWQnKQogICAgbz1QdWJsaXNoT3JjaGVzdHJhdG9yKHN0YWdlPXN0YWdlLCBpbnN0YWdyYW1fcGlwZWxpbmU9QmFkUGlwZWxpbmUoKSkKICAgIHRyeToKICAgICAgICBvLnB1Ymxpc2hfcmVlbCh0b3BpY19pZD0ndDEnLCByZWVsX3BhdGg9cmVlbCwgY2FwdGlvbj0nU2FsdXQnKQogICAgZXhjZXB0IFJ1bnRpbWVFcnJvcjoKICAgICAgICBwYXNzCiAgICBhc3NlcnQgc3RhZ2UuY2xlYW5lZD09WzQ0XQo=
+from pathlib import Path
+
+from social.publish_orchestrator import PublishOrchestrator
+
+
+class FakeStage:
+    def __init__(self): self.cleaned=[]
+    def stage(self, path):
+        class S: asset_id=44; public_url='https://github.com/o/r/releases/download/gq-media-staging/reel.mp4'
+        return S()
+    def cleanup(self, asset_id): self.cleaned.append(asset_id)
+
+class FakePipeline:
+    def publish(self, **kwargs):
+        self.kwargs=kwargs
+        class R: media_id='m1'; container_id='c1'
+        return R()
+
+class FakeArchive:
+    def __init__(self): self.uploaded=[]
+    def upload_file(self, file_path, parent_id=None, mime_type=None):
+        self.uploaded.append((file_path,parent_id,mime_type)); return {'id':'drive1'}
+
+
+def test_orchestrator_stages_publishes_archives_and_cleans(tmp_path):
+    reel=tmp_path/'reel.mp4'; reel.write_bytes(b'video')
+    stage=FakeStage(); pipeline=FakePipeline(); drive=FakeArchive()
+    o=PublishOrchestrator(stage=stage, instagram_pipeline=pipeline, drive_store=drive, drive_published_folder_id='folder')
+    result=o.publish_reel(topic_id='t1', reel_path=reel, caption='Salut')
+    assert pipeline.kwargs['media_url'].startswith('https://github.com/')
+    assert result.drive_file_id=='drive1'
+    assert stage.cleaned==[44]
+
+
+def test_orchestrator_cleans_staging_even_if_publish_fails(tmp_path):
+    reel=tmp_path/'reel.mp4'; reel.write_bytes(b'video')
+    stage=FakeStage()
+    class BadPipeline:
+        def publish(self, **kwargs): raise RuntimeError('meta failed')
+    o=PublishOrchestrator(stage=stage, instagram_pipeline=BadPipeline())
+    try:
+        o.publish_reel(topic_id='t1', reel_path=reel, caption='Salut')
+    except RuntimeError:
+        pass
+    assert stage.cleaned==[44]

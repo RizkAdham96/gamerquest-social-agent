@@ -1,1 +1,58 @@
-IyBTcHJpbnQgNCDigJQgSW5zdGFncmFtIGF1dG9tYXRpYyBwdWJsaXNoaW5nCgpTcHJpbnQgNCBhZGRzIHRoZSBwcm9kdWN0aW9uLXNpZGUgSW5zdGFncmFtIHB1Ymxpc2hpbmcgYWRhcHRlciBhbmQgc2FmZXR5IGdhdGVzLgoKIyMgSW1wbGVtZW50ZWQKCi0gTWV0YSBHcmFwaCBBUEkgUmVlbCBjb250YWluZXIgY3JlYXRpb24gKGBtZWRpYV90eXBlPVJFRUxTYCkKLSBjb25maWd1cmFibGUgR3JhcGggQVBJIHZlcnNpb24sIGRlZmF1bHQgYHYyNi4wYAotIGNvbnRhaW5lciBzdGF0dXMgcG9sbGluZyB1bnRpbCBgRklOSVNIRURgCi0gZXhwbGljaXQgZmFpbHVyZSBvbiBgRVJST1JgLCBgRVhQSVJFRGAsIGFuZCB1bmV4cGVjdGVkIGFscmVhZHktYFBVQkxJU0hFRGAgc3RhdGVzCi0gZmluYWwgYG1lZGlhX3B1Ymxpc2hgIGNhbGwKLSBkdXJhYmxlIEpTT04gcHVibGlzaCBsb2cKLSBkdXBsaWNhdGUtdG9waWMgcHJvdGVjdGlvbiBiZWZvcmUgYW55IE1ldGEgQVBJIGNhbGwKLSByb2xsaW5nIDctZGF5IHB1Ymxpc2ggY2FwIChkZWZhdWx0OiAzIFJlZWxzKQotIHB1YmxpYy1VUkwgdmFsaWRhdGlvbiBiZWZvcmUgY29udGFpbmVyIGNyZWF0aW9uCgojIyBSZXF1aXJlZCBNZXRhIGNvbmZpZ3VyYXRpb24KCkZhY2Vib29rIExvZ2luIHBhdGg6Ci0gYGluc3RhZ3JhbV9iYXNpY2AKLSBgaW5zdGFncmFtX2NvbnRlbnRfcHVibGlzaGAKLSBgcGFnZXNfc2hvd19saXN0YAotIGBwYWdlc19yZWFkX2VuZ2FnZW1lbnRgCgpJbnN0YWdyYW0gTG9naW4gcGF0aCB1c2VzIHRoZSBjb3JyZXNwb25kaW5nIGBpbnN0YWdyYW1fYnVzaW5lc3NfKmAgcGVybWlzc2lvbnMsIGluY2x1ZGluZyBgaW5zdGFncmFtX2J1c2luZXNzX2NvbnRlbnRfcHVibGlzaGAuCgojIyBJbXBvcnRhbnQgcHVibGljLW1lZGlhIHJlcXVpcmVtZW50CgpNZXRhIGZldGNoZXMgdGhlIFJlZWwgZnJvbSBgdmlkZW9fdXJsYC4gVGhlIFVSTCBtdXN0IHRoZXJlZm9yZSBiZSByZWFjaGFibGUgcHVibGljbHkgb3ZlciBIVFRQKFMpIHdoaWxlIE1ldGEgaXMgY3JlYXRpbmcgdGhlIGNvbnRhaW5lci4KCkdvb2dsZSBEcml2ZSBpcyB1c2VkIGFzIHRoZSBhcmNoaXZlIGluIHRoaXMgcHJvamVjdCwgYnV0IGEgbm9ybWFsIHByaXZhdGUgRHJpdmUgVVJMIGlzICoqbm90KiogdHJlYXRlZCBhcyB0aGUgcHVibGlzaGluZyBDRE4gVVJMLiBBIHB1YmxpYyB0ZW1wb3JhcnkgbWVkaWEtaG9zdGluZyBzdGVwIHdpbGwgYmUgd2lyZWQgaW50byB0aGUgZW5kLXRvLWVuZCBzY2hlZHVsZWQgd29ya2Zsb3cgc2VwYXJhdGVseS4KCiMjIEV4YW1wbGUKCmBgYHB5dGhvbgpmcm9tIHNvY2lhbC5pbnN0YWdyYW1fcHVibGlzaCBpbXBvcnQgSW5zdGFncmFtUHVibGlzaGVyCmZyb20gc29jaWFsLmluc3RhZ3JhbV9waXBlbGluZSBpbXBvcnQgSW5zdGFncmFtUHVibGlzaFBpcGVsaW5lCmZyb20gc3RvcmFnZS5wdWJsaXNoX2xvZyBpbXBvcnQgUHVibGlzaExvZwoKcHVibGlzaGVyID0gSW5zdGFncmFtUHVibGlzaGVyKAogICAgaWdfdXNlcl9pZD0iWU9VUl9JR19VU0VSX0lEIiwKICAgIGFjY2Vzc190b2tlbj0iWU9VUl9UT0tFTiIsCiAgICBhcGlfdmVyc2lvbj0idjI2LjAiLAopCgpwaXBlbGluZSA9IEluc3RhZ3JhbVB1Ymxpc2hQaXBlbGluZSgKICAgIHB1Ymxpc2hlcj1wdWJsaXNoZXIsCiAgICBwdWJsaXNoX2xvZz1QdWJsaXNoTG9nKCJkYXRhL3B1Ymxpc2hfbG9nLmpzb24iKSwKICAgIG1heF9yZWVsc19wZXJfd2Vlaz0zLAopCgpyZXN1bHQgPSBwaXBlbGluZS5wdWJsaXNoKAogICAgdG9waWNfaWQ9InRvcGljLWlkIiwKICAgIG1lZGlhX3VybD0iaHR0cHM6Ly9wdWJsaWMtY2RuLmV4YW1wbGUvcmVlbC5tcDQiLAogICAgY2FwdGlvbj0iVG9uIGNhcHRpb24gR2FtZXJRdWVzdEZSIiwKKQpwcmludChyZXN1bHQubWVkaWFfaWQpCmBgYAo=
+# Sprint 4 — Instagram automatic publishing
+
+Sprint 4 adds the production-side Instagram publishing adapter and safety gates.
+
+## Implemented
+
+- Meta Graph API Reel container creation (`media_type=REELS`)
+- configurable Graph API version, default `v26.0`
+- container status polling until `FINISHED`
+- explicit failure on `ERROR`, `EXPIRED`, and unexpected already-`PUBLISHED` states
+- final `media_publish` call
+- durable JSON publish log
+- duplicate-topic protection before any Meta API call
+- rolling 7-day publish cap (default: 3 Reels)
+- public-URL validation before container creation
+
+## Required Meta configuration
+
+Facebook Login path:
+- `instagram_basic`
+- `instagram_content_publish`
+- `pages_show_list`
+- `pages_read_engagement`
+
+Instagram Login path uses the corresponding `instagram_business_*` permissions, including `instagram_business_content_publish`.
+
+## Important public-media requirement
+
+Meta fetches the Reel from `video_url`. The URL must therefore be reachable publicly over HTTP(S) while Meta is creating the container.
+
+Google Drive is used as the archive in this project, but a normal private Drive URL is **not** treated as the publishing CDN URL. A public temporary media-hosting step will be wired into the end-to-end scheduled workflow separately.
+
+## Example
+
+```python
+from social.instagram_publish import InstagramPublisher
+from social.instagram_pipeline import InstagramPublishPipeline
+from storage.publish_log import PublishLog
+
+publisher = InstagramPublisher(
+    ig_user_id="YOUR_IG_USER_ID",
+    access_token="YOUR_TOKEN",
+    api_version="v26.0",
+)
+
+pipeline = InstagramPublishPipeline(
+    publisher=publisher,
+    publish_log=PublishLog("data/publish_log.json"),
+    max_reels_per_week=3,
+)
+
+result = pipeline.publish(
+    topic_id="topic-id",
+    media_url="https://public-cdn.example/reel.mp4",
+    caption="Ton caption GamerQuestFR",
+)
+print(result.media_id)
+```

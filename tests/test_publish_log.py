@@ -1,1 +1,24 @@
-ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUsIHRpbWV6b25lLCB0aW1lZGVsdGEKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpmcm9tIHN0b3JhZ2UucHVibGlzaF9sb2cgaW1wb3J0IFB1Ymxpc2hMb2cKCgpkZWYgdGVzdF9wdWJsaXNoX2xvZ19yZWNvcmRzX2FuZF9ibG9ja3NfZHVwbGljYXRlX3RvcGljKHRtcF9wYXRoKToKICAgIHBhdGg9dG1wX3BhdGgvJ3B1Ymxpc2gtbG9nLmpzb24nCiAgICBsb2c9UHVibGlzaExvZyhwYXRoKQogICAgbm93PWRhdGV0aW1lKDIwMjYsOSwxNCwxMiwwLHR6aW5mbz10aW1lem9uZS51dGMpCiAgICBsb2cucmVjb3JkKHRvcGljX2lkPSd0b3BpYy0xJywgY29udGFpbmVyX2lkPSdjMScsIG1lZGlhX2lkPSdtMScsIG1lZGlhX3VybD0naHR0cHM6Ly9jZG4vcmVlbC5tcDQnLCBwdWJsaXNoZWRfYXQ9bm93KQogICAgYXNzZXJ0IGxvZy5oYXNfdG9waWMoJ3RvcGljLTEnKSBpcyBUcnVlCiAgICBhc3NlcnQgbG9nLmhhc190b3BpYygndG9waWMtMicpIGlzIEZhbHNlCiAgICBmcmVzaD1QdWJsaXNoTG9nKHBhdGgpCiAgICBhc3NlcnQgZnJlc2guaGFzX3RvcGljKCd0b3BpYy0xJykgaXMgVHJ1ZQoKCmRlZiB0ZXN0X3B1Ymxpc2hfbG9nX2NvdW50c19wb3N0c193aXRoaW5fbGFzdF9zZXZlbl9kYXlzKHRtcF9wYXRoKToKICAgIHBhdGg9dG1wX3BhdGgvJ3B1Ymxpc2gtbG9nLmpzb24nCiAgICBsb2c9UHVibGlzaExvZyhwYXRoKQogICAgbm93PWRhdGV0aW1lKDIwMjYsOSwxNCwxMiwwLHR6aW5mbz10aW1lem9uZS51dGMpCiAgICBsb2cucmVjb3JkKHRvcGljX2lkPSduZXcnLGNvbnRhaW5lcl9pZD0nYzEnLG1lZGlhX2lkPSdtMScsbWVkaWFfdXJsPSd1MScscHVibGlzaGVkX2F0PW5vdy10aW1lZGVsdGEoZGF5cz0yKSkKICAgIGxvZy5yZWNvcmQodG9waWNfaWQ9J29sZCcsY29udGFpbmVyX2lkPSdjMicsbWVkaWFfaWQ9J20yJyxtZWRpYV91cmw9J3UyJyxwdWJsaXNoZWRfYXQ9bm93LXRpbWVkZWx0YShkYXlzPTgpKQogICAgYXNzZXJ0IGxvZy5jb3VudF9zaW5jZShub3ctdGltZWRlbHRhKGRheXM9NykpID09IDEK
+from datetime import datetime, timezone, timedelta
+from pathlib import Path
+
+from storage.publish_log import PublishLog
+
+
+def test_publish_log_records_and_blocks_duplicate_topic(tmp_path):
+    path=tmp_path/'publish-log.json'
+    log=PublishLog(path)
+    now=datetime(2026,9,14,12,0,tzinfo=timezone.utc)
+    log.record(topic_id='topic-1', container_id='c1', media_id='m1', media_url='https://cdn/reel.mp4', published_at=now)
+    assert log.has_topic('topic-1') is True
+    assert log.has_topic('topic-2') is False
+    fresh=PublishLog(path)
+    assert fresh.has_topic('topic-1') is True
+
+
+def test_publish_log_counts_posts_within_last_seven_days(tmp_path):
+    path=tmp_path/'publish-log.json'
+    log=PublishLog(path)
+    now=datetime(2026,9,14,12,0,tzinfo=timezone.utc)
+    log.record(topic_id='new',container_id='c1',media_id='m1',media_url='u1',published_at=now-timedelta(days=2))
+    log.record(topic_id='old',container_id='c2',media_id='m2',media_url='u2',published_at=now-timedelta(days=8))
+    assert log.count_since(now-timedelta(days=7)) == 1

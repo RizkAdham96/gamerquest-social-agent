@@ -1,1 +1,20 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYywgU2VsZWN0ZWRUb3BpYwpmcm9tIGFnZW50LnNjb3JlIGltcG9ydCBzY29yZV90b3BpYwoKCmRlZiBzZWxlY3RfYmVzdF90b3BpYyh0b3BpY3M6IGxpc3RbVG9waWNdLCByZWNlbnRfc2x1Z3M6IHNldFtzdHJdLCBtaW5fc2NvcmU6IGludCA9IDApIC0+IFNlbGVjdGVkVG9waWM6CiAgICBlbGlnaWJsZSA9IFtdCiAgICBmb3IgdG9waWMgaW4gdG9waWNzOgogICAgICAgIGhhc19vZmZpY2lhbF9mb290YWdlX3NpZ25hbCA9IGJvb2wodG9waWMub2ZmaWNpYWxfZm9vdGFnZV91cmwgb3IgdG9waWMuc3RlYW1fYXBwX2lkIG9yIHRvcGljLm9mZmljaWFsX2NoYW5uZWxfaWRzKQogICAgICAgIGlmIG5vdCBoYXNfb2ZmaWNpYWxfZm9vdGFnZV9zaWduYWw6CiAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgaWYgdG9waWMuc2x1ZyBpbiByZWNlbnRfc2x1Z3M6CiAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgc2NvcmUgPSBzY29yZV90b3BpYyh0b3BpYykKICAgICAgICBpZiBzY29yZS50b3RhbCA+PSBtaW5fc2NvcmU6CiAgICAgICAgICAgIGVsaWdpYmxlLmFwcGVuZCgoc2NvcmUudG90YWwsIHRvcGljLCBzY29yZSkpCiAgICBpZiBub3QgZWxpZ2libGU6CiAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigibm8gZWxpZ2libGUgdG9waWNzIikKICAgIGVsaWdpYmxlLnNvcnQoa2V5PWxhbWJkYSBpdGVtOiBpdGVtWzBdLCByZXZlcnNlPVRydWUpCiAgICBfLCB0b3BpYywgc2NvcmUgPSBlbGlnaWJsZVswXQogICAgcmV0dXJuIFNlbGVjdGVkVG9waWModG9waWM9dG9waWMsIHNjb3JlPXNjb3JlKQo=
+from app.models import Topic, SelectedTopic
+from agent.score import score_topic
+
+
+def select_best_topic(topics: list[Topic], recent_slugs: set[str], min_score: int = 0) -> SelectedTopic:
+    eligible = []
+    for topic in topics:
+        has_official_footage_signal = bool(topic.official_footage_url or topic.steam_app_id or topic.official_channel_ids)
+        if not has_official_footage_signal:
+            continue
+        if topic.slug in recent_slugs:
+            continue
+        score = score_topic(topic)
+        if score.total >= min_score:
+            eligible.append((score.total, topic, score))
+    if not eligible:
+        raise ValueError("no eligible topics")
+    eligible.sort(key=lambda item: item[0], reverse=True)
+    _, topic, score = eligible[0]
+    return SelectedTopic(topic=topic, score=score)

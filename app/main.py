@@ -1,1 +1,24 @@
-aW1wb3J0IGFyZ3BhcnNlCmltcG9ydCBqc29uCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aApmcm9tIGFnZW50LmRpc2NvdmVyIGltcG9ydCBsb2FkX3RvcGljc19mcm9tX2pzb24KZnJvbSBhZ2VudC5zZWxlY3QgaW1wb3J0IHNlbGVjdF9iZXN0X3RvcGljCmZyb20gY29udGVudC5zY3JpcHRfd3JpdGVyIGltcG9ydCBidWlsZF9yZWVsX3NjcmlwdApmcm9tIGNvbnRlbnQuY2FwdGlvbl93cml0ZXIgaW1wb3J0IGJ1aWxkX2NhcHRpb24KCgpkZWYgbWFpbigpOgogICAgcGFyc2VyID0gYXJncGFyc2UuQXJndW1lbnRQYXJzZXIoZGVzY3JpcHRpb249IkdhbWVyUXVlc3QgU29jaWFsIEFnZW50IFNwcmludCAxIikKICAgIHBhcnNlci5hZGRfYXJndW1lbnQoInRvcGljcyIsIHR5cGU9UGF0aCwgaGVscD0iSlNPTiBmaWxlIGNvbnRhaW5pbmcgY2FuZGlkYXRlIHRvcGljcyIpCiAgICBhcmdzID0gcGFyc2VyLnBhcnNlX2FyZ3MoKQogICAgc2VsZWN0ZWQgPSBzZWxlY3RfYmVzdF90b3BpYyhsb2FkX3RvcGljc19mcm9tX2pzb24oYXJncy50b3BpY3MpLCByZWNlbnRfc2x1Z3M9c2V0KCkpCiAgICBzY3JpcHQgPSBidWlsZF9yZWVsX3NjcmlwdChzZWxlY3RlZC50b3BpYykKICAgIHByaW50KGpzb24uZHVtcHMoewogICAgICAgICJ0b3BpYyI6IHNlbGVjdGVkLnRvcGljLnRpdGxlLAogICAgICAgICJzY29yZSI6IHNlbGVjdGVkLnNjb3JlLnRvdGFsLAogICAgICAgICJzY3JpcHQiOiBzY3JpcHQudm9pY2VvdmVyLAogICAgICAgICJjYXB0aW9uIjogYnVpbGRfY2FwdGlvbihzZWxlY3RlZC50b3BpYyksCiAgICB9LCBlbnN1cmVfYXNjaWk9RmFsc2UsIGluZGVudD0yKSkKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBtYWluKCkK
+import argparse
+import json
+from pathlib import Path
+from agent.discover import load_topics_from_json
+from agent.select import select_best_topic
+from content.script_writer import build_reel_script
+from content.caption_writer import build_caption
+
+
+def main():
+    parser = argparse.ArgumentParser(description="GamerQuest Social Agent Sprint 1")
+    parser.add_argument("topics", type=Path, help="JSON file containing candidate topics")
+    args = parser.parse_args()
+    selected = select_best_topic(load_topics_from_json(args.topics), recent_slugs=set())
+    script = build_reel_script(selected.topic)
+    print(json.dumps({
+        "topic": selected.topic.title,
+        "score": selected.score.total,
+        "script": script.voiceover,
+        "caption": build_caption(selected.topic),
+    }, ensure_ascii=False, indent=2))
+
+if __name__ == "__main__":
+    main()

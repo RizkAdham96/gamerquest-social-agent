@@ -1,1 +1,12 @@
-ZnJvbSBtZWRpYS5mb290YWdlX2ZpbmRlciBpbXBvcnQgRm9vdGFnZUZpbmRlcgpmcm9tIG1lZGlhLmZvb3RhZ2VfdmFsaWRhdG9yIGltcG9ydCBGb290YWdlQ2FuZGlkYXRlCgoKZGVmIHRlc3RfZmluZGVyX3JldHVybnNfZmlyc3RfdmFsaWRfb2ZmaWNpYWxfY2FuZGlkYXRlKCk6CiAgICBjYW5kaWRhdGVzID0gWwogICAgICAgIEZvb3RhZ2VDYW5kaWRhdGUoImh0dHBzOi8vZXhhbXBsZS5jb20vZmFuLm1wNCIsICJGYW4iLCBGYWxzZSksCiAgICAgICAgRm9vdGFnZUNhbmRpZGF0ZSgiaHR0cHM6Ly9jZG4ucHVibGlzaGVyLmNvbS9vZmZpY2lhbC5tcDQiLCAiUHVibGlzaGVyIiwgVHJ1ZSksCiAgICBdCiAgICBzZWxlY3RlZCA9IEZvb3RhZ2VGaW5kZXIoKS5zZWxlY3QoY2FuZGlkYXRlcykKICAgIGFzc2VydCBzZWxlY3RlZCBpcyBub3QgTm9uZQogICAgYXNzZXJ0IHNlbGVjdGVkLnNvdXJjZV9uYW1lID09ICJQdWJsaXNoZXIiCg==
+from media.footage_finder import FootageFinder
+from media.footage_validator import FootageCandidate
+
+
+def test_finder_returns_first_valid_official_candidate():
+    candidates = [
+        FootageCandidate("https://example.com/fan.mp4", "Fan", False),
+        FootageCandidate("https://cdn.publisher.com/official.mp4", "Publisher", True),
+    ]
+    selected = FootageFinder().select(candidates)
+    assert selected is not None
+    assert selected.source_name == "Publisher"

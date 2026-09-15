@@ -1,1 +1,23 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYywgUmVlbFNjcmlwdAoKCmRlZiBidWlsZF9yZWVsX3NjcmlwdCh0b3BpYzogVG9waWMpIC0+IFJlZWxTY3JpcHQ6CiAgICBmcmVlID0gImZyZWUtZ2FtZSIgaW4ge3QubG93ZXIoKSBmb3IgdCBpbiB0b3BpYy50YWdzfSBvciAiZ3JhdHVpdCIgaW4gdG9waWMudGl0bGUubG93ZXIoKQogICAgaWYgZnJlZToKICAgICAgICBob29rID0gZiJOZSBwYWllIHN1cnRvdXQgcGFzIHBvdXIgw6dhIDoge3RvcGljLnRpdGxlfS4iCiAgICAgICAgYmVhdHMgPSBbCiAgICAgICAgICAgIGhvb2ssCiAgICAgICAgICAgICJMJ29mZnJlIGVzdCBvZmZpY2llbGxlIGV0IGRpc3BvbmlibGUgcG91ciB1bmUgZHVyw6llIGxpbWl0w6llLiIsCiAgICAgICAgICAgICJBam91dGUtbGUgw6AgdGEgYmlibGlvdGjDqHF1ZSBhdmFudCBsYSBmaW4gZGUgbCdvZmZyZS4iLAogICAgICAgIF0KICAgICAgICBjdGEgPSAiVHUgbGUgcsOpY3Vww6hyZXMgPyIKICAgIGVsc2U6CiAgICAgICAgaG9vayA9IGYiw4AgcmV0ZW5pciBhdWpvdXJkJ2h1aSA6IHt0b3BpYy50aXRsZX0uIgogICAgICAgIGJlYXRzID0gWwogICAgICAgICAgICBob29rLAogICAgICAgICAgICAiVm9pbMOgIGNlIHF1aSBjaGFuZ2UgcG91ciBsZXMgam91ZXVycy4iLAogICAgICAgICAgICAiR2FtZXJRdWVzdEZSIHRlIHLDqXN1bWUgbCdlc3NlbnRpZWwgc2FucyBwZXJkcmUgdG9uIHRlbXBzLiIsCiAgICAgICAgXQogICAgICAgIGN0YSA9ICJUdSBlbiBwZW5zZXMgcXVvaSA/IgogICAgdm9pY2VvdmVyID0gIiAiLmpvaW4oYmVhdHMgKyBbY3RhXSkKICAgIHJldHVybiBSZWVsU2NyaXB0KGxhbmd1YWdlPSJmciIsIGhvb2s9aG9vaywgYmVhdHM9YmVhdHMsIGN0YT1jdGEsIHZvaWNlb3Zlcj12b2ljZW92ZXJbOjQyMF0pCg==
+from app.models import Topic, ReelScript
+
+
+def build_reel_script(topic: Topic) -> ReelScript:
+    free = "free-game" in {t.lower() for t in topic.tags} or "gratuit" in topic.title.lower()
+    if free:
+        hook = f"Ne paie surtout pas pour ça : {topic.title}."
+        beats = [
+            hook,
+            "L'offre est officielle et disponible pour une durée limitée.",
+            "Ajoute-le à ta bibliothèque avant la fin de l'offre.",
+        ]
+        cta = "Tu le récupères ?"
+    else:
+        hook = f"À retenir aujourd'hui : {topic.title}."
+        beats = [
+            hook,
+            "Voilà ce qui change pour les joueurs.",
+            "GamerQuestFR te résume l'essentiel sans perdre ton temps.",
+        ]
+        cta = "Tu en penses quoi ?"
+    voiceover = " ".join(beats + [cta])
+    return ReelScript(language="fr", hook=hook, beats=beats, cta=cta, voiceover=voiceover[:420])

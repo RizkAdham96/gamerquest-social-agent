@@ -1,1 +1,50 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKZnJvbSB0eXBpbmcgaW1wb3J0IFByb3RvY29sCgpmcm9tIGNvbnRlbnQuc3VidGl0bGVfd3JpdGVyIGltcG9ydCBidWlsZF9zdWJ0aXRsZV9jdWVzLCBjdWVzX3RvX3NydApmcm9tIC5yZWVsX2J1aWxkZXIgaW1wb3J0IFJlZWxCdWlsZFNwZWMsIFJlZWxCdWlsZGVyCmZyb20gLnR0cyBpbXBvcnQgU21hcnRGcmVuY2hUVFMKCgpjbGFzcyBUVFNQcm92aWRlcihQcm90b2NvbCk6CiAgICBkZWYgc3ludGhlc2l6ZShzZWxmLCB0ZXh0OiBzdHIsIG91dHB1dDogUGF0aCkgLT4gUGF0aDogLi4uCgoKY2xhc3MgUmVlbFBpcGVsaW5lOgogICAgZGVmIF9faW5pdF9fKHNlbGYsIHR0czogVFRTUHJvdmlkZXIgfCBOb25lID0gTm9uZSwgYnVpbGRlcjogUmVlbEJ1aWxkZXIgfCBOb25lID0gTm9uZSk6CiAgICAgICAgc2VsZi50dHMgPSB0dHMgb3IgU21hcnRGcmVuY2hUVFMoKQogICAgICAgIHNlbGYuYnVpbGRlciA9IGJ1aWxkZXIgb3IgUmVlbEJ1aWxkZXIoKQoKICAgIGRlZiByZW5kZXIoCiAgICAgICAgc2VsZiwKICAgICAgICAqLAogICAgICAgIGZvb3RhZ2U6IFBhdGgsCiAgICAgICAgdm9pY2VvdmVyX3RleHQ6IHN0ciwKICAgICAgICBvdXRwdXRfZGlyOiBQYXRoLAogICAgICAgIGR1cmF0aW9uX3NlY29uZHM6IGZsb2F0LAogICAgICAgIGJhY2tncm91bmRfbXVzaWM6IFBhdGggfCBOb25lID0gTm9uZSwKICAgICkgLT4gUGF0aDoKICAgICAgICBpZiBub3QgZm9vdGFnZS5leGlzdHMoKToKICAgICAgICAgICAgcmFpc2UgRmlsZU5vdEZvdW5kRXJyb3IoZm9vdGFnZSkKICAgICAgICBpZiBub3Qgdm9pY2VvdmVyX3RleHQuc3RyaXAoKToKICAgICAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigidm9pY2VvdmVyX3RleHQgbXVzdCBub3QgYmUgZW1wdHkiKQogICAgICAgIG91dHB1dF9kaXIubWtkaXIocGFyZW50cz1UcnVlLCBleGlzdF9vaz1UcnVlKQoKICAgICAgICB2b2ljZV9wYXRoID0gb3V0cHV0X2RpciAvICJ2b2ljZS53YXYiCiAgICAgICAgc3VidGl0bGVfcGF0aCA9IG91dHB1dF9kaXIgLyAic3VidGl0bGVzLnNydCIKICAgICAgICByZWVsX3BhdGggPSBvdXRwdXRfZGlyIC8gInJlZWwubXA0IgoKICAgICAgICBzZWxmLnR0cy5zeW50aGVzaXplKHZvaWNlb3Zlcl90ZXh0LCB2b2ljZV9wYXRoKQogICAgICAgIGN1ZXMgPSBidWlsZF9zdWJ0aXRsZV9jdWVzKHZvaWNlb3Zlcl90ZXh0LCBkdXJhdGlvbl9zZWNvbmRzLCBtYXhfd29yZHM9NSkKICAgICAgICBzdWJ0aXRsZV9wYXRoLndyaXRlX3RleHQoY3Vlc190b19zcnQoY3VlcyksIGVuY29kaW5nPSJ1dGYtOCIpCgogICAgICAgIHNwZWMgPSBSZWVsQnVpbGRTcGVjKAogICAgICAgICAgICBmb290YWdlPWZvb3RhZ2UsCiAgICAgICAgICAgIHZvaWNlb3Zlcj12b2ljZV9wYXRoLAogICAgICAgICAgICBzdWJ0aXRsZXM9c3VidGl0bGVfcGF0aCwKICAgICAgICAgICAgb3V0cHV0PXJlZWxfcGF0aCwKICAgICAgICAgICAgZHVyYXRpb25fc2Vjb25kcz1kdXJhdGlvbl9zZWNvbmRzLAogICAgICAgICAgICBiYWNrZ3JvdW5kX211c2ljPWJhY2tncm91bmRfbXVzaWMsCiAgICAgICAgKQogICAgICAgIHJldHVybiBzZWxmLmJ1aWxkZXIuYnVpbGQoc3BlYykK
+from __future__ import annotations
+from pathlib import Path
+from typing import Protocol
+
+from content.subtitle_writer import build_subtitle_cues, cues_to_srt
+from .reel_builder import ReelBuildSpec, ReelBuilder
+from .tts import SmartFrenchTTS
+
+
+class TTSProvider(Protocol):
+    def synthesize(self, text: str, output: Path) -> Path: ...
+
+
+class ReelPipeline:
+    def __init__(self, tts: TTSProvider | None = None, builder: ReelBuilder | None = None):
+        self.tts = tts or SmartFrenchTTS()
+        self.builder = builder or ReelBuilder()
+
+    def render(
+        self,
+        *,
+        footage: Path,
+        voiceover_text: str,
+        output_dir: Path,
+        duration_seconds: float,
+        background_music: Path | None = None,
+    ) -> Path:
+        if not footage.exists():
+            raise FileNotFoundError(footage)
+        if not voiceover_text.strip():
+            raise ValueError("voiceover_text must not be empty")
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        voice_path = output_dir / "voice.wav"
+        subtitle_path = output_dir / "subtitles.srt"
+        reel_path = output_dir / "reel.mp4"
+
+        self.tts.synthesize(voiceover_text, voice_path)
+        cues = build_subtitle_cues(voiceover_text, duration_seconds, max_words=5)
+        subtitle_path.write_text(cues_to_srt(cues), encoding="utf-8")
+
+        spec = ReelBuildSpec(
+            footage=footage,
+            voiceover=voice_path,
+            subtitles=subtitle_path,
+            output=reel_path,
+            duration_seconds=duration_seconds,
+            background_music=background_music,
+        )
+        return self.builder.build(spec)

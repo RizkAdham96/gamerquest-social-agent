@@ -1,1 +1,14 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwpmcm9tIGNvbGxlY3Rpb25zLmFiYyBpbXBvcnQgSXRlcmFibGUKZnJvbSAuZm9vdGFnZV92YWxpZGF0b3IgaW1wb3J0IEZvb3RhZ2VDYW5kaWRhdGUsIEZvb3RhZ2VWYWxpZGF0b3IKCgpjbGFzcyBGb290YWdlRmluZGVyOgogICAgZGVmIF9faW5pdF9fKHNlbGYsIHZhbGlkYXRvcjogRm9vdGFnZVZhbGlkYXRvciB8IE5vbmUgPSBOb25lKToKICAgICAgICBzZWxmLnZhbGlkYXRvciA9IHZhbGlkYXRvciBvciBGb290YWdlVmFsaWRhdG9yKCkKCiAgICBkZWYgc2VsZWN0KHNlbGYsIGNhbmRpZGF0ZXM6IEl0ZXJhYmxlW0Zvb3RhZ2VDYW5kaWRhdGVdKSAtPiBGb290YWdlQ2FuZGlkYXRlIHwgTm9uZToKICAgICAgICBmb3IgY2FuZGlkYXRlIGluIGNhbmRpZGF0ZXM6CiAgICAgICAgICAgIGlmIHNlbGYudmFsaWRhdG9yLnZhbGlkYXRlKGNhbmRpZGF0ZSkub2s6CiAgICAgICAgICAgICAgICByZXR1cm4gY2FuZGlkYXRlCiAgICAgICAgcmV0dXJuIE5vbmUK
+from __future__ import annotations
+from collections.abc import Iterable
+from .footage_validator import FootageCandidate, FootageValidator
+
+
+class FootageFinder:
+    def __init__(self, validator: FootageValidator | None = None):
+        self.validator = validator or FootageValidator()
+
+    def select(self, candidates: Iterable[FootageCandidate]) -> FootageCandidate | None:
+        for candidate in candidates:
+            if self.validator.validate(candidate).ok:
+                return candidate
+        return None

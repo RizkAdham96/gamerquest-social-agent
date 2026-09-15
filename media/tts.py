@@ -1,1 +1,63 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKaW1wb3J0IHNodXRpbAppbXBvcnQgc3VicHJvY2VzcwoKCmNsYXNzIEVzcGVha1RUUzoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCB2b2ljZTogc3RyID0gImZyIiwgc3BlZWQ6IGludCA9IDE2NSk6CiAgICAgICAgc2VsZi52b2ljZSA9IHZvaWNlCiAgICAgICAgc2VsZi5zcGVlZCA9IHNwZWVkCgogICAgZGVmIGJ1aWxkX2NvbW1hbmQoc2VsZiwgdGV4dDogc3RyLCBvdXRwdXQ6IFBhdGgpIC0+IGxpc3Rbc3RyXToKICAgICAgICBiaW5hcnkgPSBzaHV0aWwud2hpY2goImVzcGVhayIpIG9yICJlc3BlYWsiCiAgICAgICAgcmV0dXJuIFtiaW5hcnksICItdiIsIHNlbGYudm9pY2UsICItcyIsIHN0cihzZWxmLnNwZWVkKSwgIi13Iiwgc3RyKG91dHB1dCksIHRleHRdCgogICAgZGVmIHN5bnRoZXNpemUoc2VsZiwgdGV4dDogc3RyLCBvdXRwdXQ6IFBhdGgpIC0+IFBhdGg6CiAgICAgICAgb3V0cHV0LnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgc3VicHJvY2Vzcy5ydW4oc2VsZi5idWlsZF9jb21tYW5kKHRleHQsIG91dHB1dCksIGNoZWNrPVRydWUsIGNhcHR1cmVfb3V0cHV0PVRydWUpCiAgICAgICAgaWYgbm90IG91dHB1dC5leGlzdHMoKSBvciBvdXRwdXQuc3RhdCgpLnN0X3NpemUgPT0gMDoKICAgICAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCJUVFMgZGlkIG5vdCBwcm9kdWNlIGF1ZGlvIikKICAgICAgICByZXR1cm4gb3V0cHV0CgoKY2xhc3MgRWRnZVRUUzoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCB2b2ljZTogc3RyID0gImZyLUZSLURlbmlzZU5ldXJhbCIsIHJhdGU6IHN0ciA9ICIrMCUiKToKICAgICAgICBzZWxmLnZvaWNlID0gdm9pY2UKICAgICAgICBzZWxmLnJhdGUgPSByYXRlCgogICAgZGVmIGJ1aWxkX2NvbW1hbmQoc2VsZiwgdGV4dDogc3RyLCBvdXRwdXQ6IFBhdGgpIC0+IGxpc3Rbc3RyXToKICAgICAgICBiaW5hcnkgPSBzaHV0aWwud2hpY2goImVkZ2UtdHRzIikgb3IgImVkZ2UtdHRzIgogICAgICAgIHJldHVybiBbCiAgICAgICAgICAgIGJpbmFyeSwKICAgICAgICAgICAgIi0tdm9pY2UiLAogICAgICAgICAgICBzZWxmLnZvaWNlLAogICAgICAgICAgICBmIi0tcmF0ZT17c2VsZi5yYXRlfSIsCiAgICAgICAgICAgICItLXRleHQiLAogICAgICAgICAgICB0ZXh0LAogICAgICAgICAgICAiLS13cml0ZS1tZWRpYSIsCiAgICAgICAgICAgIHN0cihvdXRwdXQpLAogICAgICAgIF0KCiAgICBkZWYgc3ludGhlc2l6ZShzZWxmLCB0ZXh0OiBzdHIsIG91dHB1dDogUGF0aCkgLT4gUGF0aDoKICAgICAgICBvdXRwdXQucGFyZW50Lm1rZGlyKHBhcmVudHM9VHJ1ZSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICBzdWJwcm9jZXNzLnJ1bihzZWxmLmJ1aWxkX2NvbW1hbmQodGV4dCwgb3V0cHV0KSwgY2hlY2s9VHJ1ZSwgY2FwdHVyZV9vdXRwdXQ9VHJ1ZSkKICAgICAgICBpZiBub3Qgb3V0cHV0LmV4aXN0cygpIG9yIG91dHB1dC5zdGF0KCkuc3Rfc2l6ZSA9PSAwOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoIkVkZ2UgVFRTIGRpZCBub3QgcHJvZHVjZSBhdWRpbyIpCiAgICAgICAgcmV0dXJuIG91dHB1dAoKCmNsYXNzIFNtYXJ0RnJlbmNoVFRTOgogICAgIiIiVXNlcyBhIG5hdHVyYWwgb25saW5lIG5ldXJhbCB2b2ljZSBmaXJzdCBhbmQgdGhlIG9mZmxpbmUgZVNwZWFrIHBhdGggYXMgYSBoYXJkIGZhbGxiYWNrLiIiIgoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCBwcmltYXJ5PU5vbmUsIGZhbGxiYWNrPU5vbmUpOgogICAgICAgIHNlbGYucHJpbWFyeSA9IHByaW1hcnkgb3IgRWRnZVRUUygpCiAgICAgICAgc2VsZi5mYWxsYmFjayA9IGZhbGxiYWNrIG9yIEVzcGVha1RUUygpCgogICAgZGVmIHN5bnRoZXNpemUoc2VsZiwgdGV4dDogc3RyLCBvdXRwdXQ6IFBhdGgpIC0+IFBhdGg6CiAgICAgICAgdHJ5OgogICAgICAgICAgICByZXR1cm4gc2VsZi5wcmltYXJ5LnN5bnRoZXNpemUodGV4dCwgb3V0cHV0KQogICAgICAgIGV4Y2VwdCAoT1NFcnJvciwgUnVudGltZUVycm9yLCBzdWJwcm9jZXNzLlN1YnByb2Nlc3NFcnJvcik6CiAgICAgICAgICAgIGlmIG91dHB1dC5leGlzdHMoKToKICAgICAgICAgICAgICAgIG91dHB1dC51bmxpbmsoKQogICAgICAgICAgICByZXR1cm4gc2VsZi5mYWxsYmFjay5zeW50aGVzaXplKHRleHQsIG91dHB1dCkK
+from __future__ import annotations
+from pathlib import Path
+import shutil
+import subprocess
+
+
+class EspeakTTS:
+    def __init__(self, voice: str = "fr", speed: int = 165):
+        self.voice = voice
+        self.speed = speed
+
+    def build_command(self, text: str, output: Path) -> list[str]:
+        binary = shutil.which("espeak") or "espeak"
+        return [binary, "-v", self.voice, "-s", str(self.speed), "-w", str(output), text]
+
+    def synthesize(self, text: str, output: Path) -> Path:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(self.build_command(text, output), check=True, capture_output=True)
+        if not output.exists() or output.stat().st_size == 0:
+            raise RuntimeError("TTS did not produce audio")
+        return output
+
+
+class EdgeTTS:
+    def __init__(self, voice: str = "fr-FR-DeniseNeural", rate: str = "+0%"):
+        self.voice = voice
+        self.rate = rate
+
+    def build_command(self, text: str, output: Path) -> list[str]:
+        binary = shutil.which("edge-tts") or "edge-tts"
+        return [
+            binary,
+            "--voice",
+            self.voice,
+            f"--rate={self.rate}",
+            "--text",
+            text,
+            "--write-media",
+            str(output),
+        ]
+
+    def synthesize(self, text: str, output: Path) -> Path:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(self.build_command(text, output), check=True, capture_output=True)
+        if not output.exists() or output.stat().st_size == 0:
+            raise RuntimeError("Edge TTS did not produce audio")
+        return output
+
+
+class SmartFrenchTTS:
+    """Uses a natural online neural voice first and the offline eSpeak path as a hard fallback."""
+
+    def __init__(self, primary=None, fallback=None):
+        self.primary = primary or EdgeTTS()
+        self.fallback = fallback or EspeakTTS()
+
+    def synthesize(self, text: str, output: Path) -> Path:
+        try:
+            return self.primary.synthesize(text, output)
+        except (OSError, RuntimeError, subprocess.SubprocessError):
+            if output.exists():
+                output.unlink()
+            return self.fallback.synthesize(text, output)

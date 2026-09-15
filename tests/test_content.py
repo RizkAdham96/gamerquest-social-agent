@@ -1,1 +1,19 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwpmcm9tIGNvbnRlbnQuc2NyaXB0X3dyaXRlciBpbXBvcnQgYnVpbGRfcmVlbF9zY3JpcHQKZnJvbSBjb250ZW50LmNhcHRpb25fd3JpdGVyIGltcG9ydCBidWlsZF9jYXB0aW9uCgpkZWYgdGVzdF9zY3JpcHRfaXNfc2hvcnRfZnJlbmNoX2FuZF9oYXNfY3RhKCk6CiAgICB0b3BpYyA9IFRvcGljKHRpdGxlPSdIYWRlcyBlc3QgZ3JhdHVpdCBwZW5kYW50IDQ4IGhldXJlcycsIHVybD0naHR0cHM6Ly9leGFtcGxlLmNvbScsIHNvdXJjZT0nZXBpYycsIHRhZ3M9WydmcmVlLWdhbWUnXSkKICAgIHNjcmlwdCA9IGJ1aWxkX3JlZWxfc2NyaXB0KHRvcGljKQogICAgYXNzZXJ0IHNjcmlwdC5sYW5ndWFnZSA9PSAnZnInCiAgICBhc3NlcnQgMyA8PSBsZW4oc2NyaXB0LmJlYXRzKSA8PSA1CiAgICBhc3NlcnQgc2NyaXB0Lmhvb2sKICAgIGFzc2VydCBzY3JpcHQuY3RhLmVuZHN3aXRoKCc/JykKICAgIGFzc2VydCBsZW4oc2NyaXB0LnZvaWNlb3ZlcikgPD0gNDIwCgpkZWYgdGVzdF9jYXB0aW9uX2hhc19zaW5nbGVfY2xlYXJfY3RhKCk6CiAgICB0b3BpYyA9IFRvcGljKHRpdGxlPSdIYWRlcyBlc3QgZ3JhdHVpdCBwZW5kYW50IDQ4IGhldXJlcycsIHVybD0naHR0cHM6Ly9leGFtcGxlLmNvbScsIHNvdXJjZT0nZXBpYycsIHRhZ3M9WydmcmVlLWdhbWUnXSkKICAgIGNhcHRpb24gPSBidWlsZF9jYXB0aW9uKHRvcGljKQogICAgYXNzZXJ0ICdHYW1lclF1ZXN0RlInIGluIGNhcHRpb24KICAgIGFzc2VydCAnPycgaW4gY2FwdGlvbgogICAgYXNzZXJ0IGxlbihjYXB0aW9uKSA8IDUwMAo=
+from app.models import Topic
+from content.script_writer import build_reel_script
+from content.caption_writer import build_caption
+
+def test_script_is_short_french_and_has_cta():
+    topic = Topic(title='Hades est gratuit pendant 48 heures', url='https://example.com', source='epic', tags=['free-game'])
+    script = build_reel_script(topic)
+    assert script.language == 'fr'
+    assert 3 <= len(script.beats) <= 5
+    assert script.hook
+    assert script.cta.endswith('?')
+    assert len(script.voiceover) <= 420
+
+def test_caption_has_single_clear_cta():
+    topic = Topic(title='Hades est gratuit pendant 48 heures', url='https://example.com', source='epic', tags=['free-game'])
+    caption = build_caption(topic)
+    assert 'GamerQuestFR' in caption
+    assert '?' in caption
+    assert len(caption) < 500

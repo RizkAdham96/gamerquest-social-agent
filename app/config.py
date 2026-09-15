@@ -1,1 +1,24 @@
-ZnJvbSBkYXRhY2xhc3NlcyBpbXBvcnQgZGF0YWNsYXNzCmltcG9ydCBvcwoKQGRhdGFjbGFzcyhmcm96ZW49VHJ1ZSkKY2xhc3MgU2V0dGluZ3M6CiAgICBtYXhfcmVlbHNfcGVyX3dlZWs6IGludCA9IDMKICAgIGRlZHVwZV9kYXlzOiBpbnQgPSAzMAogICAgbGFuZ3VhZ2U6IHN0ciA9ICJmciIKICAgIG1pbl90b3BpY19zY29yZTogaW50ID0gNTUKICAgIG1ldGFfYXBpX3ZlcnNpb246IHN0ciA9ICJ2MjYuMCIKICAgIGluc3RhZ3JhbV91c2VyX2lkOiBzdHIgPSAiIgogICAgaW5zdGFncmFtX2FjY2Vzc190b2tlbjogc3RyID0gIiIKCiAgICBAY2xhc3NtZXRob2QKICAgIGRlZiBmcm9tX2VudihjbHMpOgogICAgICAgIHJldHVybiBjbHMoCiAgICAgICAgICAgIG1heF9yZWVsc19wZXJfd2Vlaz1pbnQob3MuZ2V0ZW52KCJHUV9NQVhfUkVFTFNfUEVSX1dFRUsiLCAiMyIpKSwKICAgICAgICAgICAgZGVkdXBlX2RheXM9aW50KG9zLmdldGVudigiR1FfREVEVVBFX0RBWVMiLCAiMzAiKSksCiAgICAgICAgICAgIGxhbmd1YWdlPW9zLmdldGVudigiR1FfTEFOR1VBR0UiLCAiZnIiKSwKICAgICAgICAgICAgbWluX3RvcGljX3Njb3JlPWludChvcy5nZXRlbnYoIkdRX01JTl9UT1BJQ19TQ09SRSIsICI1NSIpKSwKICAgICAgICAgICAgbWV0YV9hcGlfdmVyc2lvbj1vcy5nZXRlbnYoIkdRX01FVEFfQVBJX1ZFUlNJT04iLCAidjI2LjAiKSwKICAgICAgICAgICAgaW5zdGFncmFtX3VzZXJfaWQ9b3MuZ2V0ZW52KCJHUV9JTlNUQUdSQU1fVVNFUl9JRCIsICIiKSwKICAgICAgICAgICAgaW5zdGFncmFtX2FjY2Vzc190b2tlbj1vcy5nZXRlbnYoIkdRX0lOU1RBR1JBTV9BQ0NFU1NfVE9LRU4iLCAiIiksCiAgICAgICAgKQo=
+from dataclasses import dataclass
+import os
+
+@dataclass(frozen=True)
+class Settings:
+    max_reels_per_week: int = 3
+    dedupe_days: int = 30
+    language: str = "fr"
+    min_topic_score: int = 55
+    meta_api_version: str = "v26.0"
+    instagram_user_id: str = ""
+    instagram_access_token: str = ""
+
+    @classmethod
+    def from_env(cls):
+        return cls(
+            max_reels_per_week=int(os.getenv("GQ_MAX_REELS_PER_WEEK", "3")),
+            dedupe_days=int(os.getenv("GQ_DEDUPE_DAYS", "30")),
+            language=os.getenv("GQ_LANGUAGE", "fr"),
+            min_topic_score=int(os.getenv("GQ_MIN_TOPIC_SCORE", "55")),
+            meta_api_version=os.getenv("GQ_META_API_VERSION", "v26.0"),
+            instagram_user_id=os.getenv("GQ_INSTAGRAM_USER_ID", ""),
+            instagram_access_token=os.getenv("GQ_INSTAGRAM_ACCESS_TOKEN", ""),
+        )

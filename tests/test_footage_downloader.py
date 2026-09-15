@@ -1,1 +1,21 @@
-ZnJvbSBtZWRpYS5mb290YWdlX2Rvd25sb2FkZXIgaW1wb3J0IEZvb3RhZ2VEb3dubG9hZGVyCmZyb20gbWVkaWEuZm9vdGFnZV92YWxpZGF0b3IgaW1wb3J0IEZvb3RhZ2VDYW5kaWRhdGUKCgpkZWYgdGVzdF9kb3dubG9hZGVyX3JlamVjdHNfeW91dHViZV93YXRjaF9wYWdlcyh0bXBfcGF0aCk6CiAgICBkb3dubG9hZGVyID0gRm9vdGFnZURvd25sb2FkZXIoZmV0Y2hfYnl0ZXM9bGFtYmRhIHVybDogYiJ4IikKICAgIGNhbmRpZGF0ZSA9IEZvb3RhZ2VDYW5kaWRhdGUoImh0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9YWJjIiwgIk9mZmljaWFsIiwgVHJ1ZSkKICAgIHRyeToKICAgICAgICBkb3dubG9hZGVyLmRvd25sb2FkKGNhbmRpZGF0ZSwgdG1wX3BhdGgpCiAgICBleGNlcHQgVmFsdWVFcnJvciBhcyBleGM6CiAgICAgICAgYXNzZXJ0ICJkaXJlY3QgbWVkaWEiIGluIHN0cihleGMpCiAgICBlbHNlOgogICAgICAgIHJhaXNlIEFzc2VydGlvbkVycm9yKCJleHBlY3RlZCByZWplY3Rpb24iKQoKCmRlZiB0ZXN0X2Rvd25sb2FkZXJfd3JpdGVzX2RpcmVjdF9tcDQodG1wX3BhdGgpOgogICAgZG93bmxvYWRlciA9IEZvb3RhZ2VEb3dubG9hZGVyKGZldGNoX2J5dGVzPWxhbWJkYSB1cmw6IGIidmlkZW8tYnl0ZXMiKQogICAgY2FuZGlkYXRlID0gRm9vdGFnZUNhbmRpZGF0ZSgiaHR0cHM6Ly9jZG4uZXhhbXBsZS5jb20vdHJhaWxlci5tcDQiLCAiT2ZmaWNpYWwiLCBUcnVlKQogICAgcGF0aCA9IGRvd25sb2FkZXIuZG93bmxvYWQoY2FuZGlkYXRlLCB0bXBfcGF0aCkKICAgIGFzc2VydCBwYXRoLnN1ZmZpeCA9PSAiLm1wNCIKICAgIGFzc2VydCBwYXRoLnJlYWRfYnl0ZXMoKSA9PSBiInZpZGVvLWJ5dGVzIgo=
+from media.footage_downloader import FootageDownloader
+from media.footage_validator import FootageCandidate
+
+
+def test_downloader_rejects_youtube_watch_pages(tmp_path):
+    downloader = FootageDownloader(fetch_bytes=lambda url: b"x")
+    candidate = FootageCandidate("https://www.youtube.com/watch?v=abc", "Official", True)
+    try:
+        downloader.download(candidate, tmp_path)
+    except ValueError as exc:
+        assert "direct media" in str(exc)
+    else:
+        raise AssertionError("expected rejection")
+
+
+def test_downloader_writes_direct_mp4(tmp_path):
+    downloader = FootageDownloader(fetch_bytes=lambda url: b"video-bytes")
+    candidate = FootageCandidate("https://cdn.example.com/trailer.mp4", "Official", True)
+    path = downloader.download(candidate, tmp_path)
+    assert path.suffix == ".mp4"
+    assert path.read_bytes() == b"video-bytes"

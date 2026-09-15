@@ -1,1 +1,112 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFyZ3BhcnNlCmltcG9ydCBqc29uCmltcG9ydCBvcwpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKCmZyb20gYXBwLmNvbmZpZyBpbXBvcnQgU2V0dGluZ3MKZnJvbSBtZWRpYS5vZmZpY2lhbF9mb290YWdlIGltcG9ydCBPZmZpY2lhbEZvb3RhZ2VEaXNjb3ZlcnksIFN0ZWFtVHJhaWxlclByb3ZpZGVyLCBZb3VUdWJlT2ZmaWNpYWxTZWFyY2gKZnJvbSBtZWRpYS5wcm9kdWN0aW9uX3BpcGVsaW5lIGltcG9ydCBSZWVsUHJvZHVjdGlvblBpcGVsaW5lCmZyb20gbWVkaWEucmVlbF9waXBlbGluZSBpbXBvcnQgUmVlbFBpcGVsaW5lCmZyb20gc29jaWFsLmluc3RhZ3JhbV9waXBlbGluZSBpbXBvcnQgSW5zdGFncmFtUHVibGlzaFBpcGVsaW5lCmZyb20gc29jaWFsLmluc3RhZ3JhbV9wdWJsaXNoIGltcG9ydCBJbnN0YWdyYW1QdWJsaXNoZXIKZnJvbSBzb2NpYWwucHVibGlzaF9vcmNoZXN0cmF0b3IgaW1wb3J0IFB1Ymxpc2hPcmNoZXN0cmF0b3IKZnJvbSBzdG9yYWdlLmRyaXZlX3N0b3JlIGltcG9ydCBEcml2ZVN0b3JlLCBFbnZBY2Nlc3NUb2tlblByb3ZpZGVyLCBTZXJ2aWNlQWNjb3VudFRva2VuUHJvdmlkZXIKZnJvbSBzdG9yYWdlLmdpdGh1Yl9yZWxlYXNlX3N0YWdlIGltcG9ydCBHaXRIdWJSZWxlYXNlU3RhZ2UKZnJvbSBzdG9yYWdlLnB1Ymxpc2hfbG9nIGltcG9ydCBQdWJsaXNoTG9nCgpmcm9tIC5ydW5uZXIgaW1wb3J0IHJ1bl9vbmNlCgoKVFJVRV9WQUxVRVMgPSB7IjEiLCAidHJ1ZSIsICJ5ZXMiLCAib24ifQoKCmRlZiBlbnZfZmxhZyhuYW1lOiBzdHIsIGRlZmF1bHQ6IGJvb2wgPSBGYWxzZSkgLT4gYm9vbDoKICAgIHZhbHVlID0gb3MuZ2V0ZW52KG5hbWUpCiAgICBpZiB2YWx1ZSBpcyBOb25lOgogICAgICAgIHJldHVybiBkZWZhdWx0CiAgICByZXR1cm4gdmFsdWUuc3RyaXAoKS5sb3dlcigpIGluIFRSVUVfVkFMVUVTCgoKZGVmIGJ1aWxkX2RyaXZlX3N0b3JlKCkgLT4gRHJpdmVTdG9yZSB8IE5vbmU6CiAgICBzZXJ2aWNlX2FjY291bnRfZmlsZSA9IG9zLmdldGVudigiR1FfR09PR0xFX1NFUlZJQ0VfQUNDT1VOVF9GSUxFIiwgIiIpLnN0cmlwKCkKICAgIGlmIHNlcnZpY2VfYWNjb3VudF9maWxlOgogICAgICAgIHJldHVybiBEcml2ZVN0b3JlKFNlcnZpY2VBY2NvdW50VG9rZW5Qcm92aWRlcihzZXJ2aWNlX2FjY291bnRfZmlsZSkpCiAgICBpZiBvcy5nZXRlbnYoIkdRX0dPT0dMRV9EUklWRV9BQ0NFU1NfVE9LRU4iLCAiIikuc3RyaXAoKToKICAgICAgICByZXR1cm4gRHJpdmVTdG9yZShFbnZBY2Nlc3NUb2tlblByb3ZpZGVyKCkpCiAgICByZXR1cm4gTm9uZQoKCmRlZiBidWlsZF9wcm9kdWN0aW9uX3BpcGVsaW5lKCkgLT4gUmVlbFByb2R1Y3Rpb25QaXBlbGluZToKICAgIHlvdXR1YmVfa2V5ID0gb3MuZ2V0ZW52KCJHUV9ZT1VUVUJFX0FQSV9LRVkiLCAiIikuc3RyaXAoKQogICAgZGlzY292ZXJ5ID0gT2ZmaWNpYWxGb290YWdlRGlzY292ZXJ5KAogICAgICAgIHN0ZWFtPVN0ZWFtVHJhaWxlclByb3ZpZGVyKCksCiAgICAgICAgeW91dHViZT1Zb3VUdWJlT2ZmaWNpYWxTZWFyY2goeW91dHViZV9rZXkpIGlmIHlvdXR1YmVfa2V5IGVsc2UgTm9uZSwKICAgICkKICAgIHJldHVybiBSZWVsUHJvZHVjdGlvblBpcGVsaW5lKAogICAgICAgIGRpc2NvdmVyeT1kaXNjb3ZlcnksCiAgICAgICAgcmVuZGVyZXI9UmVlbFBpcGVsaW5lKCksCiAgICApCgoKZGVmIGJ1aWxkX3B1Ymxpc2hfb3JjaGVzdHJhdG9yKHNldHRpbmdzOiBTZXR0aW5ncywgcHVibGlzaF9sb2dfcGF0aDogUGF0aCkgLT4gUHVibGlzaE9yY2hlc3RyYXRvcjoKICAgIGdpdGh1Yl9yZXBvc2l0b3J5ID0gb3MuZ2V0ZW52KCJHSVRIVUJfUkVQT1NJVE9SWSIsICIiKS5zdHJpcCgpCiAgICBnaXRodWJfdG9rZW4gPSBvcy5nZXRlbnYoIkdJVEhVQl9UT0tFTiIsICIiKS5zdHJpcCgpCiAgICBpZiBub3QgZ2l0aHViX3JlcG9zaXRvcnk6CiAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCJNaXNzaW5nIEdJVEhVQl9SRVBPU0lUT1JZIikKICAgIGlmIG5vdCBnaXRodWJfdG9rZW46CiAgICAgICAgcmFpc2UgUnVudGltZUVycm9yKCJNaXNzaW5nIEdJVEhVQl9UT0tFTiIpCgogICAgcHVibGlzaGVyID0gSW5zdGFncmFtUHVibGlzaGVyKAogICAgICAgIGlnX3VzZXJfaWQ9c2V0dGluZ3MuaW5zdGFncmFtX3VzZXJfaWQsCiAgICAgICAgYWNjZXNzX3Rva2VuPXNldHRpbmdzLmluc3RhZ3JhbV9hY2Nlc3NfdG9rZW4sCiAgICAgICAgYXBpX3ZlcnNpb249c2V0dGluZ3MubWV0YV9hcGlfdmVyc2lvbiwKICAgICkKICAgIGluc3RhZ3JhbV9waXBlbGluZSA9IEluc3RhZ3JhbVB1Ymxpc2hQaXBlbGluZSgKICAgICAgICBwdWJsaXNoZXI9cHVibGlzaGVyLAogICAgICAgIHB1Ymxpc2hfbG9nPVB1Ymxpc2hMb2cocHVibGlzaF9sb2dfcGF0aCksCiAgICAgICAgbWF4X3JlZWxzX3Blcl93ZWVrPXNldHRpbmdzLm1heF9yZWVsc19wZXJfd2VlaywKICAgICkKICAgIHJldHVybiBQdWJsaXNoT3JjaGVzdHJhdG9yKAogICAgICAgIHN0YWdlPUdpdEh1YlJlbGVhc2VTdGFnZShyZXBvc2l0b3J5PWdpdGh1Yl9yZXBvc2l0b3J5LCB0b2tlbj1naXRodWJfdG9rZW4pLAogICAgICAgIGluc3RhZ3JhbV9waXBlbGluZT1pbnN0YWdyYW1fcGlwZWxpbmUsCiAgICAgICAgZHJpdmVfc3RvcmU9YnVpbGRfZHJpdmVfc3RvcmUoKSwKICAgICAgICBkcml2ZV9wdWJsaXNoZWRfZm9sZGVyX2lkPW9zLmdldGVudigiR1FfRFJJVkVfUFVCTElTSEVEX0ZPTERFUl9JRCIsICIiKS5zdHJpcCgpIG9yIE5vbmUsCiAgICApCgoKZGVmIG1haW4oKSAtPiBOb25lOgogICAgcGFyc2VyID0gYXJncGFyc2UuQXJndW1lbnRQYXJzZXIoZGVzY3JpcHRpb249IlJ1biB0aGUgR2FtZXJRdWVzdCBTb2NpYWwgQWdlbnQgb25jZSIpCiAgICBwYXJzZXIuYWRkX2FyZ3VtZW50KCItLXRvcGljcyIsIHR5cGU9UGF0aCwgcmVxdWlyZWQ9VHJ1ZSkKICAgIHBhcnNlci5hZGRfYXJndW1lbnQoIi0tb3V0cHV0LWRpciIsIHR5cGU9UGF0aCwgZGVmYXVsdD1QYXRoKCJvdXRwdXQiKSkKICAgIHBhcnNlci5hZGRfYXJndW1lbnQoIi0tcHVibGlzaC1sb2ciLCB0eXBlPVBhdGgsIGRlZmF1bHQ9UGF0aCgic3RhdGUvcHVibGlzaF9sb2cuanNvbiIpKQogICAgcGFyc2VyLmFkZF9hcmd1bWVudCgiLS1kdXJhdGlvbiIsIHR5cGU9ZmxvYXQsIGRlZmF1bHQ9MTYuMCkKICAgIGFyZ3MgPSBwYXJzZXIucGFyc2VfYXJncygpCgogICAgc2V0dGluZ3MgPSBTZXR0aW5ncy5mcm9tX2VudigpCiAgICBsaXZlX3B1Ymxpc2ggPSBlbnZfZmxhZygiR1FfTElWRV9QVUJMSVNIIiwgRmFsc2UpCiAgICBvcmNoZXN0cmF0b3IgPSBidWlsZF9wdWJsaXNoX29yY2hlc3RyYXRvcihzZXR0aW5ncywgYXJncy5wdWJsaXNoX2xvZykgaWYgbGl2ZV9wdWJsaXNoIGVsc2UgTm9uZQoKICAgIHJlc3VsdCA9IHJ1bl9vbmNlKAogICAgICAgIHRvcGljc19wYXRoPWFyZ3MudG9waWNzLAogICAgICAgIG91dHB1dF9kaXI9YXJncy5vdXRwdXRfZGlyLAogICAgICAgIHByb2R1Y3Rpb25fcGlwZWxpbmU9YnVpbGRfcHJvZHVjdGlvbl9waXBlbGluZSgpLAogICAgICAgIHB1Ymxpc2hfb3JjaGVzdHJhdG9yPW9yY2hlc3RyYXRvciwKICAgICAgICBsaXZlX3B1Ymxpc2g9bGl2ZV9wdWJsaXNoLAogICAgICAgIG1pbl9zY29yZT1zZXR0aW5ncy5taW5fdG9waWNfc2NvcmUsCiAgICAgICAgZHVyYXRpb25fc2Vjb25kcz1hcmdzLmR1cmF0aW9uLAogICAgICAgIGJhY2tncm91bmRfbXVzaWM9b3MuZ2V0ZW52KCJHUV9CQUNLR1JPVU5EX01VU0lDIiwgIiIpLnN0cmlwKCkgb3IgTm9uZSwKICAgICkKICAgIHByaW50KGpzb24uZHVtcHMoewogICAgICAgICJzdGF0dXMiOiByZXN1bHQuc3RhdHVzLAogICAgICAgICJ0b3BpY19pZCI6IHJlc3VsdC50b3BpY19pZCwKICAgICAgICAicmVlbF9wYXRoIjogc3RyKHJlc3VsdC5yZWVsX3BhdGgpLAogICAgICAgICJtZWRpYV9pZCI6IHJlc3VsdC5tZWRpYV9pZCwKICAgICAgICAiY29udGFpbmVyX2lkIjogcmVzdWx0LmNvbnRhaW5lcl9pZCwKICAgICAgICAiZHJpdmVfZmlsZV9pZCI6IHJlc3VsdC5kcml2ZV9maWxlX2lkLAogICAgfSwgZW5zdXJlX2FzY2lpPUZhbHNlKSkKCgppZiBfX25hbWVfXyA9PSAiX19tYWluX18iOgogICAgbWFpbigpCg==
+from __future__ import annotations
+
+import argparse
+import json
+import os
+from pathlib import Path
+
+from app.config import Settings
+from media.official_footage import OfficialFootageDiscovery, SteamTrailerProvider, YouTubeOfficialSearch
+from media.production_pipeline import ReelProductionPipeline
+from media.reel_pipeline import ReelPipeline
+from social.instagram_pipeline import InstagramPublishPipeline
+from social.instagram_publish import InstagramPublisher
+from social.publish_orchestrator import PublishOrchestrator
+from storage.drive_store import DriveStore, EnvAccessTokenProvider, ServiceAccountTokenProvider
+from storage.github_release_stage import GitHubReleaseStage
+from storage.publish_log import PublishLog
+
+from .runner import run_once
+
+
+TRUE_VALUES = {"1", "true", "yes", "on"}
+
+
+def env_flag(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in TRUE_VALUES
+
+
+def build_drive_store() -> DriveStore | None:
+    service_account_file = os.getenv("GQ_GOOGLE_SERVICE_ACCOUNT_FILE", "").strip()
+    if service_account_file:
+        return DriveStore(ServiceAccountTokenProvider(service_account_file))
+    if os.getenv("GQ_GOOGLE_DRIVE_ACCESS_TOKEN", "").strip():
+        return DriveStore(EnvAccessTokenProvider())
+    return None
+
+
+def build_production_pipeline() -> ReelProductionPipeline:
+    youtube_key = os.getenv("GQ_YOUTUBE_API_KEY", "").strip()
+    discovery = OfficialFootageDiscovery(
+        steam=SteamTrailerProvider(),
+        youtube=YouTubeOfficialSearch(youtube_key) if youtube_key else None,
+    )
+    return ReelProductionPipeline(
+        discovery=discovery,
+        renderer=ReelPipeline(),
+    )
+
+
+def build_publish_orchestrator(settings: Settings, publish_log_path: Path) -> PublishOrchestrator:
+    github_repository = os.getenv("GITHUB_REPOSITORY", "").strip()
+    github_token = os.getenv("GITHUB_TOKEN", "").strip()
+    if not github_repository:
+        raise RuntimeError("Missing GITHUB_REPOSITORY")
+    if not github_token:
+        raise RuntimeError("Missing GITHUB_TOKEN")
+
+    publisher = InstagramPublisher(
+        ig_user_id=settings.instagram_user_id,
+        access_token=settings.instagram_access_token,
+        api_version=settings.meta_api_version,
+    )
+    instagram_pipeline = InstagramPublishPipeline(
+        publisher=publisher,
+        publish_log=PublishLog(publish_log_path),
+        max_reels_per_week=settings.max_reels_per_week,
+    )
+    return PublishOrchestrator(
+        stage=GitHubReleaseStage(repository=github_repository, token=github_token),
+        instagram_pipeline=instagram_pipeline,
+        drive_store=build_drive_store(),
+        drive_published_folder_id=os.getenv("GQ_DRIVE_PUBLISHED_FOLDER_ID", "").strip() or None,
+    )
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Run the GamerQuest Social Agent once")
+    parser.add_argument("--topics", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, default=Path("output"))
+    parser.add_argument("--publish-log", type=Path, default=Path("state/publish_log.json"))
+    parser.add_argument("--duration", type=float, default=16.0)
+    args = parser.parse_args()
+
+    settings = Settings.from_env()
+    live_publish = env_flag("GQ_LIVE_PUBLISH", False)
+    orchestrator = build_publish_orchestrator(settings, args.publish_log) if live_publish else None
+
+    result = run_once(
+        topics_path=args.topics,
+        output_dir=args.output_dir,
+        production_pipeline=build_production_pipeline(),
+        publish_orchestrator=orchestrator,
+        live_publish=live_publish,
+        min_score=settings.min_topic_score,
+        duration_seconds=args.duration,
+        background_music=os.getenv("GQ_BACKGROUND_MUSIC", "").strip() or None,
+    )
+    print(json.dumps({
+        "status": result.status,
+        "topic_id": result.topic_id,
+        "reel_path": str(result.reel_path),
+        "media_id": result.media_id,
+        "container_id": result.container_id,
+        "drive_file_id": result.drive_file_id,
+    }, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()

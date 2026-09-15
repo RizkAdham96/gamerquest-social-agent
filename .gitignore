@@ -1,1 +1,6 @@
-X19weWNhY2hlX18vCi5weXRlc3RfY2FjaGUvCioucHljCi5lbnYKLnRtcF9zcHJpbnQyLwpvdXRwdXQvCg==
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+.tmp_sprint2/
+output/

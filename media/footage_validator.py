@@ -1,1 +1,28 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwpmcm9tIGRhdGFjbGFzc2VzIGltcG9ydCBkYXRhY2xhc3MKZnJvbSB1cmxsaWIucGFyc2UgaW1wb3J0IHVybHBhcnNlCgoKQGRhdGFjbGFzcyhmcm96ZW49VHJ1ZSkKY2xhc3MgRm9vdGFnZUNhbmRpZGF0ZToKICAgIHVybDogc3RyCiAgICBzb3VyY2VfbmFtZTogc3RyCiAgICBpc19vZmZpY2lhbDogYm9vbAoKCkBkYXRhY2xhc3MoZnJvemVuPVRydWUpCmNsYXNzIEZvb3RhZ2VWYWxpZGF0aW9uOgogICAgb2s6IGJvb2wKICAgIHJlYXNvbjogc3RyCgoKY2xhc3MgRm9vdGFnZVZhbGlkYXRvcjoKICAgIGRlZiB2YWxpZGF0ZShzZWxmLCBjYW5kaWRhdGU6IEZvb3RhZ2VDYW5kaWRhdGUpIC0+IEZvb3RhZ2VWYWxpZGF0aW9uOgogICAgICAgIGlmIG5vdCBjYW5kaWRhdGUuaXNfb2ZmaWNpYWw6CiAgICAgICAgICAgIHJldHVybiBGb290YWdlVmFsaWRhdGlvbihGYWxzZSwgInNvdXJjZV9ub3Rfb2ZmaWNpYWwiKQogICAgICAgIHBhcnNlZCA9IHVybHBhcnNlKGNhbmRpZGF0ZS51cmwpCiAgICAgICAgaWYgcGFyc2VkLnNjaGVtZSAhPSAiaHR0cHMiIG9yIG5vdCBwYXJzZWQubmV0bG9jOgogICAgICAgICAgICByZXR1cm4gRm9vdGFnZVZhbGlkYXRpb24oRmFsc2UsICJpbnZhbGlkX21lZGlhX3VybCIpCiAgICAgICAgaWYgbm90IGNhbmRpZGF0ZS5zb3VyY2VfbmFtZS5zdHJpcCgpOgogICAgICAgICAgICByZXR1cm4gRm9vdGFnZVZhbGlkYXRpb24oRmFsc2UsICJtaXNzaW5nX3NvdXJjZV9uYW1lIikKICAgICAgICByZXR1cm4gRm9vdGFnZVZhbGlkYXRpb24oVHJ1ZSwgIm9mZmljaWFsX2h0dHBzX3NvdXJjZSIpCg==
+from __future__ import annotations
+from dataclasses import dataclass
+from urllib.parse import urlparse
+
+
+@dataclass(frozen=True)
+class FootageCandidate:
+    url: str
+    source_name: str
+    is_official: bool
+
+
+@dataclass(frozen=True)
+class FootageValidation:
+    ok: bool
+    reason: str
+
+
+class FootageValidator:
+    def validate(self, candidate: FootageCandidate) -> FootageValidation:
+        if not candidate.is_official:
+            return FootageValidation(False, "source_not_official")
+        parsed = urlparse(candidate.url)
+        if parsed.scheme != "https" or not parsed.netloc:
+            return FootageValidation(False, "invalid_media_url")
+        if not candidate.source_name.strip():
+            return FootageValidation(False, "missing_source_name")
+        return FootageValidation(True, "official_https_source")

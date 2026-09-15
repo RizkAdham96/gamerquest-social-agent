@@ -1,1 +1,11 @@
-ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gbWVkaWEudHRzIGltcG9ydCBFc3BlYWtUVFMKCgpkZWYgdGVzdF9lc3BlYWtfdHRzX2J1aWxkc19jb21tYW5kX2Zvcl9mcmVuY2hfdm9pY2UodG1wX3BhdGg6IFBhdGgpOgogICAgb3V0cHV0ID0gdG1wX3BhdGggLyAidm9pY2Uud2F2IgogICAgY21kID0gRXNwZWFrVFRTKCkuYnVpbGRfY29tbWFuZCgiQm9uam91ciBHYW1lclF1ZXN0Iiwgb3V0cHV0KQogICAgYXNzZXJ0IGNtZFswXS5lbmRzd2l0aCgiZXNwZWFrIikKICAgIGFzc2VydCAiLXYiIGluIGNtZAogICAgYXNzZXJ0ICJmciIgaW4gY21kCiAgICBhc3NlcnQgc3RyKG91dHB1dCkgaW4gY21kCg==
+from pathlib import Path
+from media.tts import EspeakTTS
+
+
+def test_espeak_tts_builds_command_for_french_voice(tmp_path: Path):
+    output = tmp_path / "voice.wav"
+    cmd = EspeakTTS().build_command("Bonjour GamerQuest", output)
+    assert cmd[0].endswith("espeak")
+    assert "-v" in cmd
+    assert "fr" in cmd
+    assert str(output) in cmd

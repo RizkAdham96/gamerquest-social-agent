@@ -1,1 +1,15 @@
-ZnJvbSBhcHAubW9kZWxzIGltcG9ydCBUb3BpYwoKCmRlZiB0ZXN0X3RvcGljX2FjY2VwdHNfcHVibGlzaGVyX3N0ZWFtX2FwcF9hbmRfb2ZmaWNpYWxfY2hhbm5lbHMoKToKICAgIHRvcGljID0gVG9waWMoCiAgICAgICAgdGl0bGU9IkV4YW1wbGUgR2FtZSB1cGRhdGUiLAogICAgICAgIHVybD0iaHR0cHM6Ly9nYW1lcnF1ZXN0ZnIuY29tL2V4YW1wbGUiLAogICAgICAgIHNvdXJjZT0iR2FtZXJRdWVzdEZSIiwKICAgICAgICBwdWJsaXNoZXI9IkV4YW1wbGUgU3R1ZGlvIiwKICAgICAgICBzdGVhbV9hcHBfaWQ9MTIzNDUsCiAgICAgICAgb2ZmaWNpYWxfY2hhbm5lbF9pZHM9WyJVQy1vZmZpY2lhbCJdLAogICAgKQogICAgYXNzZXJ0IHRvcGljLnB1Ymxpc2hlciA9PSAiRXhhbXBsZSBTdHVkaW8iCiAgICBhc3NlcnQgdG9waWMuc3RlYW1fYXBwX2lkID09IDEyMzQ1CiAgICBhc3NlcnQgdG9waWMub2ZmaWNpYWxfY2hhbm5lbF9pZHMgPT0gWyJVQy1vZmZpY2lhbCJdCg==
+from app.models import Topic
+
+
+def test_topic_accepts_publisher_steam_app_and_official_channels():
+    topic = Topic(
+        title="Example Game update",
+        url="https://gamerquestfr.com/example",
+        source="GamerQuestFR",
+        publisher="Example Studio",
+        steam_app_id=12345,
+        official_channel_ids=["UC-official"],
+    )
+    assert topic.publisher == "Example Studio"
+    assert topic.steam_app_id == 12345
+    assert topic.official_channel_ids == ["UC-official"]

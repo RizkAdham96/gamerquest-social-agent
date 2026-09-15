@@ -1,1 +1,33 @@
-aW1wb3J0IGpzb24KZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmZyb20gZGF0ZXRpbWUgaW1wb3J0IGRhdGV0aW1lLCB0aW1lZGVsdGEsIHRpbWV6b25lCmZyb20gYXBwLm1vZGVscyBpbXBvcnQgVG9waWMKCmNsYXNzIFRvcGljTWVtb3J5OgogICAgZGVmIF9faW5pdF9fKHNlbGYsIHBhdGg6IHN0ciB8IFBhdGgpOgogICAgICAgIHNlbGYucGF0aCA9IFBhdGgocGF0aCkKCiAgICBkZWYgX2xvYWQoc2VsZik6CiAgICAgICAgaWYgbm90IHNlbGYucGF0aC5leGlzdHMoKToKICAgICAgICAgICAgcmV0dXJuIFtdCiAgICAgICAgcmV0dXJuIGpzb24ubG9hZHMoc2VsZi5wYXRoLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKSkKCiAgICBkZWYgX3NhdmUoc2VsZiwgcm93cyk6CiAgICAgICAgc2VsZi5wYXRoLnBhcmVudC5ta2RpcihwYXJlbnRzPVRydWUsIGV4aXN0X29rPVRydWUpCiAgICAgICAgc2VsZi5wYXRoLndyaXRlX3RleHQoanNvbi5kdW1wcyhyb3dzLCBlbnN1cmVfYXNjaWk9RmFsc2UsIGluZGVudD0yKSwgZW5jb2Rpbmc9InV0Zi04IikKCiAgICBkZWYgbWFya19wdWJsaXNoZWQoc2VsZiwgdG9waWM6IFRvcGljLCBwdWJsaXNoZWRfYXQ6IGRhdGV0aW1lIHwgTm9uZSA9IE5vbmUpOgogICAgICAgIHB1Ymxpc2hlZF9hdCA9IHB1Ymxpc2hlZF9hdCBvciBkYXRldGltZS5ub3codGltZXpvbmUudXRjKQogICAgICAgIHJvd3MgPSBzZWxmLl9sb2FkKCkKICAgICAgICByb3dzLmFwcGVuZCh7InNsdWciOiB0b3BpYy5zbHVnLCAidG9waWNfaWQiOiB0b3BpYy50b3BpY19pZCwgInB1Ymxpc2hlZF9hdCI6IHB1Ymxpc2hlZF9hdC5pc29mb3JtYXQoKX0pCiAgICAgICAgc2VsZi5fc2F2ZShyb3dzKQoKICAgIGRlZiBpc19kdXBsaWNhdGUoc2VsZiwgdG9waWM6IFRvcGljLCBsb29rYmFja19kYXlzOiBpbnQgPSAzMCkgLT4gYm9vbDoKICAgICAgICBjdXRvZmYgPSBkYXRldGltZS5ub3codGltZXpvbmUudXRjKSAtIHRpbWVkZWx0YShkYXlzPWxvb2tiYWNrX2RheXMpCiAgICAgICAgZm9yIHJvdyBpbiBzZWxmLl9sb2FkKCk6CiAgICAgICAgICAgIHdoZW4gPSBkYXRldGltZS5mcm9taXNvZm9ybWF0KHJvd1sicHVibGlzaGVkX2F0Il0pCiAgICAgICAgICAgIGlmIHdoZW4udHppbmZvIGlzIE5vbmU6CiAgICAgICAgICAgICAgICB3aGVuID0gd2hlbi5yZXBsYWNlKHR6aW5mbz10aW1lem9uZS51dGMpCiAgICAgICAgICAgIGlmIHdoZW4gPj0gY3V0b2ZmIGFuZCByb3cuZ2V0KCJzbHVnIikgPT0gdG9waWMuc2x1ZzoKICAgICAgICAgICAgICAgIHJldHVybiBUcnVlCiAgICAgICAgcmV0dXJuIEZhbHNlCg==
+import json
+from pathlib import Path
+from datetime import datetime, timedelta, timezone
+from app.models import Topic
+
+class TopicMemory:
+    def __init__(self, path: str | Path):
+        self.path = Path(path)
+
+    def _load(self):
+        if not self.path.exists():
+            return []
+        return json.loads(self.path.read_text(encoding="utf-8"))
+
+    def _save(self, rows):
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(json.dumps(rows, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    def mark_published(self, topic: Topic, published_at: datetime | None = None):
+        published_at = published_at or datetime.now(timezone.utc)
+        rows = self._load()
+        rows.append({"slug": topic.slug, "topic_id": topic.topic_id, "published_at": published_at.isoformat()})
+        self._save(rows)
+
+    def is_duplicate(self, topic: Topic, lookback_days: int = 30) -> bool:
+        cutoff = datetime.now(timezone.utc) - timedelta(days=lookback_days)
+        for row in self._load():
+            when = datetime.fromisoformat(row["published_at"])
+            if when.tzinfo is None:
+                when = when.replace(tzinfo=timezone.utc)
+            if when >= cutoff and row.get("slug") == topic.slug:
+                return True
+        return False

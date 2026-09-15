@@ -1,1 +1,34 @@
-IyBTcHJpbnQgNiDigJQgR2l0SHViIEFjdGlvbnMgb3JjaGVzdHJhdGlvbgoKU3ByaW50IDYgdHVybnMgdGhlIGV4aXN0aW5nIG1vZHVsZXMgaW50byBvbmUgc2NoZWR1bGVkIGVuZC10by1lbmQgam9iIHdoaWxlIGtlZXBpbmcgdGhlIGV4aXN0aW5nIGBnYW1lcnF1ZXN0LWF1dG9tYXRpb25gIHJlcG9zaXRvcnkgY29tcGxldGVseSB1bnRvdWNoZWQuCgojIyBXaGF0IGl0IGRvZXMKCi0gUnVucyBNb25kYXksIFdlZG5lc2RheSwgYW5kIEZyaWRheSBhdCAxNzowMCBVVEMuCi0gUnVucyB0aGUgZnVsbCBweXRlc3Qgc3VpdGUgYmVmb3JlIGNvbnRlbnQgZ2VuZXJhdGlvbi4KLSBMb2FkcyBjYW5kaWRhdGUgdG9waWNzIGZyb20gYEdRX1RPUElDU19VUkxgLgotIFNlbGVjdHMgdGhlIGJlc3QgZWxpZ2libGUgdG9waWMgYW5kIGJ1aWxkcyBhIEZyZW5jaCBzY3JpcHQvY2FwdGlvbi4KLSBGaW5kcy9kb3dubG9hZHMgb2ZmaWNpYWwgZm9vdGFnZSwgcmVuZGVycyBhIDk6MTYgUmVlbCwgRnJlbmNoIHZvaWNlLW92ZXIsIHN1YnRpdGxlcyBhbmQgYXVkaW8uCi0gSW4gZHJ5LXJ1biBtb2RlLCBzdG9wcyBhZnRlciByZW5kZXJpbmcgYW5kIHVwbG9hZHMgdGhlIHJlc3VsdCBhcyBhIEdpdEh1YiBBY3Rpb25zIGFydGlmYWN0LgotIEluIGxpdmUgbW9kZSwgc3RhZ2VzIHRoZSBNUDQgdGVtcG9yYXJpbHkgYXMgYSBwdWJsaWMgR2l0SHViIFJlbGVhc2UgYXNzZXQsIHB1Ymxpc2hlcyBpdCB0aHJvdWdoIE1ldGEsIGFyY2hpdmVzIGl0IHRvIEdvb2dsZSBEcml2ZSwgdGhlbiByZW1vdmVzIHRoZSB0ZW1wb3JhcnkgYXNzZXQuCi0gUGVyc2lzdHMgYHN0YXRlL3B1Ymxpc2hfbG9nLmpzb25gIGJhY2sgdG8gdGhpcyByZXBvIHNvIGR1cGxpY2F0ZSBwcm90ZWN0aW9uIGFuZCB0aGUgcm9sbGluZyAzLVJlZWxzLXBlci03LWRheXMgY2FwIHdvcmsgYWNyb3NzIHdvcmtmbG93IHJ1bnMuCgojIyBSZXF1aXJlZCBHaXRIdWIgY29uZmlndXJhdGlvbiBiZWZvcmUgbGl2ZSBtb2RlCgpSZXBvc2l0b3J5IHZhcmlhYmxlczoKLSBgR1FfTElWRV9QVUJMSVNIYCA9IGBmYWxzZWAgZm9yIHRoZSBmaXJzdCBkcnkgcnVuOyBzd2l0Y2ggdG8gYHRydWVgIG9ubHkgYWZ0ZXIgdmVyaWZpY2F0aW9uLgotIGBHUV9UT1BJQ1NfVVJMYCA9IHB1YmxpYyBKU09OIGVuZHBvaW50IGNvbnRhaW5pbmcgY2FuZGlkYXRlIHRvcGljcy4KLSBgR1FfRFJJVkVfUFVCTElTSEVEX0ZPTERFUl9JRGAgPSBEcml2ZSBmb2xkZXIgdXNlZCBmb3IgcHVibGlzaGVkIFJlZWxzLgotIE9wdGlvbmFsOiBgR1FfTUFYX1JFRUxTX1BFUl9XRUVLYCAoZGVmYXVsdCBgM2ApLCBgR1FfTUlOX1RPUElDX1NDT1JFYCAoZGVmYXVsdCBgNTVgKSwgYEdRX01FVEFfQVBJX1ZFUlNJT05gIChkZWZhdWx0IGB2MjYuMGApLgoKUmVwb3NpdG9yeSBzZWNyZXRzOgotIGBHUV9JTlNUQUdSQU1fVVNFUl9JRGAKLSBgR1FfSU5TVEFHUkFNX0FDQ0VTU19UT0tFTmAKLSBgR1FfR09PR0xFX1NFUlZJQ0VfQUNDT1VOVF9KU09OYCBmb3IgYXV0b25vbW91cyBEcml2ZSB1cGxvYWRzLgotIE9wdGlvbmFsOiBgR1FfWU9VVFVCRV9BUElfS0VZYC4KCkdpdEh1YidzIGJ1aWx0LWluIGBHSVRIVUJfVE9LRU5gIGlzIHVzZWQgZm9yIHRlbXBvcmFyeSBSZWxlYXNlIHN0YWdpbmcgYW5kIGRvZXMgbm90IG5lZWQgdG8gYmUgYWRkZWQgbWFudWFsbHkuCgojIyBTYWZldHkgZ2F0ZQoKVGhlIHNjaGVkdWxlZCB3b3JrZmxvdyByZWZ1c2VzIHRvIHB1Ymxpc2ggbGl2ZSB3aGVuIGBHUV9UT1BJQ1NfVVJMYCBpcyBtaXNzaW5nLiBJdCBuZXZlciB1c2VzIGB0b3BpY3Muc2FtcGxlLmpzb25gIGZvciBhIGxpdmUgcHVibGlzaC4K
+# Sprint 6 — GitHub Actions orchestration
+
+Sprint 6 turns the existing modules into one scheduled end-to-end job while keeping the existing `gamerquest-automation` repository completely untouched.
+
+## What it does
+
+- Runs Monday, Wednesday, and Friday at 17:00 UTC.
+- Runs the full pytest suite before content generation.
+- Loads candidate topics from `GQ_TOPICS_URL`.
+- Selects the best eligible topic and builds a French script/caption.
+- Finds/downloads official footage, renders a 9:16 Reel, French voice-over, subtitles and audio.
+- In dry-run mode, stops after rendering and uploads the result as a GitHub Actions artifact.
+- In live mode, stages the MP4 temporarily as a public GitHub Release asset, publishes it through Meta, archives it to Google Drive, then removes the temporary asset.
+- Persists `state/publish_log.json` back to this repo so duplicate protection and the rolling 3-Reels-per-7-days cap work across workflow runs.
+
+## Required GitHub configuration before live mode
+
+Repository variables:
+- `GQ_LIVE_PUBLISH` = `false` for the first dry run; switch to `true` only after verification.
+- `GQ_TOPICS_URL` = public JSON endpoint containing candidate topics.
+- `GQ_DRIVE_PUBLISHED_FOLDER_ID` = Drive folder used for published Reels.
+- Optional: `GQ_MAX_REELS_PER_WEEK` (default `3`), `GQ_MIN_TOPIC_SCORE` (default `55`), `GQ_META_API_VERSION` (default `v26.0`).
+
+Repository secrets:
+- `GQ_INSTAGRAM_USER_ID`
+- `GQ_INSTAGRAM_ACCESS_TOKEN`
+- `GQ_GOOGLE_SERVICE_ACCOUNT_JSON` for autonomous Drive uploads.
+- Optional: `GQ_YOUTUBE_API_KEY`.
+
+GitHub's built-in `GITHUB_TOKEN` is used for temporary Release staging and does not need to be added manually.
+
+## Safety gate
+
+The scheduled workflow refuses to publish live when `GQ_TOPICS_URL` is missing. It never uses `topics.sample.json` for a live publish.

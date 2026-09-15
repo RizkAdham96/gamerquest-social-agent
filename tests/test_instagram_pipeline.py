@@ -1,1 +1,47 @@
-ZnJvbSBkYXRldGltZSBpbXBvcnQgZGF0ZXRpbWUsIHRpbWV6b25lCmltcG9ydCBweXRlc3QKCmZyb20gc29jaWFsLmluc3RhZ3JhbV9waXBlbGluZSBpbXBvcnQgSW5zdGFncmFtUHVibGlzaFBpcGVsaW5lLCBEdXBsaWNhdGVQdWJsaXNoRXJyb3IsIFdlZWtseUxpbWl0RXJyb3IKZnJvbSBzdG9yYWdlLnB1Ymxpc2hfbG9nIGltcG9ydCBQdWJsaXNoTG9nCgoKY2xhc3MgRmFrZVB1Ymxpc2hlcjoKICAgIGRlZiBfX2luaXRfXyhzZWxmKTogc2VsZi5jYWxscz1bXQogICAgZGVmIGNyZWF0ZV9yZWVsX2NvbnRhaW5lcihzZWxmLCBtZWRpYV91cmwsIGNhcHRpb24sIHNoYXJlX3RvX2ZlZWQ9VHJ1ZSk6CiAgICAgICAgc2VsZi5jYWxscy5hcHBlbmQoKCdjcmVhdGUnLG1lZGlhX3VybCxjYXB0aW9uLHNoYXJlX3RvX2ZlZWQpKTsgcmV0dXJuICdjMTIzJwogICAgZGVmIHdhaXRfdW50aWxfcmVhZHkoc2VsZiwgY29udGFpbmVyX2lkLCAqKmt3YXJncyk6CiAgICAgICAgc2VsZi5jYWxscy5hcHBlbmQoKCd3YWl0Jyxjb250YWluZXJfaWQpKTsgcmV0dXJuIHsnc3RhdHVzX2NvZGUnOidGSU5JU0hFRCd9CiAgICBkZWYgcHVibGlzaF9jb250YWluZXIoc2VsZiwgY29udGFpbmVyX2lkKToKICAgICAgICBzZWxmLmNhbGxzLmFwcGVuZCgoJ3B1Ymxpc2gnLGNvbnRhaW5lcl9pZCkpOyByZXR1cm4gJ20xMjMnCgoKZGVmIHRlc3RfcGlwZWxpbmVfcHVibGlzaGVzX2FuZF9yZWNvcmRzX3Jlc3VsdCh0bXBfcGF0aCk6CiAgICBwdWJsaXNoZXI9RmFrZVB1Ymxpc2hlcigpOyBsb2c9UHVibGlzaExvZyh0bXBfcGF0aC8nbG9nLmpzb24nKQogICAgcGlwZWxpbmU9SW5zdGFncmFtUHVibGlzaFBpcGVsaW5lKHB1Ymxpc2hlcj1wdWJsaXNoZXIscHVibGlzaF9sb2c9bG9nLG1heF9yZWVsc19wZXJfd2Vlaz0zKQogICAgbm93PWRhdGV0aW1lKDIwMjYsOSwxNCwxMiwwLHR6aW5mbz10aW1lem9uZS51dGMpCiAgICByZXN1bHQ9cGlwZWxpbmUucHVibGlzaCh0b3BpY19pZD0ndG9waWMtMScsbWVkaWFfdXJsPSdodHRwczovL2Nkbi9yZWVsLm1wNCcsY2FwdGlvbj0nU2FsdXQnLG5vdz1ub3cpCiAgICBhc3NlcnQgcmVzdWx0Lm1lZGlhX2lkPT0nbTEyMycKICAgIGFzc2VydCByZXN1bHQuY29udGFpbmVyX2lkPT0nYzEyMycKICAgIGFzc2VydCBsb2cuaGFzX3RvcGljKCd0b3BpYy0xJykKICAgIGFzc2VydCBbeFswXSBmb3IgeCBpbiBwdWJsaXNoZXIuY2FsbHNdPT1bJ2NyZWF0ZScsJ3dhaXQnLCdwdWJsaXNoJ10KCgpkZWYgdGVzdF9waXBlbGluZV9ibG9ja3NfZHVwbGljYXRlX2JlZm9yZV9hcGlfY2FsbHModG1wX3BhdGgpOgogICAgcHVibGlzaGVyPUZha2VQdWJsaXNoZXIoKTsgbG9nPVB1Ymxpc2hMb2codG1wX3BhdGgvJ2xvZy5qc29uJykKICAgIG5vdz1kYXRldGltZSgyMDI2LDksMTQsMTIsMCx0emluZm89dGltZXpvbmUudXRjKQogICAgbG9nLnJlY29yZCh0b3BpY19pZD0ndG9waWMtMScsY29udGFpbmVyX2lkPSdjJyxtZWRpYV9pZD0nbScsbWVkaWFfdXJsPSd1JyxwdWJsaXNoZWRfYXQ9bm93KQogICAgcGlwZWxpbmU9SW5zdGFncmFtUHVibGlzaFBpcGVsaW5lKHB1Ymxpc2hlcj1wdWJsaXNoZXIscHVibGlzaF9sb2c9bG9nLG1heF9yZWVsc19wZXJfd2Vlaz0zKQogICAgd2l0aCBweXRlc3QucmFpc2VzKER1cGxpY2F0ZVB1Ymxpc2hFcnJvcik6CiAgICAgICAgcGlwZWxpbmUucHVibGlzaCh0b3BpY19pZD0ndG9waWMtMScsbWVkaWFfdXJsPSdodHRwczovL2Nkbi9uZXcubXA0JyxjYXB0aW9uPSdTYWx1dCcsbm93PW5vdykKICAgIGFzc2VydCBwdWJsaXNoZXIuY2FsbHM9PVtdCgoKZGVmIHRlc3RfcGlwZWxpbmVfZW5mb3JjZXNfd2Vla2x5X2NhcF9iZWZvcmVfYXBpX2NhbGxzKHRtcF9wYXRoKToKICAgIHB1Ymxpc2hlcj1GYWtlUHVibGlzaGVyKCk7IGxvZz1QdWJsaXNoTG9nKHRtcF9wYXRoLydsb2cuanNvbicpCiAgICBub3c9ZGF0ZXRpbWUoMjAyNiw5LDE0LDEyLDAsdHppbmZvPXRpbWV6b25lLnV0YykKICAgIGZvciBpIGluIHJhbmdlKDMpOgogICAgICAgIGxvZy5yZWNvcmQodG9waWNfaWQ9Zid0e2l9Jyxjb250YWluZXJfaWQ9Zidje2l9JyxtZWRpYV9pZD1mJ217aX0nLG1lZGlhX3VybD1mJ3V7aX0nLHB1Ymxpc2hlZF9hdD1ub3cpCiAgICBwaXBlbGluZT1JbnN0YWdyYW1QdWJsaXNoUGlwZWxpbmUocHVibGlzaGVyPXB1Ymxpc2hlcixwdWJsaXNoX2xvZz1sb2csbWF4X3JlZWxzX3Blcl93ZWVrPTMpCiAgICB3aXRoIHB5dGVzdC5yYWlzZXMoV2Vla2x5TGltaXRFcnJvcik6CiAgICAgICAgcGlwZWxpbmUucHVibGlzaCh0b3BpY19pZD0nZnJlc2gnLG1lZGlhX3VybD0naHR0cHM6Ly9jZG4vbmV3Lm1wNCcsY2FwdGlvbj0nU2FsdXQnLG5vdz1ub3cpCiAgICBhc3NlcnQgcHVibGlzaGVyLmNhbGxzPT1bXQo=
+from datetime import datetime, timezone
+import pytest
+
+from social.instagram_pipeline import InstagramPublishPipeline, DuplicatePublishError, WeeklyLimitError
+from storage.publish_log import PublishLog
+
+
+class FakePublisher:
+    def __init__(self): self.calls=[]
+    def create_reel_container(self, media_url, caption, share_to_feed=True):
+        self.calls.append(('create',media_url,caption,share_to_feed)); return 'c123'
+    def wait_until_ready(self, container_id, **kwargs):
+        self.calls.append(('wait',container_id)); return {'status_code':'FINISHED'}
+    def publish_container(self, container_id):
+        self.calls.append(('publish',container_id)); return 'm123'
+
+
+def test_pipeline_publishes_and_records_result(tmp_path):
+    publisher=FakePublisher(); log=PublishLog(tmp_path/'log.json')
+    pipeline=InstagramPublishPipeline(publisher=publisher,publish_log=log,max_reels_per_week=3)
+    now=datetime(2026,9,14,12,0,tzinfo=timezone.utc)
+    result=pipeline.publish(topic_id='topic-1',media_url='https://cdn/reel.mp4',caption='Salut',now=now)
+    assert result.media_id=='m123'
+    assert result.container_id=='c123'
+    assert log.has_topic('topic-1')
+    assert [x[0] for x in publisher.calls]==['create','wait','publish']
+
+
+def test_pipeline_blocks_duplicate_before_api_calls(tmp_path):
+    publisher=FakePublisher(); log=PublishLog(tmp_path/'log.json')
+    now=datetime(2026,9,14,12,0,tzinfo=timezone.utc)
+    log.record(topic_id='topic-1',container_id='c',media_id='m',media_url='u',published_at=now)
+    pipeline=InstagramPublishPipeline(publisher=publisher,publish_log=log,max_reels_per_week=3)
+    with pytest.raises(DuplicatePublishError):
+        pipeline.publish(topic_id='topic-1',media_url='https://cdn/new.mp4',caption='Salut',now=now)
+    assert publisher.calls==[]
+
+
+def test_pipeline_enforces_weekly_cap_before_api_calls(tmp_path):
+    publisher=FakePublisher(); log=PublishLog(tmp_path/'log.json')
+    now=datetime(2026,9,14,12,0,tzinfo=timezone.utc)
+    for i in range(3):
+        log.record(topic_id=f't{i}',container_id=f'c{i}',media_id=f'm{i}',media_url=f'u{i}',published_at=now)
+    pipeline=InstagramPublishPipeline(publisher=publisher,publish_log=log,max_reels_per_week=3)
+    with pytest.raises(WeeklyLimitError):
+        pipeline.publish(topic_id='fresh',media_url='https://cdn/new.mp4',caption='Salut',now=now)
+    assert publisher.calls==[]

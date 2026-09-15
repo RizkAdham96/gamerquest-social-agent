@@ -1,1 +1,56 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwpmcm9tIGRhdGFjbGFzc2VzIGltcG9ydCBkYXRhY2xhc3MKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCmltcG9ydCBzaHV0aWwKaW1wb3J0IHN1YnByb2Nlc3MKCgpAZGF0YWNsYXNzKGZyb3plbj1UcnVlKQpjbGFzcyBSZWVsQnVpbGRTcGVjOgogICAgZm9vdGFnZTogUGF0aAogICAgdm9pY2VvdmVyOiBQYXRoCiAgICBzdWJ0aXRsZXM6IFBhdGgKICAgIG91dHB1dDogUGF0aAogICAgZHVyYXRpb25fc2Vjb25kczogZmxvYXQKICAgIGJhY2tncm91bmRfbXVzaWM6IFBhdGggfCBOb25lID0gTm9uZQoKCmNsYXNzIFJlZWxCdWlsZGVyOgogICAgZGVmIGJ1aWxkX2NvbW1hbmQoc2VsZiwgc3BlYzogUmVlbEJ1aWxkU3BlYykgLT4gbGlzdFtzdHJdOgogICAgICAgIGZmbXBlZyA9IHNodXRpbC53aGljaCgiZmZtcGVnIikgb3IgImZmbXBlZyIKICAgICAgICBzdWJ0aXRsZV9wYXRoID0gc3RyKHNwZWMuc3VidGl0bGVzKS5yZXBsYWNlKCJcXCIsICIvIikucmVwbGFjZSgiOiIsICJcXDoiKQogICAgICAgIHZpZGVvX2ZpbHRlciA9ICgKICAgICAgICAgICAgInNjYWxlPTEwODA6MTkyMDpmb3JjZV9vcmlnaW5hbF9hc3BlY3RfcmF0aW89aW5jcmVhc2UsIgogICAgICAgICAgICAiY3JvcD0xMDgwOjE5MjAsIgogICAgICAgICAgICBmInN1YnRpdGxlcz0ne3N1YnRpdGxlX3BhdGh9Jzpmb3JjZV9zdHlsZT0nQWxpZ25tZW50PTIsTWFyZ2luVj0xODAsRm9udFNpemU9MTgnIgogICAgICAgICkKICAgICAgICBjbWQgPSBbZmZtcGVnLCAiLXkiLCAiLWkiLCBzdHIoc3BlYy5mb290YWdlKSwgIi1pIiwgc3RyKHNwZWMudm9pY2VvdmVyKV0KICAgICAgICBpZiBzcGVjLmJhY2tncm91bmRfbXVzaWM6CiAgICAgICAgICAgIGNtZCArPSBbIi1pIiwgc3RyKHNwZWMuYmFja2dyb3VuZF9tdXNpYyldCiAgICAgICAgICAgIGF1ZGlvX2ZpbHRlciA9ICgKICAgICAgICAgICAgICAgICJbMTphXXZvbHVtZT0xLjBbdm9pY2VdOyIKICAgICAgICAgICAgICAgICJbMjphXXZvbHVtZT0wLjEyW211c2ljXTsiCiAgICAgICAgICAgICAgICAiW3ZvaWNlXVttdXNpY11hbWl4PWlucHV0cz0yOmR1cmF0aW9uPWZpcnN0OmRyb3BvdXRfdHJhbnNpdGlvbj0yW2FvdXRdIgogICAgICAgICAgICApCiAgICAgICAgICAgIGNtZCArPSBbIi1maWx0ZXJfY29tcGxleCIsIGF1ZGlvX2ZpbHRlciwgIi1tYXAiLCAiMDp2OjAiLCAiLW1hcCIsICJbYW91dF0iXQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIGNtZCArPSBbIi1tYXAiLCAiMDp2OjAiLCAiLW1hcCIsICIxOmE6MCJdCiAgICAgICAgY21kICs9IFsKICAgICAgICAgICAgIi12ZiIsIHZpZGVvX2ZpbHRlciwKICAgICAgICAgICAgIi10Iiwgc3RyKHNwZWMuZHVyYXRpb25fc2Vjb25kcyksCiAgICAgICAgICAgICItYzp2IiwgImxpYngyNjQiLAogICAgICAgICAgICAiLXByZXNldCIsICJtZWRpdW0iLAogICAgICAgICAgICAiLXBpeF9mbXQiLCAieXV2NDIwcCIsCiAgICAgICAgICAgICItYzphIiwgImFhYyIsCiAgICAgICAgICAgICItYjphIiwgIjE5MmsiLAogICAgICAgICAgICAiLW1vdmZsYWdzIiwgIitmYXN0c3RhcnQiLAogICAgICAgICAgICBzdHIoc3BlYy5vdXRwdXQpLAogICAgICAgIF0KICAgICAgICByZXR1cm4gY21kCgogICAgZGVmIGJ1aWxkKHNlbGYsIHNwZWM6IFJlZWxCdWlsZFNwZWMpIC0+IFBhdGg6CiAgICAgICAgc3BlYy5vdXRwdXQucGFyZW50Lm1rZGlyKHBhcmVudHM9VHJ1ZSwgZXhpc3Rfb2s9VHJ1ZSkKICAgICAgICBzdWJwcm9jZXNzLnJ1bihzZWxmLmJ1aWxkX2NvbW1hbmQoc3BlYyksIGNoZWNrPVRydWUsIGNhcHR1cmVfb3V0cHV0PVRydWUpCiAgICAgICAgaWYgbm90IHNwZWMub3V0cHV0LmV4aXN0cygpIG9yIHNwZWMub3V0cHV0LnN0YXQoKS5zdF9zaXplID09IDA6CiAgICAgICAgICAgIHJhaXNlIFJ1bnRpbWVFcnJvcigiRkZtcGVnIGRpZCBub3QgcHJvZHVjZSBhIFJlZWwiKQogICAgICAgIHJldHVybiBzcGVjLm91dHB1dAo=
+from __future__ import annotations
+from dataclasses import dataclass
+from pathlib import Path
+import shutil
+import subprocess
+
+
+@dataclass(frozen=True)
+class ReelBuildSpec:
+    footage: Path
+    voiceover: Path
+    subtitles: Path
+    output: Path
+    duration_seconds: float
+    background_music: Path | None = None
+
+
+class ReelBuilder:
+    def build_command(self, spec: ReelBuildSpec) -> list[str]:
+        ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
+        subtitle_path = str(spec.subtitles).replace("\\", "/").replace(":", "\\:")
+        video_filter = (
+            "scale=1080:1920:force_original_aspect_ratio=increase,"
+            "crop=1080:1920,"
+            f"subtitles='{subtitle_path}':force_style='Alignment=2,MarginV=180,FontSize=18'"
+        )
+        cmd = [ffmpeg, "-y", "-i", str(spec.footage), "-i", str(spec.voiceover)]
+        if spec.background_music:
+            cmd += ["-i", str(spec.background_music)]
+            audio_filter = (
+                "[1:a]volume=1.0[voice];"
+                "[2:a]volume=0.12[music];"
+                "[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]"
+            )
+            cmd += ["-filter_complex", audio_filter, "-map", "0:v:0", "-map", "[aout]"]
+        else:
+            cmd += ["-map", "0:v:0", "-map", "1:a:0"]
+        cmd += [
+            "-vf", video_filter,
+            "-t", str(spec.duration_seconds),
+            "-c:v", "libx264",
+            "-preset", "medium",
+            "-pix_fmt", "yuv420p",
+            "-c:a", "aac",
+            "-b:a", "192k",
+            "-movflags", "+faststart",
+            str(spec.output),
+        ]
+        return cmd
+
+    def build(self, spec: ReelBuildSpec) -> Path:
+        spec.output.parent.mkdir(parents=True, exist_ok=True)
+        subprocess.run(self.build_command(spec), check=True, capture_output=True)
+        if not spec.output.exists() or spec.output.stat().st_size == 0:
+            raise RuntimeError("FFmpeg did not produce a Reel")
+        return spec.output

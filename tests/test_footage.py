@@ -1,1 +1,23 @@
-ZnJvbSBtZWRpYS5mb290YWdlX3ZhbGlkYXRvciBpbXBvcnQgRm9vdGFnZUNhbmRpZGF0ZSwgRm9vdGFnZVZhbGlkYXRvcgoKCmRlZiB0ZXN0X2FjY2VwdHNfaHR0cHNfb2ZmaWNpYWxfY2FuZGlkYXRlX3dpdGhfc291cmNlX2xhYmVsKCk6CiAgICBjYW5kaWRhdGUgPSBGb290YWdlQ2FuZGlkYXRlKAogICAgICAgIHVybD0iaHR0cHM6Ly9tZWRpYS5wbGF5c3RhdGlvbi5jb20vdHJhaWxlci5tcDQiLAogICAgICAgIHNvdXJjZV9uYW1lPSJQbGF5U3RhdGlvbiIsCiAgICAgICAgaXNfb2ZmaWNpYWw9VHJ1ZSwKICAgICkKICAgIHJlc3VsdCA9IEZvb3RhZ2VWYWxpZGF0b3IoKS52YWxpZGF0ZShjYW5kaWRhdGUpCiAgICBhc3NlcnQgcmVzdWx0Lm9rIGlzIFRydWUKICAgIGFzc2VydCByZXN1bHQucmVhc29uID09ICJvZmZpY2lhbF9odHRwc19zb3VyY2UiCgoKZGVmIHRlc3RfcmVqZWN0c191bm9mZmljaWFsX2NhbmRpZGF0ZV9ldmVuX3dpdGhfaHR0cHNfdXJsKCk6CiAgICBjYW5kaWRhdGUgPSBGb290YWdlQ2FuZGlkYXRlKAogICAgICAgIHVybD0iaHR0cHM6Ly95b3V0dWJlLmNvbS9yYW5kb21jcmVhdG9yL3ZpZGVvIiwKICAgICAgICBzb3VyY2VfbmFtZT0iUmFuZG9tIENyZWF0b3IiLAogICAgICAgIGlzX29mZmljaWFsPUZhbHNlLAogICAgKQogICAgcmVzdWx0ID0gRm9vdGFnZVZhbGlkYXRvcigpLnZhbGlkYXRlKGNhbmRpZGF0ZSkKICAgIGFzc2VydCByZXN1bHQub2sgaXMgRmFsc2UKICAgIGFzc2VydCByZXN1bHQucmVhc29uID09ICJzb3VyY2Vfbm90X29mZmljaWFsIgo=
+from media.footage_validator import FootageCandidate, FootageValidator
+
+
+def test_accepts_https_official_candidate_with_source_label():
+    candidate = FootageCandidate(
+        url="https://media.playstation.com/trailer.mp4",
+        source_name="PlayStation",
+        is_official=True,
+    )
+    result = FootageValidator().validate(candidate)
+    assert result.ok is True
+    assert result.reason == "official_https_source"
+
+
+def test_rejects_unofficial_candidate_even_with_https_url():
+    candidate = FootageCandidate(
+        url="https://youtube.com/randomcreator/video",
+        source_name="Random Creator",
+        is_official=False,
+    )
+    result = FootageValidator().validate(candidate)
+    assert result.ok is False
+    assert result.reason == "source_not_official"

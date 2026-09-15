@@ -1,1 +1,46 @@
-ZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwpmcm9tIGRhdGFjbGFzc2VzIGltcG9ydCBkYXRhY2xhc3MKCgpAZGF0YWNsYXNzKGZyb3plbj1UcnVlKQpjbGFzcyBTdWJ0aXRsZUN1ZToKICAgIHN0YXJ0OiBmbG9hdAogICAgZW5kOiBmbG9hdAogICAgdGV4dDogc3RyCgoKZGVmIGJ1aWxkX3N1YnRpdGxlX2N1ZXModGV4dDogc3RyLCBkdXJhdGlvbl9zZWNvbmRzOiBmbG9hdCwgbWF4X3dvcmRzOiBpbnQgPSA1KSAtPiBsaXN0W1N1YnRpdGxlQ3VlXToKICAgIHdvcmRzID0gdGV4dC5zcGxpdCgpCiAgICBpZiBub3Qgd29yZHM6CiAgICAgICAgcmV0dXJuIFtdCiAgICBpZiBkdXJhdGlvbl9zZWNvbmRzIDw9IDA6CiAgICAgICAgcmFpc2UgVmFsdWVFcnJvcigiZHVyYXRpb25fc2Vjb25kcyBtdXN0IGJlIHBvc2l0aXZlIikKICAgIGlmIG1heF93b3JkcyA8PSAwOgogICAgICAgIHJhaXNlIFZhbHVlRXJyb3IoIm1heF93b3JkcyBtdXN0IGJlIHBvc2l0aXZlIikKCiAgICBjaHVua3MgPSBbd29yZHNbaTppICsgbWF4X3dvcmRzXSBmb3IgaSBpbiByYW5nZSgwLCBsZW4od29yZHMpLCBtYXhfd29yZHMpXQogICAgY2h1bmtfZHVyYXRpb25zID0gW2R1cmF0aW9uX3NlY29uZHMgKiAobGVuKGNodW5rKSAvIGxlbih3b3JkcykpIGZvciBjaHVuayBpbiBjaHVua3NdCiAgICBjdWVzOiBsaXN0W1N1YnRpdGxlQ3VlXSA9IFtdCiAgICBjdXJzb3IgPSAwLjAKICAgIGZvciBpZHgsIChjaHVuaywgc3BhbikgaW4gZW51bWVyYXRlKHppcChjaHVua3MsIGNodW5rX2R1cmF0aW9ucykpOgogICAgICAgIGVuZCA9IGR1cmF0aW9uX3NlY29uZHMgaWYgaWR4ID09IGxlbihjaHVua3MpIC0gMSBlbHNlIGN1cnNvciArIHNwYW4KICAgICAgICBjdWVzLmFwcGVuZChTdWJ0aXRsZUN1ZShyb3VuZChjdXJzb3IsIDMpLCByb3VuZChlbmQsIDMpLCAiICIuam9pbihjaHVuaykpKQogICAgICAgIGN1cnNvciA9IGVuZAogICAgcmV0dXJuIGN1ZXMKCgpkZWYgX3NydF90aW1lKHNlY29uZHM6IGZsb2F0KSAtPiBzdHI6CiAgICBtaWxsaXNlY29uZHMgPSBtYXgoMCwgcm91bmQoc2Vjb25kcyAqIDEwMDApKQogICAgaG91cnMsIHJlbSA9IGRpdm1vZChtaWxsaXNlY29uZHMsIDNfNjAwXzAwMCkKICAgIG1pbnV0ZXMsIHJlbSA9IGRpdm1vZChyZW0sIDYwXzAwMCkKICAgIHNlY3MsIG1pbGxpcyA9IGRpdm1vZChyZW0sIDEwMDApCiAgICByZXR1cm4gZiJ7aG91cnM6MDJ9OnttaW51dGVzOjAyfTp7c2VjczowMn0se21pbGxpczowM30iCgoKZGVmIGN1ZXNfdG9fc3J0KGN1ZXM6IGxpc3RbU3VidGl0bGVDdWVdKSAtPiBzdHI6CiAgICBibG9ja3MgPSBbXQogICAgZm9yIGlkeCwgY3VlIGluIGVudW1lcmF0ZShjdWVzLCAxKToKICAgICAgICBibG9ja3MuYXBwZW5kKAogICAgICAgICAgICBmIntpZHh9XG57X3NydF90aW1lKGN1ZS5zdGFydCl9IC0tPiB7X3NydF90aW1lKGN1ZS5lbmQpfVxue2N1ZS50ZXh0fSIKICAgICAgICApCiAgICByZXR1cm4gIlxuXG4iLmpvaW4oYmxvY2tzKSArICgiXG4iIGlmIGJsb2NrcyBlbHNlICIiKQo=
+from __future__ import annotations
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class SubtitleCue:
+    start: float
+    end: float
+    text: str
+
+
+def build_subtitle_cues(text: str, duration_seconds: float, max_words: int = 5) -> list[SubtitleCue]:
+    words = text.split()
+    if not words:
+        return []
+    if duration_seconds <= 0:
+        raise ValueError("duration_seconds must be positive")
+    if max_words <= 0:
+        raise ValueError("max_words must be positive")
+
+    chunks = [words[i:i + max_words] for i in range(0, len(words), max_words)]
+    chunk_durations = [duration_seconds * (len(chunk) / len(words)) for chunk in chunks]
+    cues: list[SubtitleCue] = []
+    cursor = 0.0
+    for idx, (chunk, span) in enumerate(zip(chunks, chunk_durations)):
+        end = duration_seconds if idx == len(chunks) - 1 else cursor + span
+        cues.append(SubtitleCue(round(cursor, 3), round(end, 3), " ".join(chunk)))
+        cursor = end
+    return cues
+
+
+def _srt_time(seconds: float) -> str:
+    milliseconds = max(0, round(seconds * 1000))
+    hours, rem = divmod(milliseconds, 3_600_000)
+    minutes, rem = divmod(rem, 60_000)
+    secs, millis = divmod(rem, 1000)
+    return f"{hours:02}:{minutes:02}:{secs:02},{millis:03}"
+
+
+def cues_to_srt(cues: list[SubtitleCue]) -> str:
+    blocks = []
+    for idx, cue in enumerate(cues, 1):
+        blocks.append(
+            f"{idx}\n{_srt_time(cue.start)} --> {_srt_time(cue.end)}\n{cue.text}"
+        )
+    return "\n\n".join(blocks) + ("\n" if blocks else "")
