@@ -1,5 +1,6 @@
 from __future__ import annotations
 from dataclasses import dataclass
+import re
 
 
 @dataclass(frozen=True)
@@ -9,7 +10,23 @@ class SubtitleCue:
     text: str
 
 
-def build_subtitle_cues(text: str, duration_seconds: float, max_words: int = 5) -> list[SubtitleCue]:
+def _phrase_chunks(text: str, max_words: int) -> list[list[str]]:
+    """Keep punctuation boundaries so captions read as phrases, not word buckets."""
+    words = text.split()
+    chunks: list[list[str]] = []
+    current: list[str] = []
+    for word in words:
+        current.append(word)
+        closes_phrase = bool(re.search(r"[.!?;:]$", word))
+        if len(current) >= max_words or closes_phrase:
+            chunks.append(current)
+            current = []
+    if current:
+        chunks.append(current)
+    return chunks
+
+
+def build_subtitle_cues(text: str, duration_seconds: float, max_words: int = 4) -> list[SubtitleCue]:
     words = text.split()
     if not words:
         return []
@@ -18,7 +35,7 @@ def build_subtitle_cues(text: str, duration_seconds: float, max_words: int = 5) 
     if max_words <= 0:
         raise ValueError("max_words must be positive")
 
-    chunks = [words[i:i + max_words] for i in range(0, len(words), max_words)]
+    chunks = _phrase_chunks(text, max_words)
     chunk_durations = [duration_seconds * (len(chunk) / len(words)) for chunk in chunks]
     cues: list[SubtitleCue] = []
     cursor = 0.0
