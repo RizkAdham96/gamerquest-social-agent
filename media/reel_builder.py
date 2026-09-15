@@ -25,17 +25,17 @@ class ReelBuilder:
         subtitle_path = str(spec.subtitles).replace("\\", "/").replace(":", "\\:")
         caption_style = (
             "FontName=DejaVu Sans,"
-            "FontSize=30,"
+            "FontSize=14,"
             "Bold=1,"
             "PrimaryColour=&H00FFFFFF,"
-            "BackColour=&HC0000000,"
+            "BackColour=&H60000000,"
             "BorderStyle=3,"
             "Outline=0,"
             "Shadow=0,"
             "Alignment=2,"
-            "MarginL=110,"
-            "MarginR=110,"
-            "MarginV=300,"
+            "MarginL=24,"
+            "MarginR=24,"
+            "MarginV=48,"
             "Spacing=0.5"
         )
         video_filter = (
