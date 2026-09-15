@@ -10,6 +10,7 @@ class ReelBuildSpec:
     footage: Path
     voiceover: Path
     subtitles: Path
+    brand_logo: Path
     output: Path
     duration_seconds: float
     background_music: Path | None = None
@@ -42,21 +43,36 @@ class ReelBuilder:
             "setsar=1,"
             f"subtitles='{subtitle_path}':force_style='{caption_style}'"
         )
-        cmd = [ffmpeg, "-y", "-i", str(spec.footage), "-i", str(spec.voiceover)]
+        video_filter = (
+            f"[0:v]{video_filter}[base];"
+            "[2:v]scale=150:-1[logo];"
+            "[base][logo]overlay=W-w-48:48:format=auto[vout]"
+        )
+        cmd = [
+            ffmpeg,
+            "-y",
+            "-i",
+            str(spec.footage),
+            "-i",
+            str(spec.voiceover),
+            "-i",
+            str(spec.brand_logo),
+        ]
         if spec.background_music:
             cmd += ["-i", str(spec.background_music)]
             audio_filter = (
                 "[1:a]volume=1.0[voice];"
-                "[2:a]volume=0.10[music];"
+                "[3:a]volume=0.10[music];"
                 "[voice][music]amix=inputs=2:duration=first:dropout_transition=2,"
                 "loudnorm=I=-16:TP=-1.5:LRA=11[aout]"
             )
-            cmd += ["-filter_complex", audio_filter, "-map", "0:v:0", "-map", "[aout]"]
+            filter_complex = f"{video_filter};{audio_filter}"
+            cmd += ["-filter_complex", filter_complex, "-map", "[vout]", "-map", "[aout]"]
         else:
-            cmd += ["-map", "0:v:0", "-map", "1:a:0"]
-            cmd += ["-af", "loudnorm=I=-16:TP=-1.5:LRA=11"]
+            audio_filter = "[1:a]loudnorm=I=-16:TP=-1.5:LRA=11[aout]"
+            filter_complex = f"{video_filter};{audio_filter}"
+            cmd += ["-filter_complex", filter_complex, "-map", "[vout]", "-map", "[aout]"]
         cmd += [
-            "-vf", video_filter,
             "-t", str(spec.duration_seconds),
             "-c:v", "libx264",
             "-preset", "medium",

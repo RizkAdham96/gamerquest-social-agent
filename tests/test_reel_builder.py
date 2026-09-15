@@ -7,6 +7,7 @@ def _spec(tmp_path: Path) -> ReelBuildSpec:
         footage=tmp_path / "clip.mp4",
         voiceover=tmp_path / "voice.wav",
         subtitles=tmp_path / "subtitles.srt",
+        brand_logo=tmp_path / "gamerquest-logo.png",
         output=tmp_path / "reel.mp4",
         duration_seconds=15.0,
     )
@@ -34,3 +35,13 @@ def test_ffmpeg_command_uses_clean_newsroom_caption_treatment(tmp_path: Path):
     assert "drawtext" not in joined
     assert "0x7C4DFF" not in joined
     assert "eq=" not in joined
+
+
+def test_ffmpeg_command_overlays_original_logo_without_recoloring(tmp_path: Path):
+    spec = _spec(tmp_path)
+    joined = " ".join(map(str, ReelBuilder().build_command(spec)))
+    assert str(spec.brand_logo) in joined
+    assert "scale=150:-1[logo]" in joined
+    assert "overlay=W-w-48:48:format=auto" in joined
+    assert "colorchannelmixer" not in joined
+    assert "hue=" not in joined
