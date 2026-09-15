@@ -28,9 +28,9 @@ def test_ffmpeg_command_uses_professional_gamerquest_caption_treatment(tmp_path:
     assert "GAMERQUEST FR" in joined
     assert "BorderStyle=3" in joined
     assert "Bold=1" in joined
-    assert "FontSize=30" in joined
-    assert "MarginL=110" in joined
-    assert "MarginR=110" in joined
-    assert "MarginV=300" in joined
+    assert "FontSize=14" in joined
+    assert "MarginL=24" in joined
+    assert "MarginR=24" in joined
+    assert "MarginV=48" in joined
     assert "drawbox" in joined
     assert "drawtext" in joined
