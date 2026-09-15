@@ -20,7 +20,7 @@ def test_subtitle_chunks_respect_sentence_boundaries():
         max_words=4,
     )
     texts = [cue.text for cue in cues]
-    assert "arrive. Voilà" not in " ".join(texts)
+    assert all("arrive. Voilà" not in cue for cue in texts)
     assert texts[0] == "Une annonce arrive."
     assert texts[1] == "Voilà ce qui change"
 
