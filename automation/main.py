@@ -29,6 +29,15 @@ def env_flag(name: str, default: bool = False) -> bool:
     return value.strip().lower() in TRUE_VALUES
 
 
+def require_preview_mode() -> bool:
+    """Keep external publishing disabled during the quality rebuild."""
+    if env_flag("GQ_LIVE_PUBLISH", False):
+        raise RuntimeError(
+            "Instagram publishing is disabled during Clean Newsroom quality work"
+        )
+    return False
+
+
 def build_drive_store() -> DriveStore | None:
     service_account_file = os.getenv("GQ_GOOGLE_SERVICE_ACCOUNT_FILE", "").strip()
     if service_account_file:
@@ -85,8 +94,8 @@ def main() -> None:
     args = parser.parse_args()
 
     settings = Settings.from_env()
-    live_publish = env_flag("GQ_LIVE_PUBLISH", False)
-    orchestrator = build_publish_orchestrator(settings, args.publish_log) if live_publish else None
+    live_publish = require_preview_mode()
+    orchestrator = None
 
     result = run_once(
         topics_path=args.topics,

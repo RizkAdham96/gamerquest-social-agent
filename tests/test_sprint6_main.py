@@ -1,4 +1,6 @@
-from automation.main import env_flag, build_drive_store
+import pytest
+
+from automation.main import env_flag, build_drive_store, require_preview_mode
 
 
 def test_env_flag_accepts_common_true_values(monkeypatch):
@@ -17,3 +19,9 @@ def test_build_drive_store_returns_none_without_credentials(monkeypatch):
     monkeypatch.delenv('GQ_GOOGLE_SERVICE_ACCOUNT_FILE', raising=False)
     monkeypatch.delenv('GQ_GOOGLE_DRIVE_ACCESS_TOKEN', raising=False)
     assert build_drive_store() is None
+
+
+def test_require_preview_mode_blocks_live_publish(monkeypatch):
+    monkeypatch.setenv("GQ_LIVE_PUBLISH", "true")
+    with pytest.raises(RuntimeError, match="disabled"):
+        require_preview_mode()

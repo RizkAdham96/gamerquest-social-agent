@@ -13,18 +13,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-publish:
+  build-preview:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      GQ_LIVE_PUBLISH: ${{ vars.GQ_LIVE_PUBLISH || 'false' }}
+      GQ_LIVE_PUBLISH: "false"
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
       GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
-      GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
-      GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
       GQ_YOUTUBE_API_KEY: ${{ secrets.GQ_YOUTUBE_API_KEY }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Checkout
@@ -53,16 +50,11 @@ jobs:
         env:
           TOPICS_URL: ${{ vars.GQ_TOPICS_URL }}
         run: |
-          if [ -n "$TOPICS_URL" ]; then
-            curl --fail --location --retry 3 "$TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
-          elif [ "$GQ_LIVE_PUBLISH" = "true" ]; then
-            echo "GQ_TOPICS_URL must be configured before live publishing." >&2
+          if [ -z "$TOPICS_URL" ]; then
+            echo "GQ_TOPICS_URL is required for a real preview." >&2
             exit 1
-          else
-            printf '%s\n' \
-              '[{"title":"GamerQuest dry run","url":"https://gamerquestfr.com/","source":"dry-run","official_footage_url":"https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/big_buck_bunny.mp4","tags":["gaming","news"]}]' \
-              > "$RUNNER_TEMP/topics.json"
           fi
+          curl --fail --location --retry 3 "$TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
 
       - name: Run social agent
         run: |
@@ -79,16 +71,3 @@ jobs:
           path: output/
           if-no-files-found: ignore
           retention-days: 90
-
-      - name: Persist publish state
-        if: ${{ success() && vars.GQ_LIVE_PUBLISH == 'true' }}
-        run: |
-          if git diff --quiet -- state/publish_log.json; then
-            echo "No publish-state change."
-            exit 0
-          fi
-          git config user.name "gamerquest-social-agent[bot]"
-          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
-          git add state/publish_log.json
-          git commit -m "chore: persist Instagram publish state"
-          git push

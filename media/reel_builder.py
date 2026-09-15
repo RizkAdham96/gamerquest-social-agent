@@ -16,9 +16,7 @@ class ReelBuildSpec:
 
 
 class ReelBuilder:
-    """Render a branded, mobile-safe GamerQuest vertical Reel."""
-
-    BRAND_LABEL = "GAMERQUEST FR"
+    """Render a color-faithful Clean Newsroom vertical Reel."""
 
     def build_command(self, spec: ReelBuildSpec) -> list[str]:
         ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
@@ -39,15 +37,9 @@ class ReelBuilder:
             "Spacing=0.5"
         )
         video_filter = (
-            "scale=1080:1920:force_original_aspect_ratio=increase,"
-            "crop=1080:1920,"
+            "scale=w=1080:h=1920:force_original_aspect_ratio=decrease,"
+            "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black,"
             "setsar=1,"
-            "eq=contrast=1.04:saturation=1.08,"
-            "drawbox=x=54:y=90:w=500:h=96:color=black@0.72:t=fill,"
-            "drawbox=x=54:y=90:w=14:h=96:color=0x7C4DFF@1:t=fill,"
-            "drawtext=font='DejaVu Sans':"
-            f"text='{self.BRAND_LABEL}':"
-            "fontcolor=white:fontsize=38:x=88:y=116,"
             f"subtitles='{subtitle_path}':force_style='{caption_style}'"
         )
         cmd = [ffmpeg, "-y", "-i", str(spec.footage), "-i", str(spec.voiceover)]
@@ -56,11 +48,13 @@ class ReelBuilder:
             audio_filter = (
                 "[1:a]volume=1.0[voice];"
                 "[2:a]volume=0.10[music];"
-                "[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]"
+                "[voice][music]amix=inputs=2:duration=first:dropout_transition=2,"
+                "loudnorm=I=-16:TP=-1.5:LRA=11[aout]"
             )
             cmd += ["-filter_complex", audio_filter, "-map", "0:v:0", "-map", "[aout]"]
         else:
             cmd += ["-map", "0:v:0", "-map", "1:a:0"]
+            cmd += ["-af", "loudnorm=I=-16:TP=-1.5:LRA=11"]
         cmd += [
             "-vf", video_filter,
             "-t", str(spec.duration_seconds),
