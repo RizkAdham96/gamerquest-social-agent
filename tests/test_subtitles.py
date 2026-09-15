@@ -13,6 +13,18 @@ def test_subtitle_cues_cover_full_duration_without_overlap():
     assert all(len(cue.text.split()) <= 4 for cue in cues)
 
 
+def test_subtitle_chunks_respect_sentence_boundaries():
+    cues = build_subtitle_cues(
+        "Une annonce arrive. Voilà ce qui change pour les joueurs.",
+        duration_seconds=6.0,
+        max_words=4,
+    )
+    texts = [cue.text for cue in cues]
+    assert "arrive. Voilà" not in " ".join(texts)
+    assert texts[0] == "Une annonce arrive."
+    assert texts[1] == "Voilà ce qui change"
+
+
 def test_srt_contains_numbered_cues_and_timestamp():
     cues = build_subtitle_cues("Une annonce importante arrive maintenant", 4.0, max_words=3)
     srt = cues_to_srt(cues)
