@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from collections.abc import Callable, Iterable
 from urllib.parse import urlencode
 from urllib.request import urlopen
@@ -26,8 +27,12 @@ class SteamTrailerProvider:
         app = payload.get(str(app_id), {})
         if not app.get("success"):
             return []
-        movies = (app.get("data") or {}).get("movies") or []
+
+        data = app.get("data") or {}
+        movies = data.get("movies") or []
         results: list[FootageCandidate] = []
+
+        # Older Steam payloads expose direct MP4 files here.
         for movie in movies:
             mp4 = movie.get("mp4") or {}
             media_url = mp4.get("max") or mp4.get("480")
@@ -40,7 +45,31 @@ class SteamTrailerProvider:
                     is_official=True,
                 )
             )
-        return results
+
+        # Current Steam payloads may expose only DASH/HLS in movies[] while
+        # direct official MP4 gameplay clips remain embedded in the store HTML
+        # fragments. Extract those so the Reel downloader still receives a
+        # genuine direct media URL that ffmpeg can use.
+        html_sources = " ".join(
+            str(data.get(key) or "")
+            for key in ("about_the_game", "detailed_description")
+        )
+        direct_mp4_urls = re.findall(
+            r'https://[^\s"\'<>]+\.mp4(?:\?[^\s"\'<>]*)?',
+            html_sources,
+            flags=re.IGNORECASE,
+        )
+
+        for index, media_url in enumerate(direct_mp4_urls, start=1):
+            results.append(
+                FootageCandidate(
+                    url=media_url,
+                    source_name=f"Steam official gameplay clip {index}",
+                    is_official=True,
+                )
+            )
+
+        return _dedupe(results)
 
 
 class YouTubeOfficialSearch:
