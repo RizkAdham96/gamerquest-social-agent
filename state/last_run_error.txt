@@ -1,4 +1,4 @@
-Run failed at: 2026-09-18T11:58:09Z
+Run failed at: 2026-09-18T12:07:49Z
 
 Traceback (most recent call last):
   File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 32, in post
@@ -49,4 +49,4 @@ Traceback (most recent call last):
     self._raise_meta_error(error)
   File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 24, in _raise_meta_error
     raise RuntimeError(
-RuntimeError: Meta API error | HTTP 400 | {"error":{"message":"Invalid OAuth access token - Cannot parse access token","type":"OAuthException","code":190,"fbtrace_id":"AoedeuwkFM8XQu75Dd2OnDG"}}
+RuntimeError: Meta API error | HTTP 400 | {"error":{"message":"Invalid OAuth access token - Cannot parse access token","type":"OAuthException","code":190,"fbtrace_id":"AnVDl87UTThMz4VyyFPG-h1"}}
