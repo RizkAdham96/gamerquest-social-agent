@@ -9,11 +9,6 @@ on:
         default: false
         type: boolean
 
-  # One-shot live trigger used only for the requested immediate Reel publish.
-  push:
-    paths:
-      - "trigger-live-reel-now.txt"
-
   schedule:
     - cron: "0 17 * * 1,3,5"
 
