@@ -93,11 +93,38 @@ jobs:
           fi
 
       - name: Run social agent
+        id: run_agent
+        shell: bash
         run: |
+          mkdir -p output
+          set +e
           python -m automation.main \
             --topics "$RUNNER_TEMP/topics.json" \
             --output-dir output \
-            --publish-log state/publish_log.json
+            --publish-log state/publish_log.json \
+            2>&1 | tee output/social-agent.log
+          STATUS=${PIPESTATUS[0]}
+          echo "exit_code=$STATUS" >> "$GITHUB_OUTPUT"
+          exit "$STATUS"
+
+      - name: Persist failure diagnosis
+        if: ${{ failure() && steps.run_agent.outcome == 'failure' }}
+        shell: bash
+        run: |
+          mkdir -p state
+          {
+            echo "Run failed at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            tail -n 160 output/social-agent.log
+          } > state/last_run_error.txt
+
+          git config user.name "gamerquest-social-agent[bot]"
+          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
+          git add state/last_run_error.txt
+          git commit -m "chore: persist Reel failure diagnosis" || exit 0
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
 
       - name: Upload generated Reel for inspection
         if: always()
