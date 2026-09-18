@@ -45,3 +45,33 @@ def test_discovery_prefers_explicit_then_steam_then_youtube():
     discovery = OfficialFootageDiscovery()
     result = discovery.discover(topic)
     assert result[0].url == "https://publisher.example/trailer.mp4"
+
+
+def test_steam_provider_extracts_embedded_mp4_when_movies_have_no_mp4_field():
+    payload = {
+        "2369390": {
+            "success": True,
+            "data": {
+                "movies": [
+                    {
+                        "name": "Launch Trailer",
+                        "hls_h264": "https://video.akamai.steamstatic.com/master.m3u8",
+                    }
+                ],
+                "about_the_game": (
+                    '<video><source src="https://shared.akamai.steamstatic.com/'
+                    'store_item_assets/steam/apps/2369390/extras/gameplay.mp4?t=123" '
+                    'type="video/mp4"></video>'
+                ),
+            },
+        }
+    }
+
+    provider = SteamTrailerProvider(fetch_json=lambda url: payload)
+    results = provider.search(2369390)
+
+    assert [item.url for item in results] == [
+        "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/extras/gameplay.mp4?t=123"
+    ]
+    assert results[0].is_official is True
+    assert results[0].source_name == "Steam official gameplay clip 1"
