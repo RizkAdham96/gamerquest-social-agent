@@ -1,26 +1,7 @@
-Run failed at: 2026-09-18T11:56:40Z
+Run failed at: 2026-09-18T11:58:09Z
 
 Traceback (most recent call last):
-  File "<frozen runpy>", line 198, in _run_module_as_main
-  File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 112, in <module>
-    main()
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 91, in main
-    result = run_once(
-             ^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 74, in run_once
-    published = publish_orchestrator.publish_reel(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/publish_orchestrator.py", line 21, in publish_reel
-    published=self.instagram_pipeline.publish(topic_id=topic_id,media_url=staged.public_url,caption=caption)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_pipeline.py", line 53, in publish
-    container_id = self.publisher.create_reel_container(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 67, in create_reel_container
-    response = self.transport.post(
-               ^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 19, in post
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 32, in post
     with urlopen(request, timeout=60) as response:
          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 215, in urlopen
@@ -41,3 +22,31 @@ Traceback (most recent call last):
   File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 639, in http_error_default
     raise HTTPError(req.full_url, code, msg, hdrs, fp)
 urllib.error.HTTPError: HTTP Error 400: Bad Request
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 112, in <module>
+    main()
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 91, in main
+    result = run_once(
+             ^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 74, in run_once
+    published = publish_orchestrator.publish_reel(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/publish_orchestrator.py", line 21, in publish_reel
+    published=self.instagram_pipeline.publish(topic_id=topic_id,media_url=staged.public_url,caption=caption)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_pipeline.py", line 53, in publish
+    container_id = self.publisher.create_reel_container(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 85, in create_reel_container
+    response = self.transport.post(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 35, in post
+    self._raise_meta_error(error)
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 24, in _raise_meta_error
+    raise RuntimeError(
+RuntimeError: Meta API error | HTTP 400 | {"error":{"message":"Invalid OAuth access token - Cannot parse access token","type":"OAuthException","code":190,"fbtrace_id":"AoedeuwkFM8XQu75Dd2OnDG"}}
