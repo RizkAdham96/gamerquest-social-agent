@@ -2,6 +2,12 @@ name: GamerQuest Social Agent
 
 on:
   workflow_dispatch:
+    inputs:
+      publish_to_instagram:
+        description: "Publish this Reel to Instagram"
+        required: true
+        default: false
+        type: boolean
   schedule:
     - cron: "0 17 * * 1,3,5"
 
@@ -17,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      GQ_LIVE_PUBLISH: ${{ vars.GQ_LIVE_PUBLISH || 'false' }}
+      GQ_LIVE_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (vars.GQ_LIVE_PUBLISH || 'false') }}
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
       GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
@@ -48,6 +54,25 @@ jobs:
 
       - name: Verify test suite
         run: pytest -q
+
+      - name: Show publishing mode
+        run: |
+          echo "GQ_LIVE_PUBLISH=$GQ_LIVE_PUBLISH"
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            echo "This run WILL publish a Reel to Instagram."
+          else
+            echo "This run is DRY-RUN only and will not publish."
+          fi
+
+      - name: Validate live publishing configuration
+        if: ${{ env.GQ_LIVE_PUBLISH == 'true' }}
+        env:
+          TOPICS_URL: ${{ vars.GQ_TOPICS_URL }}
+        run: |
+          test -n "$GQ_INSTAGRAM_USER_ID" || (echo "Missing GQ_INSTAGRAM_USER_ID secret" >&2; exit 1)
+          test -n "$GQ_INSTAGRAM_ACCESS_TOKEN" || (echo "Missing GQ_INSTAGRAM_ACCESS_TOKEN secret" >&2; exit 1)
+          test -n "$TOPICS_URL" || (echo "Missing GQ_TOPICS_URL repository variable" >&2; exit 1)
+          echo "Instagram live-publish configuration is present."
 
       - name: Load candidate topics
         env:
@@ -81,7 +106,7 @@ jobs:
           retention-days: 90
 
       - name: Persist publish state
-        if: ${{ success() && vars.GQ_LIVE_PUBLISH == 'true' }}
+        if: ${{ success() && env.GQ_LIVE_PUBLISH == 'true' }}
         run: |
           if git diff --quiet -- state/publish_log.json; then
             echo "No publish-state change."
