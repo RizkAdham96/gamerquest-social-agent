@@ -8,6 +8,12 @@ on:
         required: true
         default: false
         type: boolean
+
+  # One-shot live trigger used only for the requested immediate Reel publish.
+  push:
+    paths:
+      - "trigger-live-reel-now.txt"
+
   schedule:
     - cron: "0 17 * * 1,3,5"
 
@@ -23,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      GQ_LIVE_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (vars.GQ_LIVE_PUBLISH || 'false') }}
+      GQ_LIVE_PUBLISH: ${{ github.event_name == 'push' && 'true' || (github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (vars.GQ_LIVE_PUBLISH || 'false')) }}
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
       GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
@@ -66,12 +72,9 @@ jobs:
 
       - name: Validate live publishing configuration
         if: ${{ env.GQ_LIVE_PUBLISH == 'true' }}
-        env:
-          TOPICS_URL: ${{ vars.GQ_TOPICS_URL }}
         run: |
           test -n "$GQ_INSTAGRAM_USER_ID" || (echo "Missing GQ_INSTAGRAM_USER_ID secret" >&2; exit 1)
           test -n "$GQ_INSTAGRAM_ACCESS_TOKEN" || (echo "Missing GQ_INSTAGRAM_ACCESS_TOKEN secret" >&2; exit 1)
-          test -n "$TOPICS_URL" || (echo "Missing GQ_TOPICS_URL repository variable" >&2; exit 1)
           echo "Instagram live-publish configuration is present."
 
       - name: Load candidate topics
@@ -80,13 +83,13 @@ jobs:
         run: |
           if [ -n "$TOPICS_URL" ]; then
             curl --fail --location --retry 3 "$TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
-          elif [ "$GQ_LIVE_PUBLISH" = "true" ]; then
-            echo "GQ_TOPICS_URL must be configured before live publishing." >&2
-            exit 1
+            echo "Loaded topics from GQ_TOPICS_URL."
+          elif [ -f "topics.live.json" ]; then
+            cp topics.live.json "$RUNNER_TEMP/topics.json"
+            echo "Loaded topics from repository fallback topics.live.json."
           else
-            printf '%s\n' \
-              '[{"title":"GamerQuest dry run","url":"https://gamerquestfr.com/","source":"dry-run","official_footage_url":"https://raw.githubusercontent.com/mediaelement/mediaelement-files/master/big_buck_bunny.mp4","tags":["gaming","news"]}]' \
-              > "$RUNNER_TEMP/topics.json"
+            echo "No live topics source is available." >&2
+            exit 1
           fi
 
       - name: Run social agent
