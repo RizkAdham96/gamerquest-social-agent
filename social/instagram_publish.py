@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import time
 from typing import Protocol, Callable
+from urllib.error import HTTPError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
@@ -13,17 +14,34 @@ class MetaTransport(Protocol):
 
 
 class UrllibMetaTransport:
+    @staticmethod
+    def _raise_meta_error(error: HTTPError) -> None:
+        try:
+            body = error.read().decode("utf-8", errors="replace")
+        except Exception:
+            body = ""
+        detail = body.strip() or str(error.reason or "")
+        raise RuntimeError(
+            f"Meta API error | HTTP {error.code} | {detail}"
+        ) from error
+
     def post(self, url: str, params: dict[str, str]) -> dict:
         data = urlencode(params).encode("utf-8")
         request = Request(url, data=data, method="POST")
-        with urlopen(request, timeout=60) as response:
-            return json.loads(response.read().decode("utf-8"))
+        try:
+            with urlopen(request, timeout=60) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except HTTPError as error:
+            self._raise_meta_error(error)
 
     def get(self, url: str, params: dict[str, str]) -> dict:
         full_url = f"{url}?{urlencode(params)}"
         request = Request(full_url, method="GET")
-        with urlopen(request, timeout=30) as response:
-            return json.loads(response.read().decode("utf-8"))
+        try:
+            with urlopen(request, timeout=30) as response:
+                return json.loads(response.read().decode("utf-8"))
+        except HTTPError as error:
+            self._raise_meta_error(error)
 
 
 class ContainerStatusError(RuntimeError):
