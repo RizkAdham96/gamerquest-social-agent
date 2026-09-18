@@ -1,1 +1,1 @@
-trigger live Instagram Reel after Steam MP4 fix
+trigger live Instagram Reel with diagnostics
