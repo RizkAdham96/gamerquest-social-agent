@@ -76,14 +76,17 @@ jobs:
         env:
           TOPICS_URL: ${{ vars.GQ_TOPICS_URL }}
         run: |
+          DEFAULT_TOPICS_URL="https://raw.githubusercontent.com/RizkAdham96/gamerquest-automation/main/gamerquest-deals-feed.json"
           if [ -n "$TOPICS_URL" ]; then
             curl --fail --location --retry 3 "$TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
             echo "Loaded topics from GQ_TOPICS_URL."
-          elif [ -f "topics.live.json" ]; then
+          elif curl --fail --location --retry 3 "$DEFAULT_TOPICS_URL" -o "$RUNNER_TEMP/topics.json"; then
+            echo "Loaded fresh topics from GamerQuest automation feed."
+          elif [ "$GQ_LIVE_PUBLISH" != "true" ] && [ -f "topics.live.json" ]; then
             cp topics.live.json "$RUNNER_TEMP/topics.json"
-            echo "Loaded topics from repository fallback topics.live.json."
+            echo "Live feed unavailable; using static topic only for dry-run inspection."
           else
-            echo "No live topics source is available." >&2
+            echo "Refusing live publish from stale topics.live.json." >&2
             exit 1
           fi
 
