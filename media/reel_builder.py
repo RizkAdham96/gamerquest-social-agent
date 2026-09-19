@@ -19,6 +19,7 @@ class ReelBuilder:
     """Render a branded, subject-safe GamerQuest vertical Reel."""
 
     BRAND_LABEL = "GAMERQUEST FR"
+    TRAILER_INTRO_SKIP_SECONDS = 7.0
 
     def build_command(self, spec: ReelBuildSpec) -> list[str]:
         ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
