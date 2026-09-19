@@ -1,4 +1,29 @@
-Run failed at: 2026-09-19T15:09:55Z
+Run failed at: 2026-09-19T19:37:10Z
+
+Traceback (most recent call last):
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 32, in post
+    with urlopen(request, timeout=60) as response:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.12.14/x64/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 400: Bad Request
+
+The above exception was the direct cause of the following exception:
 
 Traceback (most recent call last):
   File "<frozen runpy>", line 198, in _run_module_as_main
@@ -8,9 +33,20 @@ Traceback (most recent call last):
   File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 91, in main
     result = run_once(
              ^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 58, in run_once
-    produced = production_pipeline.produce(
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/media/production_pipeline.py", line 54, in produce
-    raise RuntimeError("no official footage candidates found")
-RuntimeError: no official footage candidates found
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 74, in run_once
+    published = publish_orchestrator.publish_reel(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/publish_orchestrator.py", line 21, in publish_reel
+    published=self.instagram_pipeline.publish(topic_id=topic_id,media_url=staged.public_url,caption=caption)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_pipeline.py", line 53, in publish
+    container_id = self.publisher.create_reel_container(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 101, in create_reel_container
+    response = self.transport.post(
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 35, in post
+    self._raise_meta_error(error)
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 24, in _raise_meta_error
+    raise RuntimeError(
+RuntimeError: Meta API error | HTTP 400 | {"error":{"message":"Unsupported post request. Object with ID '1869320114450045' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https:\/\/developers.facebook.com\/docs\/graph-api","type":"GraphMethodException","code":100,"error_subcode":33,"fbtrace_id":"AmlkCxxTC1xDYS2cTqW-B0U"}}
