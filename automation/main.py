@@ -67,6 +67,7 @@ def build_publish_orchestrator(settings: Settings, publish_log: PublishLog) -> P
         publisher=publisher,
         publish_log=publish_log,
         max_reels_per_week=settings.max_reels_per_week,
+        bypass_weekly_limit=env_flag("GQ_BYPASS_WEEKLY_LIMIT", False),
     )
     return PublishOrchestrator(
         stage=GitHubReleaseStage(repository=github_repository, token=github_token),
