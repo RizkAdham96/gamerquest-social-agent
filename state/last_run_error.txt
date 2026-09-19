@@ -1,19 +1,19 @@
-Run failed at: 2026-09-19T21:11:24Z
+Run failed at: 2026-09-19T21:29:09Z
 
 Traceback (most recent call last):
   File "<frozen runpy>", line 198, in _run_module_as_main
   File "<frozen runpy>", line 88, in _run_code
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 114, in <module>
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 115, in <module>
     main()
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 92, in main
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 93, in main
     result = run_once(
              ^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 89, in run_once
-    published = publish_orchestrator.publish_reel(
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/publish_orchestrator.py", line 21, in publish_reel
-    published=self.instagram_pipeline.publish(topic_id=topic_id,media_url=staged.public_url,caption=caption)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_pipeline.py", line 51, in publish
-    raise WeeklyLimitError(f"weekly Reel limit of {self.max_reels_per_week} reached")
-social.instagram_pipeline.WeeklyLimitError: weekly Reel limit of 3 reached
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 68, in run_once
+    prepared = prepare_content(
+               ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 42, in prepare_content
+    selected = select_best_topic(
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/agent/select.py", line 17, in select_best_topic
+    raise ValueError("no eligible topics")
+ValueError: no eligible topics
