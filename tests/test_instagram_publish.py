@@ -73,3 +73,30 @@ def test_publish_container_calls_media_publish():
     url, params=t.posts[0]
     assert url == 'https://graph.facebook.com/v26.0/ig-user-1/media_publish'
     assert params['creation_id']=='container-123'
+
+
+@pytest.mark.parametrize(
+    "raw_token",
+    [
+        '"secret-token"',
+        "'secret-token'",
+        "Bearer secret-token",
+        "access_token=secret-token",
+        "  secret-token  ",
+    ],
+)
+def test_access_token_copy_paste_wrappers_are_normalized(raw_token):
+    transport = FakeTransport()
+    publisher = InstagramPublisher(
+        ig_user_id="ig-user-1",
+        access_token=raw_token,
+        api_version="v26.0",
+        transport=transport,
+        sleep_fn=lambda _: None,
+    )
+    publisher.create_reel_container(
+        "https://cdn.example/reel.mp4",
+        "Bonjour",
+    )
+    _, params = transport.posts[0]
+    assert params["access_token"] == "secret-token"
