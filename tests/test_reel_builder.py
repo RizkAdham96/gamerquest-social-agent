@@ -19,6 +19,8 @@ def test_ffmpeg_command_targets_vertical_h264_aac_mp4(tmp_path: Path):
     assert cmd[0].endswith("ffmpeg")
     assert "1080:1920" in joined
     assert "libx264" in cmd
+    assert "-ss" in cmd
+    assert str(ReelBuilder.TRAILER_INTRO_SKIP_SECONDS) in cmd
     assert "aac" in cmd
     assert str(spec.output) == cmd[-1]
 
