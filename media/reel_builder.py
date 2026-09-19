@@ -55,7 +55,7 @@ class ReelBuilder:
             f"subtitles='{subtitle_path}':force_style='{caption_style}'[vout]"
         )
 
-        cmd = [ffmpeg, "-y", "-i", str(spec.footage), "-i", str(spec.voiceover)]
+        cmd = [ffmpeg, "-y", "-ss", str(self.TRAILER_INTRO_SKIP_SECONDS), "-i", str(spec.footage), "-i", str(spec.voiceover)]
         if spec.background_music:
             cmd += ["-i", str(spec.background_music)]
             audio_filter = (
