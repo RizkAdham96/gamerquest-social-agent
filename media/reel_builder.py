@@ -24,6 +24,8 @@ class ReelBuilder:
     def build_command(self, spec: ReelBuildSpec) -> list[str]:
         ffmpeg = shutil.which("ffmpeg") or "ffmpeg"
         subtitle_path = str(spec.subtitles).replace("\\", "/").replace(":", "\\:")
+        end_start = max(0.0, spec.duration_seconds - 2.2)
+
         caption_style = (
             "FontName=DejaVu Sans,"
             "FontSize=20,"
@@ -51,7 +53,13 @@ class ReelBuilder:
             "drawtext=font='DejaVu Sans':"
             f"text='{self.BRAND_LABEL}':"
             "fontcolor=white:fontsize=34:x=82:y=113,"
-            f"subtitles='{subtitle_path}':force_style='{caption_style}'[vout]"
+            f"subtitles='{subtitle_path}':force_style='{caption_style}',"
+            f"drawbox=x=0:y=0:w=1080:h=1920:color=black@0.78:t=fill:enable='gte(t,{end_start:.2f})',"
+            f"drawtext=font='DejaVu Sans':text='GAMERQUEST FR':fontcolor=white:fontsize=72:"
+            f"x=(w-text_w)/2:y=760:enable='gte(t,{end_start:.2f})',"
+            f"drawtext=font='DejaVu Sans':text='L essentiel du gaming, sans perdre ton temps.':"
+            f"fontcolor=white:fontsize=34:x=(w-text_w)/2:y=870:enable='gte(t,{end_start:.2f})',"
+            f"fade=t=out:st={max(0.0, spec.duration_seconds - 0.35):.2f}:d=0.35[vout]"
         )
 
         cmd = [ffmpeg, "-y", "-ss", str(self.TRAILER_INTRO_SKIP_SECONDS), "-i", str(spec.footage), "-i", str(spec.voiceover)]
