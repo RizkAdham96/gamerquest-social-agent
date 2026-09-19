@@ -16,7 +16,7 @@ class ReelBuildSpec:
 
 
 class ReelBuilder:
-    """Render a branded, mobile-safe GamerQuest vertical Reel."""
+    """Render a branded, subject-safe GamerQuest vertical Reel."""
 
     BRAND_LABEL = "GAMERQUEST FR"
 
@@ -25,31 +25,36 @@ class ReelBuilder:
         subtitle_path = str(spec.subtitles).replace("\\", "/").replace(":", "\\:")
         caption_style = (
             "FontName=DejaVu Sans,"
-            "FontSize=14,"
+            "FontSize=20,"
             "Bold=1,"
             "PrimaryColour=&H00FFFFFF,"
-            "BackColour=&H60000000,"
+            "BackColour=&H78000000,"
             "BorderStyle=3,"
             "Outline=0,"
             "Shadow=0,"
             "Alignment=2,"
-            "MarginL=24,"
-            "MarginR=24,"
-            "MarginV=48,"
-            "Spacing=0.5"
+            "MarginL=52,"
+            "MarginR=52,"
+            "MarginV=118,"
+            "Spacing=0.4"
         )
+
+        # Preserve the complete source frame in the sharp foreground. A separate
+        # blurred background fills 9:16, so landscape gameplay is never stretched
+        # or destructively center-cropped.
         video_filter = (
-            "scale=1080:1920:force_original_aspect_ratio=increase,"
-            "crop=1080:1920,"
-            "setsar=1,"
-            "eq=contrast=1.04:saturation=1.08,"
-            "drawbox=x=54:y=90:w=500:h=96:color=black@0.72:t=fill,"
-            "drawbox=x=54:y=90:w=14:h=96:color=0x7C4DFF@1:t=fill,"
+            "[0:v]split=2[vbg][vfg];"
+            "[vbg]scale=1080:1920:force_original_aspect_ratio=increase,"
+            "crop=1080:1920,gblur=sigma=28[bg];"
+            "[vfg]scale=1080:1920:force_original_aspect_ratio=decrease[fg];"
+            "[bg][fg]overlay=(W-w)/2:(H-h)/2,setsar=1,"
+            "drawbox=x=54:y=90:w=430:h=86:color=black@0.70:t=fill,"
             "drawtext=font='DejaVu Sans':"
             f"text='{self.BRAND_LABEL}':"
-            "fontcolor=white:fontsize=38:x=88:y=116,"
-            f"subtitles='{subtitle_path}':force_style='{caption_style}'"
+            "fontcolor=white:fontsize=34:x=82:y=113,"
+            f"subtitles='{subtitle_path}':force_style='{caption_style}'[vout]"
         )
+
         cmd = [ffmpeg, "-y", "-i", str(spec.footage), "-i", str(spec.voiceover)]
         if spec.background_music:
             cmd += ["-i", str(spec.background_music)]
@@ -58,11 +63,12 @@ class ReelBuilder:
                 "[2:a]volume=0.10[music];"
                 "[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]"
             )
-            cmd += ["-filter_complex", audio_filter, "-map", "0:v:0", "-map", "[aout]"]
+            filter_complex = video_filter + ";" + audio_filter
+            cmd += ["-filter_complex", filter_complex, "-map", "[vout]", "-map", "[aout]"]
         else:
-            cmd += ["-map", "0:v:0", "-map", "1:a:0"]
+            cmd += ["-filter_complex", video_filter, "-map", "[vout]", "-map", "1:a:0"]
+
         cmd += [
-            "-vf", video_filter,
             "-t", str(spec.duration_seconds),
             "-c:v", "libx264",
             "-preset", "medium",
