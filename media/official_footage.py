@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import html
 import json
 import re
 from collections.abc import Callable, Iterable
@@ -50,17 +51,32 @@ class SteamTrailerProvider:
         # direct official MP4 gameplay clips remain embedded in the store HTML
         # fragments. Extract those so the Reel downloader still receives a
         # genuine direct media URL that ffmpeg can use.
-        html_sources = " ".join(
-            str(data.get(key) or "")
-            for key in ("about_the_game", "detailed_description")
-        )
-        direct_mp4_urls = re.findall(
-            r'https://[^\s"\'<>]+\.mp4(?:\?[^\s"\'<>]*)?',
+        # Steam frequently changes where it exposes official gameplay clips.
+        # Some appdetails responses have no movies[].mp4 entry even though
+        # direct MP4/WebM clips are present elsewhere in the payload. Walk
+        # every nested string and extract direct Steam-hosted video URLs.
+        text_parts: list[str] = []
+
+        def collect_strings(value):
+            if isinstance(value, dict):
+                for nested in value.values():
+                    collect_strings(nested)
+            elif isinstance(value, list):
+                for nested in value:
+                    collect_strings(nested)
+            elif isinstance(value, str):
+                text_parts.append(html.unescape(value).replace("\\/", "/"))
+
+        collect_strings(data)
+        html_sources = " ".join(text_parts)
+
+        direct_video_urls = re.findall(
+            r'https://[^\s"\'<>]+\.(?:mp4|webm)(?:\?[^\s"\'<>]*)?',
             html_sources,
             flags=re.IGNORECASE,
         )
 
-        for index, media_url in enumerate(direct_mp4_urls, start=1):
+        for index, media_url in enumerate(direct_video_urls, start=1):
             results.append(
                 FootageCandidate(
                     url=media_url,
