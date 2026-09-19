@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import pytest
 
 from automation.runner import prepare_content, run_once
 
@@ -51,6 +52,16 @@ def test_prepare_content_builds_selected_topic_script_and_caption(tmp_path):
     assert prepared.topic.title == 'Free game official'
     assert prepared.script.voiceover
     assert 'Free game official' in prepared.caption
+
+
+def test_prepare_content_refuses_already_published_topic(tmp_path):
+    first = prepare_content(_topics_file(tmp_path), min_score=0)
+    with pytest.raises(ValueError, match='no eligible topics'):
+        prepare_content(
+            _topics_file(tmp_path),
+            min_score=0,
+            published_topic_ids={first.topic.topic_id},
+        )
 
 
 def test_run_once_dry_run_produces_reel_without_publishing(tmp_path):
