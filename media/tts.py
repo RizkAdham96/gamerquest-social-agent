@@ -5,7 +5,7 @@ import subprocess
 
 
 class EspeakTTS:
-    def __init__(self, voice: str = "fr", speed: int = 165):
+    def __init__(self, voice: str = "fr", speed: int = 155):
         self.voice = voice
         self.speed = speed
 
@@ -22,9 +22,17 @@ class EspeakTTS:
 
 
 class EdgeTTS:
-    def __init__(self, voice: str = "fr-FR-DeniseNeural", rate: str = "+0%"):
+    def __init__(
+        self,
+        voice: str = "fr-FR-HenriNeural",
+        rate: str = "-8%",
+        pitch: str = "-2Hz",
+        volume: str = "+0%",
+    ):
         self.voice = voice
         self.rate = rate
+        self.pitch = pitch
+        self.volume = volume
 
     def build_command(self, text: str, output: Path) -> list[str]:
         binary = shutil.which("edge-tts") or "edge-tts"
@@ -33,6 +41,8 @@ class EdgeTTS:
             "--voice",
             self.voice,
             f"--rate={self.rate}",
+            f"--pitch={self.pitch}",
+            f"--volume={self.volume}",
             "--text",
             text,
             "--write-media",
