@@ -28,9 +28,19 @@ class RunResult:
     drive_file_id: str | None = None
 
 
-def prepare_content(topics_path: str | Path, *, min_score: int = 0, recent_slugs: set[str] | None = None) -> PreparedContent:
+def prepare_content(
+    topics_path: str | Path,
+    *,
+    min_score: int = 0,
+    recent_slugs: set[str] | None = None,
+    published_topic_ids: set[str] | None = None,
+) -> PreparedContent:
+    topics = load_topics_from_json(topics_path)
+    published_topic_ids = published_topic_ids or set()
+    topics = [topic for topic in topics if topic.topic_id not in published_topic_ids]
+
     selected = select_best_topic(
-        load_topics_from_json(topics_path),
+        topics,
         recent_slugs=recent_slugs or set(),
         min_score=min_score,
     )
@@ -53,8 +63,13 @@ def run_once(
     min_score: int = 0,
     duration_seconds: float = 16.0,
     background_music: str | Path | None = None,
+    published_topic_ids: set[str] | None = None,
 ) -> RunResult:
-    prepared = prepare_content(topics_path, min_score=min_score)
+    prepared = prepare_content(
+        topics_path,
+        min_score=min_score,
+        published_topic_ids=published_topic_ids,
+    )
     produced = production_pipeline.produce(
         topic=prepared.topic,
         voiceover_text=prepared.script.voiceover,
