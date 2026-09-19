@@ -1,6 +1,10 @@
 name: GamerQuest Social Agent
 
 on:
+  push:
+    branches:
+      - main
+
   workflow_dispatch:
     inputs:
       publish_to_instagram:
@@ -24,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      GQ_LIVE_PUBLISH: ${{ github.event_name == 'push' && 'true' || (github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (vars.GQ_LIVE_PUBLISH || 'false')) }}
+      GQ_LIVE_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (github.event_name == 'schedule' && (vars.GQ_LIVE_PUBLISH || 'false') || 'false') }}
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
       GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
