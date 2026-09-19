@@ -25,11 +25,11 @@ def test_ffmpeg_command_targets_vertical_h264_aac_mp4(tmp_path: Path):
     assert str(spec.output) == cmd[-1]
 
 
-def test_ffmpeg_command_preserves_foreground_and_uses_blurred_fill(tmp_path: Path):
+def test_ffmpeg_command_forces_true_vertical_fill(tmp_path: Path):
     joined = " ".join(map(str, ReelBuilder().build_command(_spec(tmp_path))))
-    assert "force_original_aspect_ratio=decrease" in joined
-    assert "gblur=sigma=28" in joined
-    assert "[bg][fg]overlay=" in joined
+    assert "force_original_aspect_ratio=increase" in joined
+    assert "crop=1080:1920" in joined
+    assert "setsar=1" in joined
     assert "eq=" not in joined
 
 
