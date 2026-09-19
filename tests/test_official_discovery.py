@@ -75,3 +75,25 @@ def test_steam_provider_extracts_embedded_mp4_when_movies_have_no_mp4_field():
     ]
     assert results[0].is_official is True
     assert results[0].source_name == "Steam official gameplay clip 1"
+
+
+def test_steam_provider_finds_nested_direct_video_urls_anywhere_in_payload():
+    payload = {
+        "2369390": {
+            "success": True,
+            "data": {
+                "movies": [{"name": "Trailer", "hls_h264": "https://video.example/master.m3u8"}],
+                "nested": {
+                    "blocks": [
+                        '<video><source src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/extras/a.webm?t=1"></video>',
+                        '<source src="https:\\/\\/shared.akamai.steamstatic.com\\/store_item_assets\\/steam\\/apps\\/2369390\\/extras\\/b.mp4?t=2">',
+                    ]
+                },
+            },
+        }
+    }
+    provider = SteamTrailerProvider(fetch_json=lambda url: payload)
+    results = provider.search(2369390)
+    urls = [item.url for item in results]
+    assert "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/extras/a.webm?t=1" in urls
+    assert "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/extras/b.mp4?t=2" in urls
