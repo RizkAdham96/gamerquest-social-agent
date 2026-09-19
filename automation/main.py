@@ -50,7 +50,7 @@ def build_production_pipeline() -> ReelProductionPipeline:
     )
 
 
-def build_publish_orchestrator(settings: Settings, publish_log_path: Path) -> PublishOrchestrator:
+def build_publish_orchestrator(settings: Settings, publish_log: PublishLog) -> PublishOrchestrator:
     github_repository = os.getenv("GITHUB_REPOSITORY", "").strip()
     github_token = os.getenv("GITHUB_TOKEN", "").strip()
     if not github_repository:
@@ -65,7 +65,7 @@ def build_publish_orchestrator(settings: Settings, publish_log_path: Path) -> Pu
     )
     instagram_pipeline = InstagramPublishPipeline(
         publisher=publisher,
-        publish_log=PublishLog(publish_log_path),
+        publish_log=publish_log,
         max_reels_per_week=settings.max_reels_per_week,
     )
     return PublishOrchestrator(
@@ -86,7 +86,8 @@ def main() -> None:
 
     settings = Settings.from_env()
     live_publish = env_flag("GQ_LIVE_PUBLISH", False)
-    orchestrator = build_publish_orchestrator(settings, args.publish_log) if live_publish else None
+    publish_log = PublishLog(args.publish_log)
+    orchestrator = build_publish_orchestrator(settings, publish_log) if live_publish else None
 
     result = run_once(
         topics_path=args.topics,
@@ -97,6 +98,7 @@ def main() -> None:
         min_score=settings.min_topic_score,
         duration_seconds=args.duration,
         background_music=os.getenv("GQ_BACKGROUND_MUSIC", "").strip() or None,
+        published_topic_ids=publish_log.topic_ids(),
     )
     print(json.dumps({
         "status": result.status,
