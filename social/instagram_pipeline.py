@@ -24,12 +24,20 @@ class PublishResult:
 
 
 class InstagramPublishPipeline:
-    def __init__(self, *, publisher, publish_log: PublishLog, max_reels_per_week: int = 3):
+    def __init__(
+        self,
+        *,
+        publisher,
+        publish_log: PublishLog,
+        max_reels_per_week: int = 3,
+        bypass_weekly_limit: bool = False,
+    ):
         if max_reels_per_week < 1:
             raise ValueError("max_reels_per_week must be >= 1")
         self.publisher = publisher
         self.publish_log = publish_log
         self.max_reels_per_week = max_reels_per_week
+        self.bypass_weekly_limit = bypass_weekly_limit
 
     def publish(
         self,
@@ -47,7 +55,10 @@ class InstagramPublishPipeline:
         if self.publish_log.has_topic(topic_id):
             raise DuplicatePublishError(f"topic {topic_id} has already been published")
 
-        if self.publish_log.count_since(now - timedelta(days=7)) >= self.max_reels_per_week:
+        if (
+            not self.bypass_weekly_limit
+            and self.publish_log.count_since(now - timedelta(days=7)) >= self.max_reels_per_week
+        ):
             raise WeeklyLimitError(f"weekly Reel limit of {self.max_reels_per_week} reached")
 
         container_id = self.publisher.create_reel_container(
