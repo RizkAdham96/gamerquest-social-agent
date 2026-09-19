@@ -26,6 +26,13 @@ class PublishLog:
     def has_topic(self, topic_id: str) -> bool:
         return any(record.get("topic_id") == topic_id for record in self._load())
 
+    def topic_ids(self) -> set[str]:
+        return {
+            str(record["topic_id"])
+            for record in self._load()
+            if record.get("topic_id")
+        }
+
     def count_since(self, since: datetime) -> int:
         if since.tzinfo is None:
             since = since.replace(tzinfo=timezone.utc)
