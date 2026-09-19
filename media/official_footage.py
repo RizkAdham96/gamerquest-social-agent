@@ -17,7 +17,7 @@ def _fetch_json(url: str) -> dict:
 
 
 class SteamTrailerProvider:
-    """Best-effort discovery of direct trailer files exposed by a Steam store page."""
+    """Best-effort discovery of direct or streamable official Steam trailers."""
 
     def __init__(self, fetch_json: Callable[[str], dict] = _fetch_json):
         self.fetch_json = fetch_json
@@ -33,28 +33,35 @@ class SteamTrailerProvider:
         movies = data.get("movies") or []
         results: list[FootageCandidate] = []
 
-        # Older Steam payloads expose direct MP4 files here.
         for movie in movies:
+            name = movie.get("name") or "Official trailer"
             mp4 = movie.get("mp4") or {}
-            media_url = mp4.get("max") or mp4.get("480")
-            if not media_url:
-                continue
-            results.append(
-                FootageCandidate(
-                    url=media_url,
-                    source_name=f"Steam: {movie.get('name') or 'Official trailer'}",
-                    is_official=True,
+            direct_url = mp4.get("max") or mp4.get("480")
+            if direct_url:
+                results.append(
+                    FootageCandidate(
+                        url=direct_url,
+                        source_name=f"Steam: {name}",
+                        is_official=True,
+                    )
                 )
-            )
 
-        # Current Steam payloads may expose only DASH/HLS in movies[] while
-        # direct official MP4 gameplay clips remain embedded in the store HTML
-        # fragments. Extract those so the Reel downloader still receives a
-        # genuine direct media URL that ffmpeg can use.
-        # Steam frequently changes where it exposes official gameplay clips.
-        # Some appdetails responses have no movies[].mp4 entry even though
-        # direct MP4/WebM clips are present elsewhere in the payload. Walk
-        # every nested string and extract direct Steam-hosted video URLs.
+            # Steam's current API commonly exposes HLS/DASH instead of direct MP4.
+            # FFmpeg can ingest these official manifests directly.
+            for label, media_url in (
+                ("HLS", movie.get("hls_h264")),
+                ("DASH", movie.get("dash_h264")),
+            ):
+                if media_url:
+                    results.append(
+                        FootageCandidate(
+                            url=media_url,
+                            source_name=f"Steam {label}: {name}",
+                            is_official=True,
+                        )
+                    )
+
+        # Some payloads also embed direct MP4/WebM gameplay clips elsewhere.
         text_parts: list[str] = []
 
         def collect_strings(value):
