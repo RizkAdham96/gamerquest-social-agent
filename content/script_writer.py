@@ -34,5 +34,6 @@ def build_reel_script(topic: Topic) -> ReelScript:
         cta = "Tu en penses quoi ?"
 
     beats = [hook, context, impact]
-    voiceover = " ".join(beats + [cta])
+    # Short sentences and punctuation produce much more natural neural speech.
+    voiceover = "  ".join(beats + [cta])
     return ReelScript(language="fr", hook=hook, beats=beats, cta=cta, voiceover=voiceover[:420])
