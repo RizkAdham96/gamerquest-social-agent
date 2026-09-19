@@ -30,6 +30,7 @@ jobs:
     env:
       GQ_LIVE_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (github.event_name == 'schedule' && (vars.GQ_LIVE_PUBLISH || 'false') || 'false') }}
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
+      GQ_BYPASS_WEEKLY_LIMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_to_instagram && 'true' || 'false' }}
       GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
       GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
