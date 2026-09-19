@@ -45,3 +45,19 @@ def test_pipeline_enforces_weekly_cap_before_api_calls(tmp_path):
     with pytest.raises(WeeklyLimitError):
         pipeline.publish(topic_id='fresh',media_url='https://cdn/new.mp4',caption='Salut',now=now)
     assert publisher.calls==[]
+
+
+def test_pipeline_can_bypass_weekly_cap_for_manual_test(tmp_path):
+    publisher=FakePublisher(); log=PublishLog(tmp_path/'log.json')
+    now=datetime(2026,9,14,12,0,tzinfo=timezone.utc)
+    for i in range(3):
+        log.record(topic_id=f't{i}',container_id=f'c{i}',media_id=f'm{i}',media_url=f'u{i}',published_at=now)
+    pipeline=InstagramPublishPipeline(
+        publisher=publisher,
+        publish_log=log,
+        max_reels_per_week=3,
+        bypass_weekly_limit=True,
+    )
+    result=pipeline.publish(topic_id='fresh',media_url='https://cdn/new.mp4',caption='Salut',now=now)
+    assert result.media_id=='m123'
+    assert [x[0] for x in publisher.calls]==['create','wait','publish']
