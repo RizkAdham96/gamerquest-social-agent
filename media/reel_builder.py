@@ -40,15 +40,13 @@ class ReelBuilder:
             "Spacing=0.4"
         )
 
-        # Preserve the complete source frame in the sharp foreground. A separate
-        # blurred background fills 9:16, so landscape gameplay is never stretched
-        # or destructively center-cropped.
+        # Force a true full-screen 9:16 Reel. The source keeps its aspect ratio,
+        # then center-crops to 1080x1920 so Instagram receives a genuine vertical video.
         video_filter = (
-            "[0:v]split=2[vbg][vfg];"
-            "[vbg]scale=1080:1920:force_original_aspect_ratio=increase,"
-            "crop=1080:1920,gblur=sigma=28[bg];"
-            "[vfg]scale=1080:1920:force_original_aspect_ratio=decrease[fg];"
-            "[bg][fg]overlay=(W-w)/2:(H-h)/2,setsar=1,"
+            "[0:v]"
+            "scale=1080:1920:force_original_aspect_ratio=increase,"
+            "crop=1080:1920,"
+            "setsar=1,"
             "drawbox=x=54:y=90:w=430:h=86:color=black@0.70:t=fill,"
             "drawtext=font='DejaVu Sans':"
             f"text='{self.BRAND_LABEL}':"
