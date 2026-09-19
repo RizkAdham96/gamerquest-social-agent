@@ -48,6 +48,22 @@ class ContainerStatusError(RuntimeError):
     pass
 
 
+def _normalize_access_token(value: str) -> str:
+    """Normalize common copy/paste wrappers without ever logging the token."""
+    token = str(value or "").strip()
+
+    if len(token) >= 2 and token[0] == token[-1] and token[0] in {"'", '"'}:
+        token = token[1:-1].strip()
+
+    if token.lower().startswith("bearer "):
+        token = token[7:].strip()
+
+    if token.lower().startswith("access_token="):
+        token = token.split("=", 1)[1].strip()
+
+    return token
+
+
 class InstagramPublisher:
     GRAPH_BASE = "https://graph.facebook.com"
 
@@ -61,7 +77,7 @@ class InstagramPublisher:
         sleep_fn: Callable[[float], None] | None = None,
     ):
         self.ig_user_id = ig_user_id.strip()
-        self.access_token = access_token.strip()
+        self.access_token = _normalize_access_token(access_token)
         self.api_version = api_version.strip() or "v26.0"
         self.transport = transport or UrllibMetaTransport()
         self.sleep_fn = sleep_fn or time.sleep
