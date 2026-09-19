@@ -1,4 +1,4 @@
-Run failed at: 2026-09-19T19:37:10Z
+Run failed at: 2026-09-19T19:42:01Z
 
 Traceback (most recent call last):
   File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 32, in post
@@ -49,4 +49,4 @@ Traceback (most recent call last):
     self._raise_meta_error(error)
   File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 24, in _raise_meta_error
     raise RuntimeError(
-RuntimeError: Meta API error | HTTP 400 | {"error":{"message":"Unsupported post request. Object with ID '1869320114450045' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https:\/\/developers.facebook.com\/docs\/graph-api","type":"GraphMethodException","code":100,"error_subcode":33,"fbtrace_id":"AmlkCxxTC1xDYS2cTqW-B0U"}}
+RuntimeError: Meta API error | HTTP 400 | {"error":{"message":"Unsupported post request. Object with ID '1869320114450045' does not exist, cannot be loaded due to missing permissions, or does not support this operation. Please read the Graph API documentation at https:\/\/developers.facebook.com\/docs\/graph-api","type":"GraphMethodException","code":100,"error_subcode":33,"fbtrace_id":"AeGT70_PeLAFm0hvA2y3VM8"}}
