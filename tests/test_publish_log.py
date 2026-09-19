@@ -11,6 +11,7 @@ def test_publish_log_records_and_blocks_duplicate_topic(tmp_path):
     log.record(topic_id='topic-1', container_id='c1', media_id='m1', media_url='https://cdn/reel.mp4', published_at=now)
     assert log.has_topic('topic-1') is True
     assert log.has_topic('topic-2') is False
+    assert log.topic_ids() == {'topic-1'}
     fresh=PublishLog(path)
     assert fresh.has_topic('topic-1') is True
 
