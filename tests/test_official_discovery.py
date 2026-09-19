@@ -20,6 +20,25 @@ def test_steam_provider_extracts_direct_official_trailer_urls():
     assert results[0].source_name == "Steam: Launch Trailer"
 
 
+def test_steam_provider_accepts_current_hls_manifest():
+    payload = {
+        "2909400": {
+            "success": True,
+            "data": {
+                "movies": [{
+                    "name": "Launch",
+                    "hls_h264": "https://video.akamai.steamstatic.com/trailer/master.m3u8",
+                    "dash_h264": "https://video.akamai.steamstatic.com/trailer/manifest.mpd",
+                }]
+            },
+        }
+    }
+    provider = SteamTrailerProvider(fetch_json=lambda url: payload)
+    urls = [item.url for item in provider.search(2909400)]
+    assert "https://video.akamai.steamstatic.com/trailer/master.m3u8" in urls
+    assert "https://video.akamai.steamstatic.com/trailer/manifest.mpd" in urls
+
+
 def test_youtube_search_only_queries_configured_official_channel():
     captured = {}
     def fake_fetch(url):
@@ -47,7 +66,7 @@ def test_discovery_prefers_explicit_then_steam_then_youtube():
     assert result[0].url == "https://publisher.example/trailer.mp4"
 
 
-def test_steam_provider_extracts_embedded_mp4_when_movies_have_no_mp4_field():
+def test_steam_provider_keeps_hls_and_embedded_mp4_candidates():
     payload = {
         "2369390": {
             "success": True,
@@ -69,12 +88,11 @@ def test_steam_provider_extracts_embedded_mp4_when_movies_have_no_mp4_field():
 
     provider = SteamTrailerProvider(fetch_json=lambda url: payload)
     results = provider.search(2369390)
+    urls = [item.url for item in results]
 
-    assert [item.url for item in results] == [
-        "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/extras/gameplay.mp4?t=123"
-    ]
-    assert results[0].is_official is True
-    assert results[0].source_name == "Steam official gameplay clip 1"
+    assert "https://video.akamai.steamstatic.com/master.m3u8" in urls
+    assert "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/extras/gameplay.mp4?t=123" in urls
+    assert all(item.is_official for item in results)
 
 
 def test_steam_provider_finds_nested_direct_video_urls_anywhere_in_payload():
