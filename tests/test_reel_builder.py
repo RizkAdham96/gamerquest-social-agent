@@ -23,14 +23,22 @@ def test_ffmpeg_command_targets_vertical_h264_aac_mp4(tmp_path: Path):
     assert str(spec.output) == cmd[-1]
 
 
+def test_ffmpeg_command_preserves_foreground_and_uses_blurred_fill(tmp_path: Path):
+    joined = " ".join(map(str, ReelBuilder().build_command(_spec(tmp_path))))
+    assert "force_original_aspect_ratio=decrease" in joined
+    assert "gblur=sigma=28" in joined
+    assert "[bg][fg]overlay=" in joined
+    assert "eq=" not in joined
+
+
 def test_ffmpeg_command_uses_professional_gamerquest_caption_treatment(tmp_path: Path):
     joined = " ".join(map(str, ReelBuilder().build_command(_spec(tmp_path))))
     assert "GAMERQUEST FR" in joined
     assert "BorderStyle=3" in joined
     assert "Bold=1" in joined
-    assert "FontSize=14" in joined
-    assert "MarginL=24" in joined
-    assert "MarginR=24" in joined
-    assert "MarginV=48" in joined
+    assert "FontSize=20" in joined
+    assert "MarginL=52" in joined
+    assert "MarginR=52" in joined
+    assert "MarginV=118" in joined
     assert "drawbox" in joined
     assert "drawtext" in joined
