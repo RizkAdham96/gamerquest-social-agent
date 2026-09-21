@@ -8,7 +8,6 @@ import subprocess
 @dataclass(frozen=True)
 class ReelBuildSpec:
     footage: Path
-    voiceover: Path
     subtitles: Path
     output: Path
     duration_seconds: float
@@ -62,18 +61,14 @@ class ReelBuilder:
             f"fade=t=out:st={max(0.0, spec.duration_seconds - 0.35):.2f}:d=0.35[vout]"
         )
 
-        cmd = [ffmpeg, "-y", "-ss", str(self.TRAILER_INTRO_SKIP_SECONDS), "-i", str(spec.footage), "-i", str(spec.voiceover)]
+        cmd = [ffmpeg, "-y", "-ss", str(self.TRAILER_INTRO_SKIP_SECONDS), "-i", str(spec.footage)]
         if spec.background_music:
-            cmd += ["-i", str(spec.background_music)]
-            audio_filter = (
-                "[1:a]volume=1.0[voice];"
-                "[2:a]volume=0.10[music];"
-                "[voice][music]amix=inputs=2:duration=first:dropout_transition=2[aout]"
-            )
-            filter_complex = video_filter + ";" + audio_filter
-            cmd += ["-filter_complex", filter_complex, "-map", "[vout]", "-map", "[aout]"]
-        else:
+            cmd += ["-stream_loop", "-1", "-i", str(spec.background_music)]
             cmd += ["-filter_complex", video_filter, "-map", "[vout]", "-map", "1:a:0"]
+        else:
+            # No AI narration: keep the official trailer/game audio.
+            # The optional map avoids failing on rare silent trailers.
+            cmd += ["-filter_complex", video_filter, "-map", "[vout]", "-map", "0:a?"]
 
         cmd += [
             "-t", str(spec.duration_seconds),
