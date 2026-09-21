@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "state/**"
 
   workflow_dispatch:
     inputs:
@@ -121,12 +123,16 @@ jobs:
             tail -n 160 output/social-agent.log
           } > state/last_run_error.txt
 
+          cp state/last_run_error.txt "$RUNNER_TEMP/last_run_error.txt"
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p state
+          cp "$RUNNER_TEMP/last_run_error.txt" state/last_run_error.txt
+
           git config user.name "gamerquest-social-agent[bot]"
           git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
           git add state/last_run_error.txt
           git commit -m "chore: persist Reel failure diagnosis" || exit 0
-          git fetch origin main
-          git rebase origin/main
           git push origin HEAD:main
 
       - name: Upload generated Reel for inspection
@@ -145,10 +151,18 @@ jobs:
             echo "No publish-state change."
             exit 0
           fi
+          cp state/publish_log.json "$RUNNER_TEMP/publish_log.json"
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p state
+          cp "$RUNNER_TEMP/publish_log.json" state/publish_log.json
+
           git config user.name "gamerquest-social-agent[bot]"
           git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
           git add state/publish_log.json
+          if git diff --cached --quiet; then
+            echo "Publish state is already current on main."
+            exit 0
+          fi
           git commit -m "chore: persist Instagram publish state"
-          git fetch origin main
-          git rebase origin/main
           git push origin HEAD:main
