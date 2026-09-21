@@ -4,16 +4,10 @@ from typing import Protocol
 
 from content.subtitle_writer import build_subtitle_cues, cues_to_srt
 from .reel_builder import ReelBuildSpec, ReelBuilder
-from .tts import SmartFrenchTTS
-
-
-class TTSProvider(Protocol):
-    def synthesize(self, text: str, output: Path) -> Path: ...
 
 
 class ReelPipeline:
-    def __init__(self, tts: TTSProvider | None = None, builder: ReelBuilder | None = None):
-        self.tts = tts or SmartFrenchTTS()
+    def __init__(self, builder: ReelBuilder | None = None):
         self.builder = builder or ReelBuilder()
 
     def render(
@@ -31,17 +25,14 @@ class ReelPipeline:
             raise ValueError("voiceover_text must not be empty")
         output_dir.mkdir(parents=True, exist_ok=True)
 
-        voice_path = output_dir / "voice.wav"
         subtitle_path = output_dir / "subtitles.srt"
         reel_path = output_dir / "reel.mp4"
 
-        self.tts.synthesize(voiceover_text, voice_path)
         cues = build_subtitle_cues(voiceover_text, duration_seconds, max_words=4)
         subtitle_path.write_text(cues_to_srt(cues), encoding="utf-8")
 
         spec = ReelBuildSpec(
             footage=footage,
-            voiceover=voice_path,
             subtitles=subtitle_path,
             output=reel_path,
             duration_seconds=duration_seconds,
