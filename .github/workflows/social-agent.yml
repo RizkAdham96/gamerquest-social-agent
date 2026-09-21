@@ -110,6 +110,12 @@ jobs:
             2>&1 | tee output/social-agent.log
           STATUS=${PIPESTATUS[0]}
           echo "exit_code=$STATUS" >> "$GITHUB_OUTPUT"
+
+          if [ "$STATUS" -ne 0 ] && grep -q "no eligible topics" output/social-agent.log; then
+            echo "No eligible Reel topics right now; treating this run as a clean skip."
+            exit 0
+          fi
+
           exit "$STATUS"
 
       - name: Persist failure diagnosis
