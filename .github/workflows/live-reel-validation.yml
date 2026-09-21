@@ -55,16 +55,22 @@ jobs:
           test -n "$GQ_INSTAGRAM_USER_ID" || (echo "Missing GQ_INSTAGRAM_USER_ID secret" >&2; exit 1)
           test -n "$GQ_INSTAGRAM_ACCESS_TOKEN" || (echo "Missing GQ_INSTAGRAM_ACCESS_TOKEN secret" >&2; exit 1)
 
-      - name: Load candidate topics
-        env:
-          TOPICS_URL: ${{ vars.GQ_TOPICS_URL }}
+      - name: Create fresh validation topic
         run: |
-          DEFAULT_TOPICS_URL="https://raw.githubusercontent.com/RizkAdham96/gamerquest-automation/main/gamerquest-deals-feed.json"
-          if [ -n "$TOPICS_URL" ]; then
-            curl --fail --location --retry 3 "$TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
-          else
-            curl --fail --location --retry 3 "$DEFAULT_TOPICS_URL" -o "$RUNNER_TEMP/topics.json"
-          fi
+          cat > "$RUNNER_TEMP/topics.json" <<'JSON'
+          [
+            {
+              "title": "Wo Long 2 : Wings of Ember – date de sortie, plateformes, prix et démo alpha",
+              "url": "https://gamerquestfr.com/wo-long-2-wings-of-ember-date-sortie-plateformes-prix/",
+              "source": "GamerQuest FR",
+              "published_at": "2026-09-19T00:00:00+00:00",
+              "publisher": "KOEI TECMO GAMES CO., LTD.",
+              "steam_app_id": 4507990,
+              "tags": ["wo-long-2", "team-ninja", "koei-tecmo", "ps5", "xbox", "pc", "action-rpg"],
+              "summary": "Wo Long 2 : Wings of Ember sortira le 4 mars 2027 sur PS5, Xbox Series X|S et PC, avec une démo alpha disponible en septembre 2026."
+            }
+          ]
+          JSON
 
       - name: Publish Reel
         id: run_agent
