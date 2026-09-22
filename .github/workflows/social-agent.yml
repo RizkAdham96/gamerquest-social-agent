@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     env:
-      GQ_LIVE_PUBLISH: ${{ github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || (github.event_name == 'schedule' && (vars.GQ_LIVE_PUBLISH || 'false') || 'false') }}
+      GQ_LIVE_PUBLISH: ${{ github.event_name == 'schedule' && 'true' || (github.event_name == 'workflow_dispatch' && (inputs.publish_to_instagram && 'true' || 'false') || 'false') }}
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '3' }}
       GQ_BYPASS_WEEKLY_LIMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.publish_to_instagram && 'true' || 'false' }}
       GQ_MIN_TOPIC_SCORE: ${{ vars.GQ_MIN_TOPIC_SCORE || '55' }}
