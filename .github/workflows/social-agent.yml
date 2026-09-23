@@ -16,7 +16,10 @@ on:
         type: boolean
 
   schedule:
-    - cron: "0 17 * * 1,3,5"
+    # Avoid the top-of-hour GitHub Actions congestion window. The second
+    # opportunity is a guarded fallback; it will not publish twice in one day.
+    - cron: "17 17 * * 1,3,5"
+    - cron: "47 18 * * 1,3,5"
 
 permissions:
   contents: write
@@ -102,6 +105,43 @@ jobs:
         shell: bash
         run: |
           mkdir -p output
+
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            if python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          path = Path("state/publish_log.json")
+          today = datetime.now(timezone.utc).date()
+
+          if path.exists():
+              try:
+                  entries = json.loads(path.read_text(encoding="utf-8"))
+              except Exception:
+                  entries = []
+              for entry in entries if isinstance(entries, list) else []:
+                  stamp = str(entry.get("published_at", "")).strip()
+                  if not stamp:
+                      continue
+                  try:
+                      published = datetime.fromisoformat(
+                          stamp.replace("Z", "+00:00")
+                      ).astimezone(timezone.utc)
+                  except ValueError:
+                      continue
+                  if published.date() == today:
+                      raise SystemExit(0)
+
+          raise SystemExit(1)
+          PY
+            then
+              echo "A Reel was already published today; guarded fallback exits cleanly."
+              echo "exit_code=0" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
           set +e
           python -m automation.main \
             --topics "$RUNNER_TEMP/topics.json" \
