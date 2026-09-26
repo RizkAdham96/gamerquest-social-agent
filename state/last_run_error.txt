@@ -1,0 +1,16 @@
+Run failed at: 2026-09-26T18:46:42Z
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 115, in <module>
+    main()
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/main.py", line 93, in main
+    result = run_once(
+             ^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/runner.py", line 73, in run_once
+    produced = production_pipeline.produce(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/media/production_pipeline.py", line 54, in produce
+    raise RuntimeError("no official footage candidates found")
+RuntimeError: no official footage candidates found
