@@ -2,6 +2,24 @@
 
 Standalone Instagram growth automation for GamerQuestFR. This repository is intentionally isolated from the existing carousel automation.
 
+## Daily hidden-gem Reel
+
+The scheduled workflow now publishes one Reel a day about a well-reviewed, little-known Steam game:
+
+- `agent/hidden_gems.py` picks the game (SteamSpy review data, then the Steam store page for facts and the official trailer) and skips anything already published or unsuitable.
+- `content/gem_script.py` asks Groq for a short French description built only from the store facts, validates it, and fact-checks it with a second call. The game's name, price and review figures are filled in by code, never by the model.
+- `content/word_captions.py` shows the script one word at a time.
+- `media/gem_reel.py` renders 1080x1920: the trailer centred over a blurred fill, with the game's own audio.
+- `automation/daily_reel.py` ties it together. A game that fails any check is skipped and the next one is tried; nothing is published unless every check passed.
+
+Required repository secrets: `GROQ_API_KEY`, `GQ_INSTAGRAM_USER_ID`, `GQ_INSTAGRAM_ACCESS_TOKEN`.
+
+Dry run (renders `output/reel.mp4` and `output/script.json`, publishes nothing):
+
+```bash
+GROQ_API_KEY=... python -m automation.daily_reel --output-dir output
+```
+
 ## Sprint 1
 
 Implemented foundations:
