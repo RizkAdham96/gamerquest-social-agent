@@ -1,0 +1,158 @@
+name: GamerQuest Social Agent
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_to_instagram:
+        description: "Publish this Reel to Instagram"
+        required: true
+        default: false
+        type: boolean
+
+  schedule:
+    # One hidden-gem Reel a day. The second slot is a guarded fallback for a
+    # missed or failed first run; it never publishes twice in one day.
+    - cron: "17 15 * * *"
+    - cron: "47 18 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gamerquest-social-agent
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      GQ_LIVE_PUBLISH: ${{ github.event_name == 'schedule' && 'true' || (inputs.publish_to_instagram && 'true' || 'false') }}
+      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '7' }}
+      GQ_BYPASS_WEEKLY_LIMIT: "false"
+      GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
+      GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
+      GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-dejavu-core
+
+      - name: Install agent
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . pytest
+
+      - name: Verify test suite
+        run: pytest -q
+
+      - name: Show publishing mode
+        run: |
+          echo "GQ_LIVE_PUBLISH=$GQ_LIVE_PUBLISH"
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            echo "This run WILL publish a Reel to Instagram."
+          else
+            echo "This run is DRY-RUN only and will not publish."
+          fi
+
+      - name: Validate configuration
+        run: |
+          test -n "$GROQ_API_KEY" || (echo "Missing GROQ_API_KEY secret" >&2; exit 1)
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            test -n "$GQ_INSTAGRAM_USER_ID" || (echo "Missing GQ_INSTAGRAM_USER_ID secret" >&2; exit 1)
+            test -n "$GQ_INSTAGRAM_ACCESS_TOKEN" || (echo "Missing GQ_INSTAGRAM_ACCESS_TOKEN secret" >&2; exit 1)
+          fi
+          echo "Configuration is present."
+
+      - name: Validate Instagram token before production
+        if: ${{ env.GQ_LIVE_PUBLISH == 'true' }}
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --retry 2 \
+            -H "Authorization: Bearer $GQ_INSTAGRAM_ACCESS_TOKEN" \
+            "https://graph.facebook.com/$GQ_META_API_VERSION/$GQ_INSTAGRAM_USER_ID?fields=id" \
+            > /dev/null
+          echo "Instagram token preflight passed."
+
+      - name: Produce the daily Reel
+        id: run_agent
+        shell: bash
+        run: |
+          mkdir -p output
+          set +e
+          python -m automation.daily_reel \
+            --output-dir output \
+            --publish-log state/publish_log.json \
+            2>&1 | tee output/social-agent.log
+          STATUS=${PIPESTATUS[0]}
+          exit "$STATUS"
+
+      - name: Persist failure diagnosis
+        if: ${{ failure() && steps.run_agent.outcome == 'failure' }}
+        shell: bash
+        run: |
+          {
+            echo "Run failed at: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            tail -n 160 output/social-agent.log
+          } > "$RUNNER_TEMP/last_run_error.txt"
+
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p state
+          cp "$RUNNER_TEMP/last_run_error.txt" state/last_run_error.txt
+
+          git config user.name "gamerquest-social-agent[bot]"
+          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
+          git add state/last_run_error.txt
+          git commit -m "chore: persist Reel failure diagnosis" || exit 0
+          git push origin HEAD:main
+
+      - name: Upload generated Reel for inspection
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gamerquest-social-agent-output
+          path: |
+            output/reel.mp4
+            output/script.json
+            output/social-agent.log
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist publish state
+        if: ${{ success() }}
+        run: |
+          cp state/publish_log.json "$RUNNER_TEMP/publish_log.json"
+          cp state/gem_candidates.json "$RUNNER_TEMP/gem_candidates.json"
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p state
+          cp "$RUNNER_TEMP/gem_candidates.json" state/gem_candidates.json
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            cp "$RUNNER_TEMP/publish_log.json" state/publish_log.json
+          fi
+          rm -f state/last_run_error.txt
+
+          git config user.name "gamerquest-social-agent[bot]"
+          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
+          git add -A state
+          if git diff --cached --quiet; then
+            echo "State is already current on main."
+            exit 0
+          fi
+          git commit -m "chore: persist Reel state"
+          git push origin HEAD:main
