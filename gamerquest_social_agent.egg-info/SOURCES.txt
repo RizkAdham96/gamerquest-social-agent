@@ -64,4 +64,3 @@ tests/test_sprint6_runner.py
 tests/test_subtitles.py
 tests/test_topic_integrations.py
 tests/test_tts.py
-tests/test_workflow_safety.py
