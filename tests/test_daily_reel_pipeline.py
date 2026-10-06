@@ -15,7 +15,8 @@ from content.gem_script import (
     validate_body,
     write_gem_script,
 )
-from content.word_captions import build_word_cues, cues_to_ass, total_duration
+from content.voice import SpokenWord
+from content.word_captions import build_phrase_cues, build_word_cues, cues_to_ass, total_duration
 from media.gem_reel import CLIP_SECONDS, build_command, build_filter_graph, clip_starts
 
 GOOD_BODY = (
@@ -23,6 +24,7 @@ GOOD_BODY = (
     "Tu enchaînes les armes et les bonus les plus variés pour repousser la corruption du Vide. "
     "Chaque partie est différente, et tu peux même y jouer à deux en coopération."
 )
+assert 40 <= len(GOOD_BODY.split()) <= 62
 
 
 def facts(**overrides):
@@ -187,6 +189,79 @@ def test_ass_output_is_centred_and_escaped():
     assert "PlayResX: 1080" in text and "PlayResY: 1920" in text
     assert ",5,40,40,0,1" in text  # Alignment 5 = middle centre
     assert "(toi)" in text and "{toi}" not in text
+
+
+def spoken(text, step=0.4):
+    return [
+        SpokenWord(index * step, index * step + step - 0.05, word.strip(".,!?"))
+        for index, word in enumerate(text.split())
+    ]
+
+
+def test_phrases_follow_the_voice_and_break_at_punctuation():
+    script = "Dans ce jeu, tu pars à la chasse aux boss. Abonne-toi !"
+    cues = build_phrase_cues(spoken(script), script)
+    assert [cue.text for cue in cues] == [
+        "Dans ce jeu,", "tu pars à la", "chasse aux boss.", "Abonne-toi !",
+    ]
+    assert cues[1].start == pytest.approx(1.2)
+    assert all(later.start >= earlier.end for earlier, later in zip(cues, cues[1:]))
+    assert all(len(cue.text.split()) <= 4 for cue in cues)
+
+
+def test_phrase_captions_use_the_bottom_style():
+    script = "Dans ce jeu, tu explores."
+    text = cues_to_ass(build_phrase_cues(spoken(script), script), style="Phrase")
+    assert ",Phrase,,0,0,0,,Dans ce jeu," in text
+
+
+def test_narrated_reel_mixes_voice_over_quiet_game_audio():
+    graph = build_filter_graph([6.0, 20.0], has_audio=True, has_voice=True)
+    assert "volume=0.14[game]" in graph and "[voice][game]amix" in graph
+    command = build_command([6.0, 20.0], 24.0, has_audio=True, has_voice=True)
+    assert command.count("-i") == 2 and "voice.mp3" in command
+
+
+def test_narration_still_plays_over_a_silent_trailer():
+    graph = build_filter_graph([6.0], has_audio=False, has_voice=True)
+    assert "[1:a]" in graph and graph.endswith("[aout]")
+    assert "-an" not in build_command([6.0], 20.0, has_audio=False, has_voice=True)
+
+
+def test_produce_narrates_and_times_the_reel_from_the_voice(tmp_path):
+    from automation.daily_reel import produce
+
+    script = GemScript(body=GOOD_BODY, on_screen_text=GOOD_BODY, caption="caption")
+    captured = {}
+
+    def speak(text, path):
+        path.write_bytes(b"voice")
+        return spoken(text)
+
+    def render(**kwargs):
+        captured.update(kwargs)
+        return SimpleNamespace(path=tmp_path / "reel.mp4", duration_seconds=kwargs["reel_seconds"])
+
+    _, rendered = produce(
+        facts(), tmp_path, write_script=lambda game: script, speak=speak,
+        fetch_trailer=lambda url, out: tmp_path / "trailer.mp4", render=render,
+    )
+    words = len(GOOD_BODY.split())
+    assert rendered.duration_seconds == pytest.approx((words - 1) * 0.4 + 0.35 + 0.8)
+    assert captured["voice"] == tmp_path / "voice.mp3"
+    assert ",Phrase," in captured["captions_ass"]
+
+
+def test_failed_narration_stops_the_reel(tmp_path):
+    from automation.daily_reel import produce
+
+    script = GemScript(body=GOOD_BODY, on_screen_text=GOOD_BODY, caption="caption")
+
+    def speak(text, path):
+        raise RuntimeError("narration could not be produced")
+
+    with pytest.raises(RuntimeError, match="narration"):
+        produce(facts(), tmp_path, write_script=lambda game: script, speak=speak)
 
 
 # --- render -----------------------------------------------------------------

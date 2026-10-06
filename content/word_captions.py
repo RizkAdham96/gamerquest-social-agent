@@ -1,4 +1,4 @@
-"""One-word-at-a-time captions, the reading rhythm of the reference Reel."""
+"""Captions for Reels: short phrases that follow the narration."""
 
 from __future__ import annotations
 
@@ -19,6 +19,7 @@ WrapStyle: 2
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Word,DejaVu Sans,84,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,1,0,0,0,100,100,0,0,1,6,2,5,40,40,0,1
+Style: Phrase,DejaVu Sans,72,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,1,0,0,0,100,100,0,0,1,6,2,2,60,60,400,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -64,9 +65,57 @@ def _escape(text: str) -> str:
     return text.replace("\\", "").replace("{", "(").replace("}", ")")
 
 
-def cues_to_ass(cues: list[WordCue]) -> str:
+MAX_PHRASE_WORDS = 4
+MAX_PHRASE_CHARS = 24
+# A caption that vanishes the instant the last word ends is hard to read.
+PHRASE_HOLD_SECONDS = 0.25
+
+
+def attach_punctuation(spoken_texts: list[str], script: str) -> list[str]:
+    """Give each spoken word the punctuation it has in the script.
+
+    The voice service reports bare words ("jeu"), while phrase breaks need the
+    script's punctuation ("jeu,"). Words are matched in order; when the two
+    sequences disagree the spoken text is kept as it is.
+    """
+    script_words = script.split()
+    if len(script_words) != len(spoken_texts):
+        return list(spoken_texts)
+    return script_words
+
+
+def build_phrase_cues(spoken, script: str = "") -> list[WordCue]:
+    """Group timed words into short phrases, breaking at punctuation."""
+    texts = attach_punctuation([word.text for word in spoken], script) if script else [
+        word.text for word in spoken
+    ]
+    cues: list[WordCue] = []
+    current: list[int] = []
+
+    def flush(next_start: float | None) -> None:
+        if not current:
+            return
+        start = spoken[current[0]].start
+        end = spoken[current[-1]].end + PHRASE_HOLD_SECONDS
+        if next_start is not None:
+            end = min(end, next_start)
+        cues.append(WordCue(round(start, 3), round(end, 3), " ".join(texts[i] for i in current)))
+        current.clear()
+
+    for index, text in enumerate(texts):
+        length = sum(len(texts[i]) + 1 for i in current) + len(text)
+        if current and (len(current) >= MAX_PHRASE_WORDS or length > MAX_PHRASE_CHARS):
+            flush(spoken[index].start)
+        current.append(index)
+        if text.endswith((".", "!", "?", "…", ",", ";", ":")):
+            flush(spoken[index + 1].start if index + 1 < len(spoken) else None)
+    flush(None)
+    return cues
+
+
+def cues_to_ass(cues: list[WordCue], style: str = "Word") -> str:
     lines = [
-        f"Dialogue: 0,{_ass_time(cue.start)},{_ass_time(cue.end)},Word,,0,0,0,,{_escape(cue.text)}"
+        f"Dialogue: 0,{_ass_time(cue.start)},{_ass_time(cue.end)},{style},,0,0,0,,{_escape(cue.text)}"
         for cue in cues
     ]
     return ASS_HEADER + "\n".join(lines) + ("\n" if lines else "")

@@ -19,8 +19,9 @@ from agent.hidden_gems import GameFacts
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "openai/gpt-oss-120b"
-MIN_BODY_WORDS = 30
-MAX_BODY_WORDS = 52
+# About 20 to 25 seconds once the name and closing line are spoken.
+MIN_BODY_WORDS = 40
+MAX_BODY_WORDS = 62
 MAX_WRITE_ATTEMPTS = 2
 
 FOLLOW_LINE = "Abonne-toi pour découvrir une pépite cachée chaque jour."
@@ -89,7 +90,7 @@ def _facts_block(facts: GameFacts) -> str:
 
 def build_writer_messages(facts: GameFacts, feedback: str = "") -> list[dict]:
     system = (
-        "Tu écris le texte affiché à l'écran d'un Reel Instagram pour GamerQuest FR, "
+        "Tu écris le texte lu en voix off dans un Reel Instagram pour GamerQuest FR, "
         "qui présente chaque jour un jeu méconnu. Tu réponds uniquement en JSON."
     )
     user = f"""Écris la description du jeu ci-dessous, en français, pour un Reel.
@@ -98,7 +99,8 @@ FAITS (seule source autorisée) :
 {_facts_block(facts)}
 
 RÈGLES :
-- Entre {MIN_BODY_WORDS} et {MAX_BODY_WORDS} mots, en 3 ou 4 phrases courtes.
+- Entre {MIN_BODY_WORDS} et {MAX_BODY_WORDS} mots, en 4 ou 5 phrases courtes.
+- Le texte sera lu à voix haute : écris comme on parle, sans parenthèses ni abréviations.
 - Tutoie le spectateur, au présent ("Dans ce jeu, tu...").
 - Commence directement par ce qu'on fait dans le jeu, de façon accrocheuse.
 - Utilise uniquement ce que disent les FAITS. N'ajoute aucun mode, personnage,
