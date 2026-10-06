@@ -282,6 +282,38 @@ def test_unsupported_reasoning_option_is_dropped_and_the_call_repeated():
     assert len(payloads) == 2 and "reasoning_effort" not in payloads[1]
 
 
+def test_per_minute_rate_limit_waits_and_retries():
+    from content.gem_script import groq_chat
+
+    waits = []
+    replies = iter([
+        http_error(429, "Rate limit reached on tokens per minute (TPM). Please try again in 3.9225s."),
+        groq_reply('{"body": "x"}'),
+    ])
+
+    def post(payload, api_key):
+        reply = next(replies)
+        if isinstance(reply, Exception):
+            raise reply
+        return reply
+
+    assert groq_chat([], max_tokens=10, api_key="k", post=post, sleep=waits.append) == '{"body": "x"}'
+    assert waits == [pytest.approx(5.9225)]
+
+
+def test_daily_rate_limit_is_not_waited_out():
+    from content.gem_script import groq_chat
+
+    waits = []
+
+    def post(payload, api_key):
+        raise http_error(429, "Rate limit reached on tokens per day (TPD).")
+
+    with pytest.raises(RuntimeError, match="HTTP 429"):
+        groq_chat([], max_tokens=10, api_key="k", post=post, sleep=waits.append)
+    assert waits == []
+
+
 def test_groq_outage_is_reported_as_a_run_error():
     from content.gem_script import groq_chat
 
