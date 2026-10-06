@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import time
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -31,6 +32,7 @@ WRITER_MAX_TOKENS = 6000
 WRITER_REASONING = "medium"
 CHECKER_MAX_TOKENS = 3000
 CHECKER_REASONING = "low"
+MAX_RATE_LIMIT_RETRIES = 3
 
 FOLLOW_LINE = "Abonne-toi pour découvrir une pépite cachée chaque jour."
 
@@ -81,6 +83,7 @@ def groq_chat(
     reasoning: str = "low",
     api_key: str | None = None,
     post=_post_groq,
+    sleep=time.sleep,
 ) -> str:
     api_key = api_key if api_key is not None else os.getenv("GROQ_API_KEY", "").strip()
     if not api_key:
@@ -97,19 +100,29 @@ def groq_chat(
         "reasoning_effort": reasoning,
         "response_format": {"type": "json_object"},
     }
-    try:
+    for attempt in range(1, MAX_RATE_LIMIT_RETRIES + 2):
         try:
             data = post(payload, api_key)
+            break
         except HTTPError as exc:
             detail = exc.read().decode("utf-8", errors="replace")[:300]
-            if exc.code != 400 or "reasoning_effort" not in detail:
-                raise _groq_error(exc.code, detail) from exc
-            # The model does not take the option: ask again without it.
-            payload.pop("reasoning_effort")
-            data = post(payload, api_key)
-    except HTTPError as exc:
-        raise _groq_error(exc.code, exc.read().decode("utf-8", errors="replace")[:300]) from exc
+            if exc.code == 400 and "reasoning_effort" in detail and "reasoning_effort" in payload:
+                # The model does not take the option: ask again without it.
+                payload.pop("reasoning_effort")
+                continue
+            if exc.code == 429 and attempt <= MAX_RATE_LIMIT_RETRIES and "per day" not in detail:
+                # The free tier allows 8000 tokens a minute; a writer call
+                # followed by a check can cross it. The window clears quickly.
+                sleep(rate_limit_wait(detail))
+                continue
+            raise _groq_error(exc.code, detail) from exc
     return str(data["choices"][0]["message"]["content"] or "")
+
+
+def rate_limit_wait(detail: str) -> float:
+    match = re.search(r"try again in ([0-9.]+)s", detail)
+    seconds = float(match.group(1)) if match else 20.0
+    return min(seconds + 2.0, 65.0)
 
 
 def _groq_error(code: int, detail: str) -> Exception:
