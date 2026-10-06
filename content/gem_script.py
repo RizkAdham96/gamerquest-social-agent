@@ -13,6 +13,7 @@ import re
 from collections.abc import Callable
 from dataclasses import dataclass
 from datetime import datetime, timezone
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from agent.hidden_gems import GameFacts
@@ -35,6 +36,8 @@ FORBIDDEN_TERMS = (
     "meilleur", "chef-d'œuvre", "chef d'œuvre", "incontournable", "culte",
     "millions", "record", "récompense", "prix du", "goty",
     "http", "www.", "#", "@",
+    # Store plumbing is not a reason to play a game.
+    "steam", "succès", "cloud", "manette", "partage familial", "cartes à échanger",
 )
 
 
@@ -70,8 +73,16 @@ def groq_chat(messages: list[dict], *, max_tokens: int, api_key: str | None = No
         },
         method="POST",
     )
-    with urlopen(request, timeout=90) as response:
-        data = json.loads(response.read().decode("utf-8"))
+    try:
+        with urlopen(request, timeout=90) as response:
+            data = json.loads(response.read().decode("utf-8"))
+    except HTTPError as exc:
+        detail = exc.read().decode("utf-8", errors="replace")[:300]
+        if exc.code == 400:
+            # Groq answers 400 when the model's reply was not valid JSON; that
+            # is a failed draft to retry, not a broken run.
+            raise ScriptRejected(f"the model reply was refused by the API: {detail}") from exc
+        raise RuntimeError(f"Groq request failed with HTTP {exc.code}: {detail}") from exc
     return str(data["choices"][0]["message"]["content"] or "")
 
 
@@ -80,8 +91,9 @@ def _facts_block(facts: GameFacts) -> str:
         {
             "name": facts.name,
             "official_description": facts.description,
+            "official_presentation": facts.about,
             "genres": facts.genres,
-            "steam_features": facts.features,
+            "play_modes": facts.modes,
         },
         ensure_ascii=False,
         indent=1,
@@ -103,6 +115,10 @@ RÈGLES :
 - Le texte sera lu à voix haute : écris comme on parle, sans parenthèses ni abréviations.
 - Tutoie le spectateur, au présent ("Dans ce jeu, tu...").
 - Commence directement par ce qu'on fait dans le jeu, de façon accrocheuse.
+- Parle de l'histoire, de l'ambiance et de ce que le joueur fait concrètement.
+- Ne parle jamais de fonctionnalités de boutique : succès, sauvegarde en ligne,
+  manette, partage familial.
+- Français irréprochable : accords, articles et prépositions corrects.
 - Utilise uniquement ce que disent les FAITS. N'ajoute aucun mode, personnage,
   lieu, chiffre ou mécanique qui n'y figure pas.
 - Ne cite pas le nom du jeu : il est ajouté après ton texte.
@@ -128,7 +144,11 @@ Une affirmation est non appuyée si elle ajoute un mode de jeu, un personnage, u
 lieu, une mécanique, un chiffre ou une qualité absents des FAITS. Une simple
 reformulation fidèle est appuyée. N'utilise aucune connaissance extérieure.
 
-Réponds avec : {{"valid": true ou false, "unsupported": ["..."]}}"""
+Vérifie aussi la langue : toute faute de grammaire, d'accord, d'orthographe ou
+de préposition, et tout mot anglais qui n'est pas un nom propre, est une erreur.
+
+Réponds avec : {{"valid": true ou false, "unsupported": ["..."], "language_errors": ["..."]}}
+"valid" doit être false s'il y a au moins une affirmation non appuyée ou une erreur de langue."""
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
@@ -198,9 +218,12 @@ def write_gem_script(
             draft = _parse_json(chat(build_writer_messages(facts, feedback), max_tokens=1400))
             body = validate_body(draft.get("body", ""), facts)
             verdict = _parse_json(chat(build_checker_messages(facts, body), max_tokens=900))
-            if verdict.get("valid") is not True:
-                unsupported = "; ".join(str(item) for item in verdict.get("unsupported") or [])
-                raise ScriptRejected(f"fact-check failed: {unsupported or 'no reason given'}")
+            language_errors = [str(item) for item in verdict.get("language_errors") or []]
+            if verdict.get("valid") is not True or language_errors:
+                problems = [str(item) for item in verdict.get("unsupported") or []] + language_errors
+                raise ScriptRejected(
+                    f"fact-check failed: {'; '.join(problems) or 'no reason given'}"
+                )
         except ScriptRejected as exc:
             last_error = exc
             feedback = str(exc)

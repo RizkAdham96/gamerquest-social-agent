@@ -47,6 +47,8 @@ class GameFacts:
     review_count: int
     trailer_url: str
     developers: list[str] = field(default_factory=list)
+    about: str = ""
+    modes: list[str] = field(default_factory=list)
 
     @property
     def topic_id(self) -> str:
@@ -118,6 +120,20 @@ def load_candidates(
     return []
 
 
+# Only what a player would call a way to play; store plumbing such as cloud
+# saves or achievements made the first scripts read like a feature list.
+PLAY_MODES = {
+    "Single-player": "solo",
+    "Multi-player": "multijoueur",
+    "Co-op": "coopération",
+    "Online Co-op": "coopération en ligne",
+    "Shared/Split Screen Co-op": "coopération en écran partagé",
+    "PvP": "joueur contre joueur",
+    "Online PvP": "joueur contre joueur en ligne",
+}
+MAX_ABOUT_CHARS = 1400
+
+
 def _price_text(data: dict) -> str:
     if data.get("is_free"):
         return "Gratuit"
@@ -173,6 +189,12 @@ def build_facts(candidate: dict, english: dict, french: dict | None = None) -> G
         review_count=int(candidate["review_count"]),
         trailer_url=trailer,
         developers=[str(item) for item in english.get("developers") or []],
+        about=_clean_text(english.get("about_the_game"))[:MAX_ABOUT_CHARS],
+        modes=[
+            PLAY_MODES[str(item.get("description", "")).strip()]
+            for item in english.get("categories") or []
+            if str(item.get("description", "")).strip() in PLAY_MODES
+        ],
     )
 
 

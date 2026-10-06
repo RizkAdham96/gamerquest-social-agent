@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import json
 import math
+import re
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -29,6 +30,64 @@ VOICE_FILE = "voice.mp3"
 # Game audio stays audible under the narration without competing with it.
 GAME_VOLUME_UNDER_VOICE = 0.14
 REEL_FILE = "reel.mp4"
+
+
+# Trailer suitability. A first dry run produced an almost black Reel from a
+# dark, letterboxed trailer; such footage is refused and another game is tried.
+BLACK_BAR_LUMA_LIMIT = 40
+MIN_MEAN_LUMA = 55.0
+MAX_PICTURE_ASPECT = 2.2
+MIN_PICTURE_HEIGHT = 480
+ANALYSIS_SECONDS = 40
+
+
+@dataclass(frozen=True)
+class TrailerLook:
+    crop: str
+    width: int
+    height: int
+    mean_luma: float
+
+
+def analyze_trailer(path: Path, run=subprocess.run) -> TrailerLook:
+    """Find baked-in black bars and how bright the picture inside them is."""
+    base = [
+        _ffmpeg(), "-hide_banner", "-ss", str(TRAILER_INTRO_SKIP_SECONDS),
+        "-t", str(ANALYSIS_SECONDS), "-i", str(path),
+    ]
+    detect = run(
+        base + ["-vf", f"fps=2,cropdetect=limit={BLACK_BAR_LUMA_LIMIT}:round=2:reset=0",
+                "-an", "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    crops = re.findall(r"crop=(\d+):(\d+):(\d+):(\d+)", detect.stderr or "")
+    if not crops:
+        raise RuntimeError("the trailer's picture area could not be measured")
+    width, height, x, y = (int(value) for value in crops[-1])
+    crop = f"{width}:{height}:{x}:{y}"
+    stats = run(
+        base + ["-vf", f"crop={crop},fps=1,signalstats,"
+                       "metadata=print:key=lavfi.signalstats.YAVG:file=-",
+                "-an", "-f", "null", "-"],
+        capture_output=True, text=True,
+    )
+    values = [float(value) for value in re.findall(r"YAVG=([0-9.]+)", stats.stdout or "")]
+    if not values:
+        raise RuntimeError("the trailer's brightness could not be measured")
+    return TrailerLook(crop, width, height, round(sum(values) / len(values), 1))
+
+
+def check_trailer_look(look: TrailerLook) -> None:
+    if look.height < MIN_PICTURE_HEIGHT or look.width / look.height > MAX_PICTURE_ASPECT:
+        raise RuntimeError(
+            f"the trailer's picture is a {look.width}x{look.height} strip, "
+            "too wide for the centre of a vertical Reel"
+        )
+    if look.mean_luma < MIN_MEAN_LUMA:
+        raise RuntimeError(
+            f"the trailer is too dark for a Reel (brightness {look.mean_luma:.0f}, "
+            f"minimum {MIN_MEAN_LUMA:.0f})"
+        )
 
 
 @dataclass(frozen=True)
@@ -98,13 +157,19 @@ def clip_starts(trailer_seconds: float, reel_seconds: float) -> list[float]:
     return [round(TRAILER_INTRO_SKIP_SECONDS + index * step, 2) for index in range(count)]
 
 
-def build_filter_graph(starts: list[float], has_audio: bool, has_voice: bool = False) -> str:
+def build_filter_graph(
+    starts: list[float], has_audio: bool, has_voice: bool = False, crop: str = "",
+) -> str:
     parts = []
     video_labels = ""
     audio_labels = ""
+    count = len(starts)
+    # Remove baked-in black bars once, then cut the clips from the clean picture.
+    source = f"[0:v]crop={crop}," if crop else "[0:v]"
+    parts.append(source + f"split={count}" + "".join(f"[s{i}]" for i in range(count)) + ";")
     for index, start in enumerate(starts):
         parts.append(
-            f"[0:v]trim=start={start}:duration={CLIP_SECONDS},setpts=PTS-STARTPTS[v{index}];"
+            f"[s{index}]trim=start={start}:duration={CLIP_SECONDS},setpts=PTS-STARTPTS[v{index}];"
         )
         video_labels += f"[v{index}]"
         if has_audio:
@@ -112,7 +177,6 @@ def build_filter_graph(starts: list[float], has_audio: bool, has_voice: bool = F
                 f"[0:a]atrim=start={start}:duration={CLIP_SECONDS},asetpts=PTS-STARTPTS[a{index}];"
             )
             audio_labels += f"[a{index}]"
-    count = len(starts)
     graph = "".join(parts)
     graph += f"{video_labels}concat=n={count}:v=1:a=0,fps=30,split[bgsrc][fgsrc];"
     graph += (
@@ -137,12 +201,13 @@ def build_filter_graph(starts: list[float], has_audio: bool, has_voice: bool = F
 
 def build_command(
     starts: list[float], reel_seconds: float, has_audio: bool, has_voice: bool = False,
+    crop: str = "",
 ) -> list[str]:
     command = [_ffmpeg(), "-v", "error", "-y", "-i", TRAILER_FILE]
     if has_voice:
         command += ["-i", VOICE_FILE]
     command += [
-        "-filter_complex", build_filter_graph(starts, has_audio, has_voice),
+        "-filter_complex", build_filter_graph(starts, has_audio, has_voice, crop),
         "-map", "[vout]",
     ]
     if has_audio or has_voice:
@@ -175,11 +240,13 @@ def render_reel(
     (output_dir / CAPTIONS_FILE).write_text(captions_ass, encoding="utf-8")
 
     info = probe(output_dir / TRAILER_FILE, run=run)
+    look = analyze_trailer(output_dir / TRAILER_FILE, run=run)
+    check_trailer_look(look)
     starts = clip_starts(info["duration"], reel_seconds)
     # Relative file names and cwd keep Windows drive letters out of the
     # filter graph, where a colon would need escaping.
     run(
-        build_command(starts, reel_seconds, info["has_audio"], voice is not None),
+        build_command(starts, reel_seconds, info["has_audio"], voice is not None, look.crop),
         check=True, capture_output=True, cwd=output_dir,
     )
 
