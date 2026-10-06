@@ -123,10 +123,13 @@ def run_once(
     games=None,
     produce_fn=produce,
     now: datetime | None = None,
+    allow_extra_today: bool = False,
 ) -> DailyReelResult:
     now = now or datetime.now(timezone.utc)
     publish_log = PublishLog(publish_log_path)
-    if live_publish and published_today(publish_log_path, now):
+    # Scheduled runs never post twice in a day; only an editor's explicit
+    # manual request may add a second Reel.
+    if live_publish and not allow_extra_today and published_today(publish_log_path, now):
         return DailyReelResult(status="skipped", reason="a Reel was already published today")
 
     if games is None:
@@ -185,6 +188,7 @@ def main() -> None:
         publish_log_path=args.publish_log,
         live_publish=live_publish,
         orchestrator=orchestrator,
+        allow_extra_today=env_flag("GQ_ALLOW_EXTRA_REEL", False),
     )
     print(json.dumps(asdict(result), ensure_ascii=False))
 

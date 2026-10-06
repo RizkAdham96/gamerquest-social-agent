@@ -588,6 +588,39 @@ def test_only_one_reel_is_published_per_day(tmp_path):
     assert orchestrator.published == []
 
 
+def test_editor_can_request_an_extra_reel_the_same_day(tmp_path):
+    log = tmp_path / "log.json"
+    now = datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc)
+    log.write_text(
+        json.dumps([{"topic_id": "steam-9", "published_at": "2026-10-06T15:20:00Z"}]),
+        encoding="utf-8",
+    )
+    orchestrator = FakeOrchestrator()
+    result = run_once(
+        output_dir=tmp_path, publish_log_path=log, live_publish=True,
+        orchestrator=orchestrator, games=iter([facts()]), produce_fn=fake_produce(),
+        now=now, allow_extra_today=True,
+    )
+    assert result.status == "published"
+    assert orchestrator.published == ["steam-1304680"]
+
+
+def test_scheduled_runs_can_never_request_an_extra_reel():
+    workflow = Path(".github/workflows/social-agent.yml").read_text(encoding="utf-8")
+    assert (
+        "GQ_ALLOW_EXTRA_REEL: ${{ github.event_name == 'workflow_dispatch' "
+        "&& inputs.extra_reel_today && 'true' || 'false' }}"
+    ) in workflow
+
+
+def test_checker_is_told_to_verify_translations():
+    from content.gem_script import build_checker_messages, build_writer_messages
+
+    checker = build_checker_messages(facts(), GOOD_BODY)[-1]["content"]
+    assert "faux ami" in checker and "éperonner" in checker
+    assert "éperonner" in build_writer_messages(facts())[-1]["content"]
+
+
 def test_workflow_runs_the_daily_reel_once_a_day_with_groq():
     workflow = Path(".github/workflows/social-agent.yml").read_text(encoding="utf-8")
     assert "python -m automation.daily_reel" in workflow
