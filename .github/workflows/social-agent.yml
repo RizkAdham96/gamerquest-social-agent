@@ -8,6 +8,11 @@ on:
         required: true
         default: false
         type: boolean
+      extra_reel_today:
+        description: "Publish even if a Reel was already posted today"
+        required: false
+        default: false
+        type: boolean
 
   schedule:
     # One hidden-gem Reel a day. The second slot is a guarded fallback for a
@@ -30,6 +35,7 @@ jobs:
       GQ_LIVE_PUBLISH: ${{ github.event_name == 'schedule' && 'true' || (inputs.publish_to_instagram && 'true' || 'false') }}
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '7' }}
       GQ_BYPASS_WEEKLY_LIMIT: "false"
+      GQ_ALLOW_EXTRA_REEL: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_reel_today && 'true' || 'false' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
       GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
       GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}

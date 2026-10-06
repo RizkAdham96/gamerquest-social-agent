@@ -169,6 +169,9 @@ RÈGLES :
 - Phrases simples : sujet, verbe conjugué, complément. Relis chaque verbe.
 - Traduis tous les termes anglais des FAITS en français courant. Les noms
   propres du jeu (lieux, factions, personnages) peuvent rester tels quels.
+- Méfie-toi des faux amis : "ramming" se dit "éperonner" (pas "ramer"),
+  "boarding" se dit "aborder". Si tu n'es pas certain de la traduction d'un
+  terme, décris l'action avec d'autres mots plutôt que de la traduire.
 - Utilise uniquement ce que disent les FAITS. N'ajoute aucun mode, personnage,
   lieu, chiffre ou mécanique qui n'y figure pas.
 - Ne cite pas le nom du jeu : il est ajouté après ton texte.
@@ -202,6 +205,12 @@ Sont appuyées, et ne doivent PAS être signalées :
 
 Vérifie aussi la langue : toute faute de grammaire, d'accord, d'orthographe ou
 de préposition, et tout mot anglais qui n'est pas un nom propre, est une erreur.
+
+Vérifie enfin chaque traduction : pour chaque verbe d'action et chaque terme de
+jeu du TEXTE, retrouve le mot anglais des FAITS et confirme que le sens est le
+même. Un faux ami ou un contresens est une erreur de langue. Exemples d'erreurs :
+"ramming" rendu par "ramer" (il faut "éperonner"), "boarding" rendu par
+"embarquer" (il faut "aborder"), "crafting" rendu par "crafter".
 
 Réponds avec : {{"valid": true ou false, "unsupported": ["..."], "language_errors": ["..."]}}
 "valid" doit être false s'il y a au moins une affirmation non appuyée ou une erreur de langue."""
