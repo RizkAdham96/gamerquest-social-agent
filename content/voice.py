@@ -7,7 +7,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 
-DEFAULT_VOICE = "fr-FR-RemyMultilingualNeural"
+DEFAULT_VOICE = "fr-FR-VivienneMultilingualNeural"
 DEFAULT_RATE = "+4%"
 MAX_ATTEMPTS = 3
 
