@@ -24,6 +24,8 @@ GROQ_MODEL = "openai/gpt-oss-120b"
 MIN_BODY_WORDS = 40
 MAX_BODY_WORDS = 62
 MAX_WRITE_ATTEMPTS = 2
+WRITER_MAX_TOKENS = 4000
+CHECKER_MAX_TOKENS = 3000
 
 FOLLOW_LINE = "Abonne-toi pour découvrir une pépite cachée chaque jour."
 
@@ -52,17 +54,7 @@ class GemScript:
     caption: str
 
 
-def groq_chat(messages: list[dict], *, max_tokens: int, api_key: str | None = None) -> str:
-    api_key = api_key if api_key is not None else os.getenv("GROQ_API_KEY", "").strip()
-    if not api_key:
-        raise RuntimeError("Missing GROQ_API_KEY")
-    payload = {
-        "model": GROQ_MODEL,
-        "messages": messages,
-        "temperature": 0.4,
-        "max_tokens": max_tokens,
-        "response_format": {"type": "json_object"},
-    }
+def _post_groq(payload: dict, api_key: str) -> dict:
     request = Request(
         GROQ_URL,
         data=json.dumps(payload).encode("utf-8"),
@@ -73,17 +65,53 @@ def groq_chat(messages: list[dict], *, max_tokens: int, api_key: str | None = No
         },
         method="POST",
     )
+    with urlopen(request, timeout=120) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+def groq_chat(
+    messages: list[dict],
+    *,
+    max_tokens: int,
+    api_key: str | None = None,
+    post=_post_groq,
+) -> str:
+    api_key = api_key if api_key is not None else os.getenv("GROQ_API_KEY", "").strip()
+    if not api_key:
+        raise RuntimeError("Missing GROQ_API_KEY")
+    payload = {
+        "model": GROQ_MODEL,
+        "messages": messages,
+        "temperature": 0.4,
+        # gpt-oss reasons before it answers and the reasoning counts against
+        # this limit; when it used the whole allowance the reply came back
+        # empty and Groq refused it as invalid JSON. Low effort plus a wide
+        # allowance leaves room for the answer itself.
+        "max_tokens": max_tokens,
+        "reasoning_effort": "low",
+        "response_format": {"type": "json_object"},
+    }
     try:
-        with urlopen(request, timeout=90) as response:
-            data = json.loads(response.read().decode("utf-8"))
+        try:
+            data = post(payload, api_key)
+        except HTTPError as exc:
+            detail = exc.read().decode("utf-8", errors="replace")[:300]
+            if exc.code != 400 or "reasoning_effort" not in detail:
+                raise _groq_error(exc.code, detail) from exc
+            # The model does not take the option: ask again without it.
+            payload.pop("reasoning_effort")
+            data = post(payload, api_key)
     except HTTPError as exc:
-        detail = exc.read().decode("utf-8", errors="replace")[:300]
-        if exc.code == 400:
-            # Groq answers 400 when the model's reply was not valid JSON; that
-            # is a failed draft to retry, not a broken run.
-            raise ScriptRejected(f"the model reply was refused by the API: {detail}") from exc
-        raise RuntimeError(f"Groq request failed with HTTP {exc.code}: {detail}") from exc
+        raise _groq_error(exc.code, exc.read().decode("utf-8", errors="replace")[:300]) from exc
     return str(data["choices"][0]["message"]["content"] or "")
+
+
+def _groq_error(code: int, detail: str) -> Exception:
+    if code == 400:
+        # Groq answers 400 when the model's reply was not valid JSON; that is
+        # a failed draft to retry, not a broken run.
+        return ScriptRejected(f"the model reply was refused by the API: {detail}")
+    return RuntimeError(f"Groq request failed with HTTP {code}: {detail}")
 
 
 def _facts_block(facts: GameFacts) -> str:
@@ -215,9 +243,9 @@ def write_gem_script(
     last_error: ScriptRejected | None = None
     for _attempt in range(MAX_WRITE_ATTEMPTS):
         try:
-            draft = _parse_json(chat(build_writer_messages(facts, feedback), max_tokens=1400))
+            draft = _parse_json(chat(build_writer_messages(facts, feedback), max_tokens=WRITER_MAX_TOKENS))
             body = validate_body(draft.get("body", ""), facts)
-            verdict = _parse_json(chat(build_checker_messages(facts, body), max_tokens=900))
+            verdict = _parse_json(chat(build_checker_messages(facts, body), max_tokens=CHECKER_MAX_TOKENS))
             language_errors = [str(item) for item in verdict.get("language_errors") or []]
             if verdict.get("valid") is not True or language_errors:
                 problems = [str(item) for item in verdict.get("unsupported") or []] + language_errors

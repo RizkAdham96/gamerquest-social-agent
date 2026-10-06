@@ -212,6 +212,66 @@ def test_unusable_model_reply_is_rejected_not_published():
         write_gem_script(facts(), chat=lambda messages, max_tokens: "")
 
 
+def groq_reply(content):
+    return {"choices": [{"message": {"content": content}}]}
+
+
+def http_error(code, body):
+    from io import BytesIO
+    from urllib.error import HTTPError
+
+    return HTTPError("https://api.groq.com", code, "error", {}, BytesIO(body.encode("utf-8")))
+
+
+def test_groq_call_leaves_room_for_the_answer_after_reasoning():
+    from content.gem_script import WRITER_MAX_TOKENS, groq_chat
+
+    sent = {}
+
+    def post(payload, api_key):
+        sent.update(payload)
+        return groq_reply('{"body": "x"}')
+
+    assert groq_chat([], max_tokens=WRITER_MAX_TOKENS, api_key="k", post=post) == '{"body": "x"}'
+    assert sent["reasoning_effort"] == "low"
+    assert sent["max_tokens"] >= 4000
+
+
+def test_empty_model_reply_is_a_rejected_draft_not_a_crash():
+    from content.gem_script import groq_chat
+
+    def post(payload, api_key):
+        raise http_error(400, '{"error":{"code":"json_validate_failed","failed_generation":""}}')
+
+    with pytest.raises(ScriptRejected, match="json_validate_failed"):
+        groq_chat([], max_tokens=10, api_key="k", post=post)
+
+
+def test_unsupported_reasoning_option_is_dropped_and_the_call_repeated():
+    from content.gem_script import groq_chat
+
+    payloads = []
+
+    def post(payload, api_key):
+        payloads.append(dict(payload))
+        if "reasoning_effort" in payload:
+            raise http_error(400, '{"error":{"message":"reasoning_effort is not supported"}}')
+        return groq_reply('{"body": "x"}')
+
+    assert groq_chat([], max_tokens=10, api_key="k", post=post) == '{"body": "x"}'
+    assert len(payloads) == 2 and "reasoning_effort" not in payloads[1]
+
+
+def test_groq_outage_is_reported_as_a_run_error():
+    from content.gem_script import groq_chat
+
+    def post(payload, api_key):
+        raise http_error(503, "unavailable")
+
+    with pytest.raises(RuntimeError, match="HTTP 503"):
+        groq_chat([], max_tokens=10, api_key="k", post=post)
+
+
 # --- captions ---------------------------------------------------------------
 
 def test_one_cue_per_word_in_order_without_overlap():
