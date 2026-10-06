@@ -18,6 +18,7 @@ from urllib.request import Request, urlopen
 
 STEAMSPY_INDIE = "https://steamspy.com/api.php?request=tag&tag=Indie"
 APP_DETAILS = "https://store.steampowered.com/api/appdetails?appids={appid}&l={lang}&cc=FR"
+STEAMSPY_APP = "https://steamspy.com/api.php?request=appdetails&appid={appid}"
 CANDIDATE_CACHE = Path("state/gem_candidates.json")
 
 MIN_REVIEWS = 800
@@ -33,6 +34,22 @@ BLOCKED_NAME_WORDS = (
     "hentai", "sex", "nsfw", "waifu", "strip", "dating", "lewd", "erotic",
     "soundtrack", "demo", "playtest", "dlc",
 )
+
+
+# Community tags for things that are not a game to watch: software sold on
+# Steam, and games whose trailer is a screen of text (the second dry run
+# picked a chat-interface game and produced a grey, wordy Reel).
+BLOCKED_TAGS = {
+    "Visual Novel", "Text-Based", "Interactive Fiction", "Word Game", "Dating Sim",
+    "Software", "Utilities", "Design & Illustration", "Animation & Modeling",
+    "Photo Editing", "Video Production", "Audio Production", "Game Development",
+    "Education", "Web Publishing", "Sexual Content", "Nudity", "Hentai", "NSFW",
+}
+SOFTWARE_GENRES = {
+    "Animation & Modeling", "Design & Illustration", "Photo Editing", "Utilities",
+    "Video Production", "Audio Production", "Education", "Software Training",
+    "Web Publishing", "Game Development", "Accounting",
+}
 
 
 @dataclass(frozen=True)
@@ -162,6 +179,11 @@ def build_facts(candidate: dict, english: dict, french: dict | None = None) -> G
     descriptor_ids = set((english.get("content_descriptors") or {}).get("ids") or [])
     if descriptor_ids & BLOCKED_DESCRIPTOR_IDS:
         return None
+    english_genres = {
+        str(item.get("description", "")).strip() for item in english.get("genres") or []
+    }
+    if english_genres & SOFTWARE_GENRES:
+        return None
 
     description = _clean_text(english.get("short_description"))
     trailer = _trailer_url(english)
@@ -203,6 +225,20 @@ def _details(appid: int, lang: str, fetch_json) -> dict | None:
     return payload.get("data") if payload.get("success") else None
 
 
+def blocked_tags(appid: int, fetch_json: Callable[[str], dict] = _fetch_json) -> set[str]:
+    """Blocked community tags the game carries; empty if SteamSpy is unreachable.
+
+    The trailer's own look is checked afterwards, so a missing tag list does
+    not let unsuitable footage through unexamined.
+    """
+    try:
+        tags = fetch_json(STEAMSPY_APP.format(appid=int(appid))).get("tags") or {}
+    except Exception as exc:
+        print(f"Tag lookup failed for app {appid}: {exc}")
+        return set()
+    return set(tags) & BLOCKED_TAGS if isinstance(tags, dict) else set()
+
+
 def iter_games(
     candidates: list[dict],
     published_topic_ids: set[str],
@@ -226,5 +262,10 @@ def iter_games(
             print(f"Steam lookup failed for {candidate['name']}: {exc}")
             continue
         facts = build_facts(candidate, english, french)
-        if facts is not None:
-            yield facts
+        if facts is None:
+            continue
+        blocked = blocked_tags(facts.appid, fetch_json)
+        if blocked:
+            print(f"Skipped {facts.name}: tagged {', '.join(sorted(blocked))}")
+            continue
+        yield facts

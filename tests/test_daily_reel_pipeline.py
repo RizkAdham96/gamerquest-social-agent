@@ -117,8 +117,40 @@ def test_suitable_game_carries_store_facts():
     assert built.topic_id == "steam-1304680"
 
 
+def store_and_tags(tags):
+    def fetch(url):
+        if "steamspy.com" in url:
+            return {"tags": {tag: 100 for tag in tags}}
+        return {"1304680": {"success": True, "data": steam_details()}}
+
+    return fetch
+
+
+def test_text_based_games_and_software_are_skipped_by_tag():
+    assert list(iter_games([CANDIDATE], set(), seed="d", fetch_json=store_and_tags(["Visual Novel"]))) == []
+    assert list(iter_games([CANDIDATE], set(), seed="d", fetch_json=store_and_tags(["Software"]))) == []
+    kept = list(iter_games([CANDIDATE], set(), seed="d", fetch_json=store_and_tags(["Roguelike"])))
+    assert [game.name for game in kept] == ["Voidigo"]
+
+
+def test_tag_lookup_outage_does_not_stop_the_run():
+    def fetch(url):
+        if "steamspy.com" in url:
+            raise OSError("steamspy down")
+        return {"1304680": {"success": True, "data": steam_details()}}
+
+    assert len(list(iter_games([CANDIDATE], set(), seed="d", fetch_json=fetch))) == 1
+
+
+def test_software_sold_on_steam_is_not_a_game():
+    software = steam_details(genres=[{"description": "Indie"}, {"description": "Design & Illustration"}])
+    assert build_facts(CANDIDATE, software) is None
+
+
 def test_published_games_are_never_picked_again():
     def fetch(url):
+        if "steamspy.com" in url:
+            return {"tags": {}}
         return {"1304680": {"success": True, "data": steam_details()}}
 
     assert list(iter_games([CANDIDATE], {"steam-1304680"}, seed="d", fetch_json=fetch)) == []
@@ -333,6 +365,7 @@ def test_bright_full_frame_trailer_is_accepted():
     [
         (TrailerLook("1280:336:0:192", 1280, 336, 63.7), "strip"),
         (TrailerLook("1920:1080:0:0", 1920, 1080, 31.0), "too dark"),
+        (TrailerLook("1920:1080:0:0", 1920, 1080, 89.5, 9.6), "colourless"),
     ],
 )
 def test_letterboxed_or_dark_trailers_are_refused(look, reason):
