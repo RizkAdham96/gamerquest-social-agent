@@ -221,12 +221,13 @@ def validate_body(body: str, facts: GameFacts) -> str:
         raise ScriptRejected("description does not end with a complete sentence")
     lowered = body.lower()
     for term in FORBIDDEN_TERMS:
-        # Whole words only: "steam" must not reject "steampunk".
+        # Whole words only, plural included: "steam" must not reject
+        # "steampunk", while "euro" must still catch "euros".
         pattern = re.escape(term.strip())
         if term.strip()[0].isalnum():
             pattern = rf"(?<![a-zà-ÿ0-9]){pattern}"
         if term.strip()[-1].isalnum():
-            pattern = rf"{pattern}(?![a-zà-ÿ0-9])"
+            pattern = rf"{pattern}(?:s|x)?(?![a-zà-ÿ0-9])"
         if re.search(pattern, lowered):
             raise ScriptRejected(f"description contains a forbidden term: {term.strip()}")
     if re.search(r"\d", body):
