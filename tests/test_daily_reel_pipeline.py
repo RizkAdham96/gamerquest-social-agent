@@ -183,7 +183,7 @@ def test_forbidden_terms_match_whole_words_only():
     steampunk = GOOD_BODY.replace("coloré et déjanté", "steampunk et déjanté")
     assert validate_body(steampunk, facts()) == steampunk
     with pytest.raises(ScriptRejected, match="steam"):
-        validate_body(GOOD_BODY.replace("coloré et déjanté", "culte sur Steam"), facts())
+        validate_body(GOOD_BODY.replace("coloré et déjanté", "disponible sur Steam"), facts())
 
 
 def test_writer_reasons_harder_than_the_checker():
