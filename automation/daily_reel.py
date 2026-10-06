@@ -17,13 +17,15 @@ from pathlib import Path
 from agent.hidden_gems import GameFacts, iter_games, load_candidates
 from app.config import Settings
 from content.gem_script import ScriptRejected, write_gem_script
-from content.word_captions import build_word_cues, cues_to_ass, total_duration
-from media.gem_reel import download_trailer, render_reel
+from content.voice import synthesize
+from content.word_captions import build_phrase_cues, cues_to_ass
+from media.gem_reel import VOICE_FILE, download_trailer, render_reel
 from storage.publish_log import PublishLog
 
 MAX_GAMES_PER_RUN = 3
 MIN_REEL_SECONDS = 14.0
 MAX_REEL_SECONDS = 40.0
+VOICE_TAIL_SECONDS = 0.8
 TRUE_VALUES = {"1", "true", "yes", "on"}
 
 
@@ -44,18 +46,24 @@ def env_flag(name: str, default: bool = False) -> bool:
 
 
 def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script,
-            fetch_trailer=download_trailer, render=render_reel):
+            speak=synthesize, fetch_trailer=download_trailer, render=render_reel):
     script = write_script(facts)
-    cues = build_word_cues(script.on_screen_text)
-    seconds = total_duration(cues)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    voice_path = output_dir / VOICE_FILE
+    # The narration sets the Reel's length and the captions follow its timing,
+    # so a Reel is never published silent or out of step with its text.
+    spoken = speak(script.on_screen_text, voice_path)
+    cues = build_phrase_cues(spoken, script.on_screen_text)
+    seconds = round(spoken[-1].end + VOICE_TAIL_SECONDS, 2)
     if not MIN_REEL_SECONDS <= seconds <= MAX_REEL_SECONDS:
         raise ScriptRejected(f"the script would run {seconds:.1f}s")
     trailer = fetch_trailer(facts.trailer_url, output_dir)
     rendered = render(
         trailer=trailer,
-        captions_ass=cues_to_ass(cues),
+        captions_ass=cues_to_ass(cues, style="Phrase"),
         reel_seconds=seconds,
         output_dir=output_dir,
+        voice=voice_path,
     )
     (output_dir / "script.json").write_text(
         json.dumps(

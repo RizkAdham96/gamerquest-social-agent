@@ -34,6 +34,7 @@ jobs:
       GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
       GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GQ_REEL_VOICE: ${{ vars.GQ_REEL_VOICE || 'fr-FR-RemyMultilingualNeural' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
