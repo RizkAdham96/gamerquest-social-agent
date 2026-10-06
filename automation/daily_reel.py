@@ -28,7 +28,7 @@ from media.gem_reel import (
 )
 from storage.publish_log import PublishLog
 
-MAX_GAMES_PER_RUN = 3
+MAX_GAMES_PER_RUN = 4
 MIN_REEL_SECONDS = 14.0
 MAX_REEL_SECONDS = 40.0
 VOICE_TAIL_SECONDS = 0.8

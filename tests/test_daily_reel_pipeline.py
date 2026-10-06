@@ -179,6 +179,26 @@ def test_bad_bodies_are_rejected(body, reason):
         validate_body(body, facts())
 
 
+def test_forbidden_terms_match_whole_words_only():
+    steampunk = GOOD_BODY.replace("coloré et déjanté", "steampunk et déjanté")
+    assert validate_body(steampunk, facts()) == steampunk
+    with pytest.raises(ScriptRejected, match="steam"):
+        validate_body(GOOD_BODY.replace("coloré et déjanté", "culte sur Steam"), facts())
+
+
+def test_writer_reasons_harder_than_the_checker():
+    efforts = []
+
+    def chat(messages, max_tokens, reasoning):
+        efforts.append(reasoning)
+        if "Vérifie" in messages[-1]["content"]:
+            return json.dumps({"valid": True, "unsupported": [], "language_errors": []})
+        return json.dumps({"body": GOOD_BODY})
+
+    write_gem_script(facts(), chat=chat)
+    assert efforts == ["medium", "low"]
+
+
 def test_caption_figures_come_from_store_data():
     caption = build_caption(facts(), today=datetime(2026, 10, 6, tzinfo=timezone.utc))
     assert "Jeu : Voidigo" in caption
@@ -188,14 +208,14 @@ def test_caption_figures_come_from_store_data():
 
 def test_script_is_written_then_fact_checked():
     replies = iter([json.dumps({"body": GOOD_BODY}), json.dumps({"valid": True, "unsupported": []})])
-    script = write_gem_script(facts(), chat=lambda messages, max_tokens: next(replies))
+    script = write_gem_script(facts(), chat=lambda messages, **options: next(replies))
     assert script.on_screen_text == f"{GOOD_BODY} Le jeu s'appelle Voidigo. {FOLLOW_LINE}"
 
 
 def test_failed_fact_check_is_retried_then_rejected():
     calls = []
 
-    def chat(messages, max_tokens):
+    def chat(messages, **options):
         calls.append(messages[-1]["content"])
         if "Vérifie" in messages[-1]["content"]:
             return json.dumps({"valid": False, "unsupported": ["mode en ligne"]})
@@ -203,13 +223,13 @@ def test_failed_fact_check_is_retried_then_rejected():
 
     with pytest.raises(ScriptRejected, match="fact-check failed: mode en ligne"):
         write_gem_script(facts(), chat=chat)
-    assert len(calls) == 4
+    assert len(calls) == 6
     assert "CORRECTION DEMANDÉE" in calls[2]
 
 
 def test_unusable_model_reply_is_rejected_not_published():
     with pytest.raises(ScriptRejected):
-        write_gem_script(facts(), chat=lambda messages, max_tokens: "")
+        write_gem_script(facts(), chat=lambda messages, **options: "")
 
 
 def groq_reply(content):
@@ -458,7 +478,7 @@ def test_store_features_in_the_text_are_rejected():
 
 
 def test_language_errors_fail_the_check():
-    def chat(messages, max_tokens):
+    def chat(messages, **options):
         if "Vérifie" in messages[-1]["content"]:
             return json.dumps({"valid": True, "unsupported": [], "language_errors": ["au manette"]})
         return json.dumps({"body": GOOD_BODY})

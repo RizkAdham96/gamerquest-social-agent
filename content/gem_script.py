@@ -23,9 +23,14 @@ GROQ_MODEL = "openai/gpt-oss-120b"
 # About 20 to 25 seconds once the name and closing line are spoken.
 MIN_BODY_WORDS = 40
 MAX_BODY_WORDS = 62
-MAX_WRITE_ATTEMPTS = 2
-WRITER_MAX_TOKENS = 4000
+MAX_WRITE_ATTEMPTS = 3
+# With low reasoning effort the writer produced broken French ("Tu assemblages
+# modules"); it gets medium effort and the allowance to go with it. The
+# checker's task is narrower and stays on low.
+WRITER_MAX_TOKENS = 6000
+WRITER_REASONING = "medium"
 CHECKER_MAX_TOKENS = 3000
+CHECKER_REASONING = "low"
 
 FOLLOW_LINE = "Abonne-toi pour découvrir une pépite cachée chaque jour."
 
@@ -73,6 +78,7 @@ def groq_chat(
     messages: list[dict],
     *,
     max_tokens: int,
+    reasoning: str = "low",
     api_key: str | None = None,
     post=_post_groq,
 ) -> str:
@@ -85,10 +91,10 @@ def groq_chat(
         "temperature": 0.4,
         # gpt-oss reasons before it answers and the reasoning counts against
         # this limit; when it used the whole allowance the reply came back
-        # empty and Groq refused it as invalid JSON. Low effort plus a wide
-        # allowance leaves room for the answer itself.
+        # empty and Groq refused it as invalid JSON. A wide allowance leaves
+        # room for the answer itself.
         "max_tokens": max_tokens,
-        "reasoning_effort": "low",
+        "reasoning_effort": reasoning,
         "response_format": {"type": "json_object"},
     }
     try:
@@ -147,6 +153,9 @@ RÈGLES :
 - Ne parle jamais de fonctionnalités de boutique : succès, sauvegarde en ligne,
   manette, partage familial.
 - Français irréprochable : accords, articles et prépositions corrects.
+- Phrases simples : sujet, verbe conjugué, complément. Relis chaque verbe.
+- Traduis tous les termes anglais des FAITS en français courant. Les noms
+  propres du jeu (lieux, factions, personnages) peuvent rester tels quels.
 - Utilise uniquement ce que disent les FAITS. N'ajoute aucun mode, personnage,
   lieu, chiffre ou mécanique qui n'y figure pas.
 - Ne cite pas le nom du jeu : il est ajouté après ton texte.
@@ -169,8 +178,14 @@ TEXTE :
 {body}
 
 Une affirmation est non appuyée si elle ajoute un mode de jeu, un personnage, un
-lieu, une mécanique, un chiffre ou une qualité absents des FAITS. Une simple
-reformulation fidèle est appuyée. N'utilise aucune connaissance extérieure.
+lieu, une mécanique, un chiffre ou une qualité absents des FAITS. N'utilise
+aucune connaissance extérieure.
+
+Sont appuyées, et ne doivent PAS être signalées :
+- une reformulation fidèle ou un résumé d'un passage des FAITS ;
+- la traduction française d'un terme anglais des FAITS ("the Void" -> "le Vide",
+  "boss hunting" -> "chasse aux boss") ;
+- un nom propre repris des FAITS.
 
 Vérifie aussi la langue : toute faute de grammaire, d'accord, d'orthographe ou
 de préposition, et tout mot anglais qui n'est pas un nom propre, est une erreur.
@@ -206,7 +221,13 @@ def validate_body(body: str, facts: GameFacts) -> str:
         raise ScriptRejected("description does not end with a complete sentence")
     lowered = body.lower()
     for term in FORBIDDEN_TERMS:
-        if term in lowered:
+        # Whole words only: "steam" must not reject "steampunk".
+        pattern = re.escape(term.strip())
+        if term.strip()[0].isalnum():
+            pattern = rf"(?<![a-zà-ÿ0-9]){pattern}"
+        if term.strip()[-1].isalnum():
+            pattern = rf"{pattern}(?![a-zà-ÿ0-9])"
+        if re.search(pattern, lowered):
             raise ScriptRejected(f"description contains a forbidden term: {term.strip()}")
     if re.search(r"\d", body):
         raise ScriptRejected("description contains a number")
@@ -243,9 +264,15 @@ def write_gem_script(
     last_error: ScriptRejected | None = None
     for _attempt in range(MAX_WRITE_ATTEMPTS):
         try:
-            draft = _parse_json(chat(build_writer_messages(facts, feedback), max_tokens=WRITER_MAX_TOKENS))
+            draft = _parse_json(chat(
+                build_writer_messages(facts, feedback),
+                max_tokens=WRITER_MAX_TOKENS, reasoning=WRITER_REASONING,
+            ))
             body = validate_body(draft.get("body", ""), facts)
-            verdict = _parse_json(chat(build_checker_messages(facts, body), max_tokens=CHECKER_MAX_TOKENS))
+            verdict = _parse_json(chat(
+                build_checker_messages(facts, body),
+                max_tokens=CHECKER_MAX_TOKENS, reasoning=CHECKER_REASONING,
+            ))
             language_errors = [str(item) for item in verdict.get("language_errors") or []]
             if verdict.get("valid") is not True or language_errors:
                 problems = [str(item) for item in verdict.get("unsupported") or []] + language_errors
