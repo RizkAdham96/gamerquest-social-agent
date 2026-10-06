@@ -19,7 +19,13 @@ from app.config import Settings
 from content.gem_script import ScriptRejected, write_gem_script
 from content.voice import synthesize
 from content.word_captions import build_phrase_cues, cues_to_ass
-from media.gem_reel import VOICE_FILE, download_trailer, render_reel
+from media.gem_reel import (
+    VOICE_FILE,
+    analyze_trailer,
+    check_trailer_look,
+    download_trailer,
+    render_reel,
+)
 from storage.publish_log import PublishLog
 
 MAX_GAMES_PER_RUN = 3
@@ -45,10 +51,19 @@ def env_flag(name: str, default: bool = False) -> bool:
     return default if value is None else value.strip().lower() in TRUE_VALUES
 
 
+def check_trailer(trailer: Path) -> None:
+    check_trailer_look(analyze_trailer(trailer))
+
+
 def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script,
-            speak=synthesize, fetch_trailer=download_trailer, render=render_reel):
-    script = write_script(facts)
+            speak=synthesize, fetch_trailer=download_trailer, render=render_reel,
+            inspect_trailer=check_trailer):
     output_dir.mkdir(parents=True, exist_ok=True)
+    # Footage first: an unusable trailer rules the game out before any AI
+    # tokens are spent on its script.
+    trailer = fetch_trailer(facts.trailer_url, output_dir)
+    inspect_trailer(trailer)
+    script = write_script(facts)
     voice_path = output_dir / VOICE_FILE
     # The narration sets the Reel's length and the captions follow its timing,
     # so a Reel is never published silent or out of step with its text.
@@ -57,7 +72,6 @@ def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script
     seconds = round(spoken[-1].end + VOICE_TAIL_SECONDS, 2)
     if not MIN_REEL_SECONDS <= seconds <= MAX_REEL_SECONDS:
         raise ScriptRejected(f"the script would run {seconds:.1f}s")
-    trailer = fetch_trailer(facts.trailer_url, output_dir)
     rendered = render(
         trailer=trailer,
         captions_ass=cues_to_ass(cues, style="Phrase"),

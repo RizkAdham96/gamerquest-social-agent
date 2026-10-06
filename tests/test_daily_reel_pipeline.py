@@ -17,7 +17,14 @@ from content.gem_script import (
 )
 from content.voice import SpokenWord
 from content.word_captions import build_phrase_cues, build_word_cues, cues_to_ass, total_duration
-from media.gem_reel import CLIP_SECONDS, build_command, build_filter_graph, clip_starts
+from media.gem_reel import (
+    CLIP_SECONDS,
+    TrailerLook,
+    build_command,
+    build_filter_graph,
+    check_trailer_look,
+    clip_starts,
+)
 
 GOOD_BODY = (
     "Dans ce jeu, tu pars à la chasse aux boss dans un monde coloré et déjanté. "
@@ -245,6 +252,7 @@ def test_produce_narrates_and_times_the_reel_from_the_voice(tmp_path):
     _, rendered = produce(
         facts(), tmp_path, write_script=lambda game: script, speak=speak,
         fetch_trailer=lambda url, out: tmp_path / "trailer.mp4", render=render,
+        inspect_trailer=lambda trailer: None,
     )
     words = len(GOOD_BODY.split())
     assert rendered.duration_seconds == pytest.approx((words - 1) * 0.4 + 0.35 + 0.8)
@@ -261,7 +269,28 @@ def test_failed_narration_stops_the_reel(tmp_path):
         raise RuntimeError("narration could not be produced")
 
     with pytest.raises(RuntimeError, match="narration"):
-        produce(facts(), tmp_path, write_script=lambda game: script, speak=speak)
+        produce(
+            facts(), tmp_path, write_script=lambda game: script, speak=speak,
+            fetch_trailer=lambda url, out: tmp_path / "trailer.mp4",
+            inspect_trailer=lambda trailer: None,
+        )
+
+
+def test_unusable_trailer_rules_the_game_out_before_any_script_is_written(tmp_path):
+    from automation.daily_reel import produce
+
+    def refuse(trailer):
+        raise RuntimeError("the trailer is too dark for a Reel")
+
+    def write_script(game):
+        raise AssertionError("no AI call expected for a refused trailer")
+
+    with pytest.raises(RuntimeError, match="too dark"):
+        produce(
+            facts(), tmp_path, write_script=write_script,
+            fetch_trailer=lambda url, out: tmp_path / "trailer.mp4",
+            inspect_trailer=refuse,
+        )
 
 
 # --- render -----------------------------------------------------------------
@@ -293,6 +322,56 @@ def test_render_command_targets_vertical_h264_with_reference_layout():
 def test_silent_trailer_renders_without_audio_track():
     command = build_command([6.0], 20.0, has_audio=False)
     assert "-an" in command and "[aout]" not in command
+
+
+def test_bright_full_frame_trailer_is_accepted():
+    check_trailer_look(TrailerLook("1920:1080:0:0", 1920, 1080, 84.7))
+
+
+@pytest.mark.parametrize(
+    "look, reason",
+    [
+        (TrailerLook("1280:336:0:192", 1280, 336, 63.7), "strip"),
+        (TrailerLook("1920:1080:0:0", 1920, 1080, 31.0), "too dark"),
+    ],
+)
+def test_letterboxed_or_dark_trailers_are_refused(look, reason):
+    with pytest.raises(RuntimeError, match=reason):
+        check_trailer_look(look)
+
+
+def test_black_bars_are_cropped_before_the_clips_are_cut():
+    graph = build_filter_graph([6.0, 20.0], has_audio=False, crop="1920:800:0:140")
+    assert graph.startswith("[0:v]crop=1920:800:0:140,split=2[s0][s1];")
+    assert "[s1]trim=start=20.0" in graph
+
+
+def test_store_plumbing_never_reaches_the_script_facts():
+    built = build_facts(CANDIDATE, steam_details(
+        about_the_game="<p>Hunt bosses across a <b>colourful</b> world.</p>",
+        categories=[
+            {"description": "Single-player"}, {"description": "Co-op"},
+            {"description": "Steam Cloud"}, {"description": "Full controller support"},
+        ],
+    ))
+    assert built.modes == ["solo", "coopération"]
+    assert built.about == "Hunt bosses across a colourful world."
+
+
+def test_store_features_in_the_text_are_rejected():
+    body = GOOD_BODY.replace("en coopération.", "en coopération, avec des succès à débloquer.")
+    with pytest.raises(ScriptRejected, match="forbidden"):
+        validate_body(body, facts())
+
+
+def test_language_errors_fail_the_check():
+    def chat(messages, max_tokens):
+        if "Vérifie" in messages[-1]["content"]:
+            return json.dumps({"valid": True, "unsupported": [], "language_errors": ["au manette"]})
+        return json.dumps({"body": GOOD_BODY})
+
+    with pytest.raises(ScriptRejected, match="au manette"):
+        write_gem_script(facts(), chat=chat)
 
 
 # --- orchestration ----------------------------------------------------------
