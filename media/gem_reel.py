@@ -36,6 +36,10 @@ REEL_FILE = "reel.mp4"
 # dark, letterboxed trailer; such footage is refused and another game is tried.
 BLACK_BAR_LUMA_LIMIT = 40
 MIN_MEAN_LUMA = 55.0
+# Grey or sepia footage (menus, text screens) reads as lifeless at Reel size.
+# Measured on real trailers: colourful games 17-39, muted 3D games 11-13,
+# grey text interfaces and monochrome art below 10.
+MIN_MEAN_SATURATION = 10.0
 MAX_PICTURE_ASPECT = 2.2
 MIN_PICTURE_HEIGHT = 480
 ANALYSIS_SECONDS = 40
@@ -47,6 +51,7 @@ class TrailerLook:
     width: int
     height: int
     mean_luma: float
+    mean_saturation: float = 100.0
 
 
 def analyze_trailer(path: Path, run=subprocess.run) -> TrailerLook:
@@ -67,14 +72,20 @@ def analyze_trailer(path: Path, run=subprocess.run) -> TrailerLook:
     crop = f"{width}:{height}:{x}:{y}"
     stats = run(
         base + ["-vf", f"crop={crop},fps=1,signalstats,"
-                       "metadata=print:key=lavfi.signalstats.YAVG:file=-",
+                       "metadata=print:key=lavfi.signalstats.YAVG:file=-,"
+                       "metadata=print:key=lavfi.signalstats.SATAVG:file=-",
                 "-an", "-f", "null", "-"],
         capture_output=True, text=True,
     )
-    values = [float(value) for value in re.findall(r"YAVG=([0-9.]+)", stats.stdout or "")]
-    if not values:
+    luma = [float(value) for value in re.findall(r"YAVG=([0-9.]+)", stats.stdout or "")]
+    saturation = [float(value) for value in re.findall(r"SATAVG=([0-9.]+)", stats.stdout or "")]
+    if not luma or not saturation:
         raise RuntimeError("the trailer's brightness could not be measured")
-    return TrailerLook(crop, width, height, round(sum(values) / len(values), 1))
+    return TrailerLook(
+        crop, width, height,
+        round(sum(luma) / len(luma), 1),
+        round(sum(saturation) / len(saturation), 1),
+    )
 
 
 def check_trailer_look(look: TrailerLook) -> None:
@@ -87,6 +98,11 @@ def check_trailer_look(look: TrailerLook) -> None:
         raise RuntimeError(
             f"the trailer is too dark for a Reel (brightness {look.mean_luma:.0f}, "
             f"minimum {MIN_MEAN_LUMA:.0f})"
+        )
+    if look.mean_saturation < MIN_MEAN_SATURATION:
+        raise RuntimeError(
+            f"the trailer is nearly colourless (saturation {look.mean_saturation:.0f}, "
+            f"minimum {MIN_MEAN_SATURATION:.0f})"
         )
 
 
