@@ -240,3 +240,9 @@ def test_dry_run_never_posts_to_tiktok(tmp_path):
         games=iter([facts()]), produce_fn=fake_produce(), tiktok_poster=tiktok_poster,
     )
     assert result.status == "dry-run"
+
+
+def test_connection_is_stored_even_when_the_test_post_fails():
+    workflow = Path(".github/workflows/tiktok-connect.yml").read_text(encoding="utf-8")
+    persist = workflow.split("- name: Persist the TikTok connection", 1)[1]
+    assert persist.lstrip().startswith("if: ${{ always() }}")
