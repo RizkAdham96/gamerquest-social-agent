@@ -15,7 +15,7 @@ from content.gem_script import (
     validate_body,
     write_gem_script,
 )
-from content.voice import SpokenWord
+from content.voice_types import SpokenWord
 from content.word_captions import (
     build_karaoke_ass,
     build_phrase_cues,

@@ -45,6 +45,11 @@ jobs:
       # SELF_ONLY until TikTok has audited the app; then PUBLIC_TO_EVERYONE.
       GQ_TIKTOK_PRIVACY: ${{ vars.GQ_TIKTOK_PRIVACY || 'SELF_ONLY' }}
       GQ_REEL_VOICE: ${{ vars.GQ_REEL_VOICE || 'fr-FR-VivienneMultilingualNeural' }}
+      # Optional premium voice. Without the key the free voice above is used.
+      FISH_AUDIO_API_KEY: ${{ secrets.FISH_AUDIO_API_KEY }}
+      GQ_FISH_VOICE_ID: ${{ vars.GQ_FISH_VOICE_ID }}
+      GQ_FISH_MODEL: ${{ vars.GQ_FISH_MODEL || 's2.1-pro-free' }}
+      GQ_FISH_SPEED: ${{ vars.GQ_FISH_SPEED || '1.12' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
@@ -66,6 +71,9 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e . pytest
+          # Speech recogniser used to time captions for voices that do not
+          # report word timings.
+          pip install faster-whisper numpy
 
       - name: Verify test suite
         run: pytest -q
