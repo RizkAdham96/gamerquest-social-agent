@@ -64,8 +64,10 @@ jobs:
         if: ${{ inputs.post_test_video }}
         run: python -m automation.tiktok test-post
 
+      # Always: a failed test post must not throw away a connection that was
+      # just made, since the sign-in code cannot be used twice.
       - name: Persist the TikTok connection
-        if: ${{ success() }}
+        if: ${{ always() }}
         run: |
           if [ ! -f state/tiktok_token.enc ]; then
             echo "No TikTok connection to store."
