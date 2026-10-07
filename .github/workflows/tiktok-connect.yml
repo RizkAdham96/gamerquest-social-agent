@@ -1,0 +1,88 @@
+name: TikTok Connect
+
+# Run by hand, once, to link the GamerQuest TikTok account, and afterwards
+# whenever a private test post is wanted.
+on:
+  workflow_dispatch:
+    inputs:
+      auth_code:
+        description: "Code from the address bar after signing in with TikTok (leave empty to only test)"
+        required: false
+        default: ""
+        type: string
+      post_test_video:
+        description: "Post a short private test clip to TikTok"
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gamerquest-social-agent
+  cancel-in-progress: false
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+      TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+      GQ_TIKTOK_PRIVACY: "SELF_ONLY"
+      # Passed through the environment so the code never appears in a command line.
+      TIKTOK_AUTH_CODE: ${{ inputs.auth_code }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Validate configuration
+        run: |
+          test -n "$TIKTOK_CLIENT_KEY" || (echo "Missing TIKTOK_CLIENT_KEY secret" >&2; exit 1)
+          test -n "$TIKTOK_CLIENT_SECRET" || (echo "Missing TIKTOK_CLIENT_SECRET secret" >&2; exit 1)
+
+      - name: Connect the TikTok account
+        if: ${{ inputs.auth_code != '' }}
+        run: python -m automation.tiktok connect --code "$TIKTOK_AUTH_CODE"
+
+      - name: Post a private test clip
+        if: ${{ inputs.post_test_video }}
+        run: python -m automation.tiktok test-post
+
+      - name: Persist the TikTok connection
+        if: ${{ success() }}
+        run: |
+          if [ ! -f state/tiktok_token.enc ]; then
+            echo "No TikTok connection to store."
+            exit 0
+          fi
+          cp state/tiktok_token.enc "$RUNNER_TEMP/tiktok_token.enc"
+          git fetch origin main
+          git reset --hard origin/main
+          mkdir -p state
+          cp "$RUNNER_TEMP/tiktok_token.enc" state/tiktok_token.enc
+
+          git config user.name "gamerquest-social-agent[bot]"
+          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
+          git add state/tiktok_token.enc
+          if git diff --cached --quiet; then
+            echo "TikTok connection is already current on main."
+            exit 0
+          fi
+          git commit -m "chore: persist TikTok connection"
+          git push origin HEAD:main

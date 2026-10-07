@@ -40,6 +40,10 @@ jobs:
       GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
       GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      TIKTOK_CLIENT_KEY: ${{ secrets.TIKTOK_CLIENT_KEY }}
+      TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+      # SELF_ONLY until TikTok has audited the app; then PUBLIC_TO_EVERYONE.
+      GQ_TIKTOK_PRIVACY: ${{ vars.GQ_TIKTOK_PRIVACY || 'SELF_ONLY' }}
       GQ_REEL_VOICE: ${{ vars.GQ_REEL_VOICE || 'fr-FR-VivienneMultilingualNeural' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -145,12 +149,19 @@ jobs:
         run: |
           cp state/publish_log.json "$RUNNER_TEMP/publish_log.json"
           cp state/gem_candidates.json "$RUNNER_TEMP/gem_candidates.json"
+          # TikTok may have issued a new refresh token during this run.
+          if [ -f state/tiktok_token.enc ]; then
+            cp state/tiktok_token.enc "$RUNNER_TEMP/tiktok_token.enc"
+          fi
           git fetch origin main
           git reset --hard origin/main
           mkdir -p state
           cp "$RUNNER_TEMP/gem_candidates.json" state/gem_candidates.json
           if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
             cp "$RUNNER_TEMP/publish_log.json" state/publish_log.json
+            if [ -f "$RUNNER_TEMP/tiktok_token.enc" ]; then
+              cp "$RUNNER_TEMP/tiktok_token.enc" state/tiktok_token.enc
+            fi
           fi
           rm -f state/last_run_error.txt
 

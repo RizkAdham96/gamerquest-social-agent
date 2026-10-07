@@ -124,6 +124,7 @@ def run_once(
     produce_fn=produce,
     now: datetime | None = None,
     allow_extra_today: bool = False,
+    tiktok_poster=None,
 ) -> DailyReelResult:
     now = now or datetime.now(timezone.utc)
     publish_log = PublishLog(publish_log_path)
@@ -158,6 +159,13 @@ def run_once(
         published = orchestrator.publish_reel(
             topic_id=facts.topic_id, reel_path=rendered.path, caption=script.caption,
         )
+        if tiktok_poster is not None:
+            # Instagram is done and recorded; TikTok must not be able to turn
+            # this run into a failure.
+            try:
+                tiktok_poster(rendered.path, script.caption)
+            except Exception as exc:
+                print(f"TikTok: unexpected error, Instagram is unaffected: {exc}")
         return DailyReelResult(
             status="published", topic_id=facts.topic_id, game=facts.name,
             reel_path=str(rendered.path), duration_seconds=rendered.duration_seconds,
@@ -178,10 +186,14 @@ def main() -> None:
 
     live_publish = env_flag("GQ_LIVE_PUBLISH", False)
     orchestrator = None
+    tiktok_poster = None
     if live_publish:
         from automation.main import build_publish_orchestrator
+        from automation.tiktok import is_connected, post_reel
 
         orchestrator = build_publish_orchestrator(Settings.from_env(), PublishLog(args.publish_log))
+        if is_connected():
+            tiktok_poster = post_reel
 
     result = run_once(
         output_dir=args.output_dir,
@@ -189,6 +201,7 @@ def main() -> None:
         live_publish=live_publish,
         orchestrator=orchestrator,
         allow_extra_today=env_flag("GQ_ALLOW_EXTRA_REEL", False),
+        tiktok_poster=tiktok_poster,
     )
     print(json.dumps(asdict(result), ensure_ascii=False))
 
