@@ -100,3 +100,13 @@ def test_access_token_copy_paste_wrappers_are_normalized(raw_token):
     )
     _, params = transport.posts[0]
     assert params["access_token"] == "secret-token"
+
+
+def test_default_wait_covers_several_minutes_of_instagram_processing():
+    import inspect
+
+    from social.instagram_publish import InstagramPublisher
+
+    defaults = inspect.signature(InstagramPublisher.wait_until_ready).parameters
+    total = defaults["max_attempts"].default * defaults["poll_seconds"].default
+    assert total >= 300

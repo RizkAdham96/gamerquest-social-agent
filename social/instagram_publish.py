@@ -126,8 +126,10 @@ class InstagramPublisher:
         self,
         container_id: str,
         *,
-        max_attempts: int = 30,
-        poll_seconds: float = 2.0,
+        # Instagram can take several minutes to process a Reel; the previous
+        # 60-second wait gave up on a video that was still being prepared.
+        max_attempts: int = 72,
+        poll_seconds: float = 5.0,
     ) -> dict:
         if max_attempts < 1:
             raise ValueError("max_attempts must be >= 1")
