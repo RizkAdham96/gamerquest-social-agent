@@ -1,0 +1,23 @@
+Run failed at: 2026-10-07T10:34:28Z
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 210, in <module>
+    main()
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 198, in main
+    result = run_once(
+             ^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 159, in run_once
+    published = orchestrator.publish_reel(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/publish_orchestrator.py", line 21, in publish_reel
+    published=self.instagram_pipeline.publish(topic_id=topic_id,media_url=staged.public_url,caption=caption)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_pipeline.py", line 69, in publish
+    self.publisher.wait_until_ready(container_id)
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/social/instagram_publish.py", line 145, in wait_until_ready
+    raise TimeoutError(f"container {container_id} was not ready after {max_attempts} attempts")
+TimeoutError: container 18102796136170921 was not ready after 30 attempts
+Candidate 1: pureya (97% positive)
+Script rejected for pureya: fact-check failed: les garder le plus longtemps possible; Amuse‑toi sans limite
