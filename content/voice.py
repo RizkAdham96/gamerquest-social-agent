@@ -8,7 +8,8 @@ from dataclasses import dataclass
 from pathlib import Path
 
 DEFAULT_VOICE = "fr-FR-VivienneMultilingualNeural"
-DEFAULT_RATE = "+4%"
+# The reference Reels speak at about four words a second.
+DEFAULT_RATE = "+18%"
 MAX_ATTEMPTS = 3
 
 

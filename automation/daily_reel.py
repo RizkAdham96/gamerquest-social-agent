@@ -18,7 +18,7 @@ from agent.hidden_gems import GameFacts, iter_games, load_candidates
 from app.config import Settings
 from content.gem_script import ScriptRejected, write_gem_script
 from content.voice import synthesize
-from content.word_captions import build_phrase_cues, cues_to_ass
+from content.word_captions import build_karaoke_ass
 from media.gem_reel import (
     VOICE_FILE,
     analyze_trailer,
@@ -29,8 +29,8 @@ from media.gem_reel import (
 from storage.publish_log import PublishLog
 
 MAX_GAMES_PER_RUN = 4
-MIN_REEL_SECONDS = 14.0
-MAX_REEL_SECONDS = 40.0
+MIN_REEL_SECONDS = 20.0
+MAX_REEL_SECONDS = 55.0
 VOICE_TAIL_SECONDS = 0.8
 TRUE_VALUES = {"1", "true", "yes", "on"}
 
@@ -68,13 +68,12 @@ def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script
     # The narration sets the Reel's length and the captions follow its timing,
     # so a Reel is never published silent or out of step with its text.
     spoken = speak(script.on_screen_text, voice_path)
-    cues = build_phrase_cues(spoken, script.on_screen_text)
     seconds = round(spoken[-1].end + VOICE_TAIL_SECONDS, 2)
     if not MIN_REEL_SECONDS <= seconds <= MAX_REEL_SECONDS:
         raise ScriptRejected(f"the script would run {seconds:.1f}s")
     rendered = render(
         trailer=trailer,
-        captions_ass=cues_to_ass(cues, style="Phrase"),
+        captions_ass=build_karaoke_ass(spoken, script.on_screen_text),
         reel_seconds=seconds,
         output_dir=output_dir,
         voice=voice_path,

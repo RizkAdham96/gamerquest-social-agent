@@ -20,6 +20,7 @@ WrapStyle: 2
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 Style: Word,DejaVu Sans,84,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,1,0,0,0,100,100,0,0,1,6,2,5,40,40,0,1
 Style: Phrase,DejaVu Sans,72,&H00FFFFFF,&H00FFFFFF,&H00000000,&H64000000,1,0,0,0,100,100,0,0,1,6,2,2,60,60,400,1
+Style: Karaoke,Montserrat ExtraBold,80,&H00FFFFFF,&H00FFFFFF,&H00000000,&H78000000,1,0,0,0,100,100,0,0,1,7,3,8,50,50,1430,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -118,4 +119,57 @@ def cues_to_ass(cues: list[WordCue], style: str = "Word") -> str:
         f"Dialogue: 0,{_ass_time(cue.start)},{_ass_time(cue.end)},{style},,0,0,0,,{_escape(cue.text)}"
         for cue in cues
     ]
+    return ASS_HEADER + "\n".join(lines) + ("\n" if lines else "")
+
+
+
+# Captions in the style of the reference Reels: two or three bold words at a
+# time under the footage, the word being spoken picked out in yellow.
+KARAOKE_MAX_WORDS = 3
+KARAOKE_MAX_CHARS = 20
+HIGHLIGHT = r"{\c&H00E5FF&}"
+PLAIN = r"{\c&HFFFFFF&}"
+POP = r"{\fscx112\fscy112\t(0,110,\fscx100\fscy100)}"
+
+
+def build_karaoke_ass(spoken, script: str = "") -> str:
+    """One caption line per spoken word, with that word highlighted."""
+    texts = attach_punctuation([word.text for word in spoken], script) if script else [
+        word.text for word in spoken
+    ]
+    groups: list[list[int]] = []
+    current: list[int] = []
+    for index, text in enumerate(texts):
+        length = sum(len(texts[i]) + 1 for i in current) + len(text)
+        if current and (len(current) >= KARAOKE_MAX_WORDS or length > KARAOKE_MAX_CHARS):
+            groups.append(current)
+            current = []
+        current.append(index)
+        if text.endswith((".", "!", "?", "…", ",", ";", ":")):
+            groups.append(current)
+            current = []
+    if current:
+        groups.append(current)
+
+    lines = []
+    for group_number, group in enumerate(groups):
+        next_group_start = (
+            spoken[groups[group_number + 1][0]].start if group_number + 1 < len(groups) else None
+        )
+        for position, index in enumerate(group):
+            start = spoken[index].start
+            if position + 1 < len(group):
+                end = spoken[group[position + 1]].start
+            else:
+                end = spoken[index].end + PHRASE_HOLD_SECONDS
+                if next_group_start is not None:
+                    end = min(end, next_group_start)
+            parts = [
+                (HIGHLIGHT + _escape(texts[i]) + PLAIN) if i == index else _escape(texts[i])
+                for i in group
+            ]
+            text = (POP if position == 0 else "") + " ".join(parts)
+            lines.append(
+                f"Dialogue: 0,{_ass_time(start)},{_ass_time(max(end, start + 0.05))},Karaoke,,0,0,0,,{text}"
+            )
     return ASS_HEADER + "\n".join(lines) + ("\n" if lines else "")

@@ -21,9 +21,10 @@ from agent.hidden_gems import GameFacts
 
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "openai/gpt-oss-120b"
-# About 20 to 25 seconds once the name and closing line are spoken.
-MIN_BODY_WORDS = 40
-MAX_BODY_WORDS = 62
+# The reference Reels run 35-42 seconds at about four words a second, with
+# the game's name held back to the end.
+MIN_BODY_WORDS = 95
+MAX_BODY_WORDS = 135
 MAX_WRITE_ATTEMPTS = 3
 # With low reasoning effort the writer produced broken French ("Tu assemblages
 # modules"); it gets medium effort and the allowance to go with it. The
@@ -34,7 +35,7 @@ CHECKER_MAX_TOKENS = 3000
 CHECKER_REASONING = "low"
 MAX_RATE_LIMIT_RETRIES = 3
 
-FOLLOW_LINE = "Abonne-toi pour découvrir une pépite cachée chaque jour."
+FOLLOW_LINE = "Je te présente un nouveau jeu chaque jour, alors abonne-toi pour ne rien manquer."
 
 # The body describes gameplay only. Anything about money, dates, platforms or
 # reception comes from Steam data in the caption, never from the model.
@@ -158,11 +159,20 @@ FAITS (seule source autorisée) :
 {_facts_block(facts)}
 
 RÈGLES :
-- Entre {MIN_BODY_WORDS} et {MAX_BODY_WORDS} mots, en 4 ou 5 phrases courtes.
-- Le texte sera lu à voix haute : écris comme on parle, sans parenthèses ni abréviations.
-- Tutoie le spectateur, au présent ("Dans ce jeu, tu...").
-- Commence directement par ce qu'on fait dans le jeu, de façon accrocheuse.
-- Parle de l'histoire, de l'ambiance et de ce que le joueur fait concrètement.
+- Entre {MIN_BODY_WORDS} et {MAX_BODY_WORDS} mots.
+- Le texte est dit à voix haute par un créateur qui parle à un ami : français
+  oral, tutoiement, phrases courtes. Les tournures parlées sont voulues
+  ("t'es", "c'est pas", "y a", "du coup", "sauf que", "franchement").
+  Aucune parenthèse, aucune abréviation, aucune liste.
+- STRUCTURE, dans cet ordre :
+  1. Une accroche de une ou deux phrases qui pose l'enjeu ou le retournement
+     du jeu du point de vue du joueur. Pas de "Dans ce jeu, tu...".
+  2. Ce que le joueur fait concrètement, avec les détails précis des FAITS.
+  3. Ce qui rend le jeu différent ou tendu ("Sauf que...", "Et le pire...").
+  4. Une seule phrase d'enthousiasme sur le concept, sans jamais dire que tu
+     y as joué ni que tu l'as testé.
+- Chaque phrase doit donner une information ou faire monter la tension :
+  aucune phrase creuse, aucune répétition.
 - Ne parle jamais de fonctionnalités de boutique : succès, sauvegarde en ligne,
   manette, partage familial.
 - Français irréprochable : accords, articles et prépositions corrects.
@@ -175,8 +185,8 @@ RÈGLES :
 - Utilise uniquement ce que disent les FAITS. N'ajoute aucun mode, personnage,
   lieu, chiffre ou mécanique qui n'y figure pas.
 - Ne cite pas le nom du jeu : il est ajouté après ton texte.
-- Aucun prix, aucune date, aucune plateforme, aucun avis ni superlatif
-  ("meilleur", "culte", "incontournable").
+- Aucun prix, aucune date, aucune plateforme, aucun superlatif
+  ("meilleur", "culte", "incontournable"), aucun avis de joueurs ou de presse.
 - Aucun chiffre, aucun emoji, aucun hashtag, aucun mot en anglais sauf un nom propre.
 {("CORRECTION DEMANDÉE : " + feedback) if feedback else ""}
 Réponds avec : {{"body": "..."}}"""
@@ -205,6 +215,11 @@ Sont appuyées, et ne doivent PAS être signalées :
 
 Vérifie aussi la langue : toute faute de grammaire, d'accord, d'orthographe ou
 de préposition, et tout mot anglais qui n'est pas un nom propre, est une erreur.
+Le registre oral est voulu : "t'es", "c'est pas", "y a", l'absence de "ne" et
+les mots comme "franchement" ou "du coup" ne sont PAS des erreurs.
+Une phrase d'enthousiasme sur le concept est permise tant qu'elle n'affirme
+aucun fait ; en revanche, dire qu'on a joué au jeu ou qu'on l'a testé est une
+affirmation non appuyée.
 
 Vérifie enfin chaque traduction : pour chaque verbe d'action et chaque terme de
 jeu du TEXTE, retrouve le mot anglais des FAITS et confirme que le sens est le
@@ -275,7 +290,7 @@ def build_caption(facts: GameFacts, today: datetime | None = None) -> str:
 
 
 def on_screen_text(facts: GameFacts, body: str) -> str:
-    return f"{body} Le jeu s'appelle {facts.name}. {FOLLOW_LINE}"
+    return f"{body} {FOLLOW_LINE} Ce jeu, c'est {facts.name}, et il est dispo sur PC, sur Steam."
 
 
 def write_gem_script(
