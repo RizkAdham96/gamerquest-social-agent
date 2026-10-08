@@ -51,6 +51,7 @@ def test_fish_voice_is_used_when_its_key_is_set(tmp_path, monkeypatch):
     monkeypatch.setenv("GQ_FISH_VOICE_ID", "voice-123")
     monkeypatch.setenv("GQ_FISH_MODEL", "s2.1-pro")
     monkeypatch.setenv("GQ_FISH_SPEED", "1.2")
+    monkeypatch.setenv("GQ_FISH_TEMPO", "1.0")
     sent = {}
 
     def request(text, api_key, voice_id, model, speed):
@@ -93,6 +94,7 @@ def test_free_voice_is_used_without_a_fish_key(tmp_path, monkeypatch):
 
 def test_fish_waits_between_retries_after_a_server_error(tmp_path, monkeypatch):
     monkeypatch.setenv("FISH_AUDIO_API_KEY", "key")
+    monkeypatch.setenv("GQ_FISH_TEMPO", "1.0")
     waits = []
     replies = iter([RuntimeError("Fish Audio HTTP 503"), RuntimeError("Fish Audio HTTP 503"), bytes(20_000)])
 
@@ -108,3 +110,29 @@ def test_fish_waits_between_retries_after_a_server_error(tmp_path, monkeypatch):
     )
     assert waits == [15.0, 30.0]
     assert [word.text for word in words] == ["Bonjour"]
+
+
+def test_fish_narration_is_slowed_before_captions_are_timed(tmp_path, monkeypatch):
+    monkeypatch.setenv("FISH_AUDIO_API_KEY", "key")
+    monkeypatch.setenv("GQ_FISH_TEMPO", "0.9")
+    order = []
+    monkeypatch.setattr(voice, "slow_down", lambda audio, tempo: order.append(("tempo", tempo)))
+
+    def time_words(text, audio):
+        order.append(("timing", None))
+        return [SpokenWord(0.0, 0.4, "Bonjour")]
+
+    voice.fish_synthesize(
+        "Bonjour", tmp_path / "v.mp3", request=lambda *args: bytes(20_000), time_words=time_words,
+    )
+    assert order == [("tempo", 0.9), ("timing", None)]
+
+
+def test_tempo_of_one_leaves_the_audio_untouched(tmp_path, monkeypatch):
+    monkeypatch.setenv("FISH_AUDIO_API_KEY", "key")
+    monkeypatch.setenv("GQ_FISH_TEMPO", "1.0")
+    monkeypatch.setattr(voice, "slow_down", lambda audio, tempo: pytest.fail("no stretch expected"))
+    voice.fish_synthesize(
+        "Bonjour", tmp_path / "v.mp3", request=lambda *args: bytes(20_000),
+        time_words=lambda text, audio: [SpokenWord(0.0, 0.4, "Bonjour")],
+    )

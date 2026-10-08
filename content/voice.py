@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import subprocess
 import time
 from pathlib import Path
 from urllib.error import HTTPError
@@ -60,6 +61,9 @@ FISH_TTS_URL = "https://api.fish.audio/v1/tts"
 FISH_DEFAULT_MODEL = "s2.1-pro-free"
 FISH_DEFAULT_SPEED = 1.0
 FISH_RETRY_WAIT_SECONDS = 15.0
+# The chosen Fish voice speaks at about 3.7 words a second whatever speed is
+# requested, which the editor found too fast; the audio is slowed afterwards.
+FISH_DEFAULT_TEMPO = 0.88
 
 
 def _fish_request(text: str, api_key: str, voice_id: str, model: str, speed: float) -> bytes:
@@ -82,6 +86,19 @@ def _fish_request(text: str, api_key: str, voice_id: str, model: str, speed: flo
     except HTTPError as exc:
         detail = exc.read().decode("utf-8", errors="replace")[:300]
         raise RuntimeError(f"Fish Audio HTTP {exc.code}: {detail}") from exc
+
+
+def change_tempo(audio: Path, tempo: float, run=subprocess.run) -> None:
+    """Stretch the narration in time without changing its pitch."""
+    stretched = audio.with_name(audio.stem + ".tempo" + audio.suffix)
+    run(
+        ["ffmpeg", "-v", "error", "-y", "-i", str(audio), "-filter:a", f"atempo={tempo}", str(stretched)],
+        check=True, capture_output=True,
+    )
+    stretched.replace(audio)
+
+
+slow_down = change_tempo
 
 
 def fish_synthesize(
@@ -118,9 +135,13 @@ def fish_synthesize(
     else:
         raise RuntimeError(f"narration could not be produced: {last_error}")
 
+    tempo = float(os.getenv("GQ_FISH_TEMPO", "").strip() or FISH_DEFAULT_TEMPO)
+    if abs(tempo - 1.0) > 0.01:
+        slow_down(output, tempo)
+
     if time_words is None:
         from content.align import time_words
-    print(f"Narration: Fish Audio voice ({model}).")
+    print(f"Narration: Fish Audio voice ({model}, tempo {tempo}).")
     return time_words(text, output)
 
 
