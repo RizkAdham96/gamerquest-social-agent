@@ -19,7 +19,12 @@ from pathlib import Path
 WIDTH = 1080
 HEIGHT = 1920
 FOREGROUND_HEIGHT = 1216
+# The footage sits high in the frame so the captions have the blurred band
+# beneath it, clear of the picture and of Instagram's own bottom overlay.
+FOREGROUND_TOP = 150
 CLIP_SECONDS = 2.4
+# Cuts of varying length feel edited; a fixed rhythm feels machine-made.
+CLIP_PATTERN = (2.0, 3.0, 2.4, 3.4, 2.2, 2.8)
 TRAILER_INTRO_SKIP_SECONDS = 6.0
 TRAILER_OUTRO_SKIP_SECONDS = 4.0
 MAX_TRAILER_SECONDS = 120
@@ -86,6 +91,70 @@ def analyze_trailer(path: Path, run=subprocess.run) -> TrailerLook:
         round(sum(luma) / len(luma), 1),
         round(sum(saturation) / len(saturation), 1),
     )
+
+
+# A moment of the trailer that is a logo on black, a fade or a title card:
+# nearly black, or bright but colourless. The first test Reel in the new
+# style showed the publisher's logo because cuts were placed blindly.
+DULL_MOMENT_MAX_LUMA = 32.0
+BLANK_MOMENT_MIN_LUMA = 215.0
+BLANK_MOMENT_MAX_SATURATION = 6.0
+CLIP_SHIFT_STEP = 0.5
+CLIP_MAX_SHIFT = 8.0
+
+
+def dull_seconds(path: Path, crop: str, run=subprocess.run) -> set[int]:
+    """Whole seconds of the trailer that show nothing worth cutting to."""
+    stats = run(
+        [
+            _ffmpeg(), "-hide_banner", "-i", str(path),
+            "-vf", f"crop={crop},fps=1,signalstats,"
+                   "metadata=print:key=lavfi.signalstats.YAVG:file=-,"
+                   "metadata=print:key=lavfi.signalstats.SATAVG:file=-",
+            "-an", "-f", "null", "-",
+        ],
+        capture_output=True, text=True,
+    )
+    luma = [float(value) for value in re.findall(r"YAVG=([0-9.]+)", stats.stdout or "")]
+    saturation = [float(value) for value in re.findall(r"SATAVG=([0-9.]+)", stats.stdout or "")]
+    dull = set()
+    for second, (brightness, colour) in enumerate(zip(luma, saturation)):
+        if brightness < DULL_MOMENT_MAX_LUMA or (
+            brightness > BLANK_MOMENT_MIN_LUMA and colour < BLANK_MOMENT_MAX_SATURATION
+        ):
+            dull.add(second)
+    return dull
+
+
+def _touches_dull(start: float, duration: float, dull: set[int]) -> bool:
+    return any(second in dull for second in range(int(start), int(start + duration) + 1))
+
+
+def avoid_dull_moments(
+    clips: list[tuple[float, float]], dull: set[int], trailer_seconds: float,
+) -> list[tuple[float, float]]:
+    """Slide each cut to the nearest stretch of real footage."""
+    if not dull:
+        return clips
+    last_start = trailer_seconds - TRAILER_OUTRO_SKIP_SECONDS
+    adjusted = []
+    for start, duration in clips:
+        choice = start
+        if _touches_dull(start, duration, dull):
+            steps = int(CLIP_MAX_SHIFT / CLIP_SHIFT_STEP)
+            for step in range(1, steps + 1):
+                for candidate in (start + step * CLIP_SHIFT_STEP, start - step * CLIP_SHIFT_STEP):
+                    if (
+                        TRAILER_INTRO_SKIP_SECONDS <= candidate
+                        and candidate + duration <= last_start
+                        and not _touches_dull(candidate, duration, dull)
+                    ):
+                        choice = candidate
+                        break
+                if choice != start:
+                    break
+        adjusted.append((round(choice, 2), duration))
+    return adjusted
 
 
 def check_trailer_look(look: TrailerLook) -> None:
@@ -173,24 +242,53 @@ def clip_starts(trailer_seconds: float, reel_seconds: float) -> list[float]:
     return [round(TRAILER_INTRO_SKIP_SECONDS + index * step, 2) for index in range(count)]
 
 
+def plan_clips(trailer_seconds: float, reel_seconds: float) -> list[tuple[float, float]]:
+    """(start, duration) for each cut: varied lengths, spread across the trailer."""
+    usable = trailer_seconds - TRAILER_INTRO_SKIP_SECONDS - TRAILER_OUTRO_SKIP_SECONDS
+    if usable < MIN_USABLE_TRAILER_SECONDS:
+        raise RuntimeError(
+            f"the trailer is too short for a Reel ({trailer_seconds:.0f}s)"
+        )
+    durations: list[float] = []
+    while sum(durations) < reel_seconds:
+        durations.append(CLIP_PATTERN[len(durations) % len(CLIP_PATTERN)])
+    span = usable - max(durations)
+    if len(durations) == 1:
+        return [(TRAILER_INTRO_SKIP_SECONDS, durations[0])]
+    step = span / (len(durations) - 1)
+    return [
+        (round(TRAILER_INTRO_SKIP_SECONDS + index * step, 2), duration)
+        for index, duration in enumerate(durations)
+    ]
+
+
+def _as_clips(clips) -> list[tuple[float, float]]:
+    """Accept plain start times (fixed length) or (start, duration) pairs."""
+    return [
+        (float(item[0]), float(item[1])) if isinstance(item, (tuple, list)) else (float(item), CLIP_SECONDS)
+        for item in clips
+    ]
+
+
 def build_filter_graph(
     starts: list[float], has_audio: bool, has_voice: bool = False, crop: str = "",
 ) -> str:
     parts = []
     video_labels = ""
     audio_labels = ""
-    count = len(starts)
+    clips = _as_clips(starts)
+    count = len(clips)
     # Remove baked-in black bars once, then cut the clips from the clean picture.
     source = f"[0:v]crop={crop}," if crop else "[0:v]"
     parts.append(source + f"split={count}" + "".join(f"[s{i}]" for i in range(count)) + ";")
-    for index, start in enumerate(starts):
+    for index, (start, duration) in enumerate(clips):
         parts.append(
-            f"[s{index}]trim=start={start}:duration={CLIP_SECONDS},setpts=PTS-STARTPTS[v{index}];"
+            f"[s{index}]trim=start={start}:duration={duration},setpts=PTS-STARTPTS[v{index}];"
         )
         video_labels += f"[v{index}]"
         if has_audio:
             parts.append(
-                f"[0:a]atrim=start={start}:duration={CLIP_SECONDS},asetpts=PTS-STARTPTS[a{index}];"
+                f"[0:a]atrim=start={start}:duration={duration},asetpts=PTS-STARTPTS[a{index}];"
             )
             audio_labels += f"[a{index}]"
     graph = "".join(parts)
@@ -200,7 +298,7 @@ def build_filter_graph(
         f"crop={WIDTH}:{HEIGHT},gblur=sigma=36,eq=brightness=-0.06[bg];"
     )
     graph += f"[fgsrc]scale=-2:{FOREGROUND_HEIGHT},crop={WIDTH}:{FOREGROUND_HEIGHT}[fg];"
-    graph += f"[bg][fg]overlay=0:(H-h)/2,ass={CAPTIONS_FILE},setsar=1[vout]"
+    graph += f"[bg][fg]overlay=0:{FOREGROUND_TOP},ass={CAPTIONS_FILE},setsar=1[vout]"
     if has_audio:
         # Official game audio, levelled so trailers of any loudness sit alike.
         game = f";{audio_labels}concat=n={count}:v=0:a=1,loudnorm=I=-16:TP=-1.5:LRA=11"
@@ -258,7 +356,11 @@ def render_reel(
     info = probe(output_dir / TRAILER_FILE, run=run)
     look = analyze_trailer(output_dir / TRAILER_FILE, run=run)
     check_trailer_look(look)
-    starts = clip_starts(info["duration"], reel_seconds)
+    starts = avoid_dull_moments(
+        plan_clips(info["duration"], reel_seconds),
+        dull_seconds(output_dir / TRAILER_FILE, look.crop, run=run),
+        info["duration"],
+    )
     # Relative file names and cwd keep Windows drive letters out of the
     # filter graph, where a colon would need escaping.
     run(

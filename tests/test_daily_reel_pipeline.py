@@ -15,10 +15,18 @@ from content.gem_script import (
     validate_body,
     write_gem_script,
 )
-from content.voice import SpokenWord
-from content.word_captions import build_phrase_cues, build_word_cues, cues_to_ass, total_duration
+from content.voice_types import SpokenWord
+from content.word_captions import (
+    build_karaoke_ass,
+    build_phrase_cues,
+    build_word_cues,
+    cues_to_ass,
+    total_duration,
+)
 from media.gem_reel import (
+    CLIP_PATTERN,
     CLIP_SECONDS,
+    plan_clips,
     TrailerLook,
     build_command,
     build_filter_graph,
@@ -27,11 +35,17 @@ from media.gem_reel import (
 )
 
 GOOD_BODY = (
-    "Dans ce jeu, tu pars à la chasse aux boss dans un monde coloré et déjanté. "
-    "Tu enchaînes les armes et les bonus les plus variés pour repousser la corruption du Vide. "
-    "Chaque partie est différente, et tu peux même y jouer à deux en coopération."
+    "Dans ce jeu, c'est pas toi qui fuis les boss, c'est toi qui les traques. "
+    "Tu débarques dans un monde coloré et déjanté, corrompu par le Vide, et ta mission est simple : "
+    "retrouver chaque boss, le faire sortir de sa cachette et l'éliminer. "
+    "Sauf que les boss ne restent pas plantés là à t'attendre. Ils se baladent, ils fuient, "
+    "et ils reviennent quand tu t'y attends le moins. "
+    "Pour t'en sortir, tu mélanges des armes à distance et de mêlée avec des bonus qui changent tout. "
+    "Et franchement, le concept est malin : ici, le chasseur, c'est toi. "
+    "Tu enchaînes les combats, tu esquives, tu étourdis tes ennemis et tu repars à la chasse. "
+    "En plus, tu peux même y jouer à deux en coopération."
 )
-assert 40 <= len(GOOD_BODY.split()) <= 62
+assert 95 <= len(GOOD_BODY.split()) <= 135
 
 
 def facts(**overrides):
@@ -209,7 +223,9 @@ def test_caption_figures_come_from_store_data():
 def test_script_is_written_then_fact_checked():
     replies = iter([json.dumps({"body": GOOD_BODY}), json.dumps({"valid": True, "unsupported": []})])
     script = write_gem_script(facts(), chat=lambda messages, **options: next(replies))
-    assert script.on_screen_text == f"{GOOD_BODY} Le jeu s'appelle Voidigo. {FOLLOW_LINE}"
+    assert script.on_screen_text == (
+        f"{GOOD_BODY} {FOLLOW_LINE} Ce jeu, c'est Voidigo, et il est dispo sur PC, sur Steam."
+    )
 
 
 def test_failed_fact_check_is_retried_then_rejected():
@@ -366,6 +382,67 @@ def test_phrase_captions_use_the_bottom_style():
     assert ",Phrase,,0,0,0,,Dans ce jeu," in text
 
 
+def test_karaoke_captions_highlight_the_word_being_spoken():
+    script = "Dans ce jeu, tu traques les boss."
+    text = build_karaoke_ass(spoken(script), script)
+    lines = [line for line in text.splitlines() if line.startswith("Dialogue:")]
+    # One line per spoken word, each showing its short phrase.
+    assert len(lines) == len(script.split())
+    assert lines[0].endswith(r"{\c&H00E5FF&}Dans{\c&HFFFFFF&} ce jeu,")
+    assert lines[1].endswith(r"Dans {\c&H00E5FF&}ce{\c&HFFFFFF&} jeu,")
+    assert lines[3].split(",,")[-1].count(" ") <= 2
+    assert all(",Karaoke," in line for line in lines)
+
+
+def test_clips_vary_in_length_and_cover_the_reel():
+    clips = plan_clips(trailer_seconds=95.0, reel_seconds=36.0)
+    durations = [duration for _start, duration in clips]
+    assert sum(durations) >= 36.0
+    assert len(set(durations)) > 1 and set(durations) <= set(CLIP_PATTERN)
+    starts = [start for start, _duration in clips]
+    assert starts == sorted(starts) and starts[0] == 6.0
+    assert starts[-1] + durations[-1] <= 95.0 - 4.0
+    graph = build_filter_graph(clips, has_audio=False)
+    assert f"trim=start={starts[1]}:duration={durations[1]}" in graph
+
+
+def test_cuts_are_moved_off_logo_and_black_moments():
+    from media.gem_reel import avoid_dull_moments
+
+    clips = [(6.0, 2.0), (20.0, 3.0), (40.0, 2.4)]
+    dull = {20, 21, 22}
+    moved = avoid_dull_moments(clips, dull, trailer_seconds=90.0)
+    assert moved[0] == (6.0, 2.0) and moved[2] == (40.0, 2.4)
+    start, duration = moved[1]
+    assert not any(second in dull for second in range(int(start), int(start + duration) + 1))
+    assert abs(start - 20.0) <= 8.0
+
+
+def test_cut_stays_put_when_no_clean_footage_is_near():
+    from media.gem_reel import avoid_dull_moments
+
+    dull = set(range(0, 60))
+    assert avoid_dull_moments([(20.0, 3.0)], dull, trailer_seconds=90.0) == [(20.0, 3.0)]
+
+
+def test_verdicts_on_the_game_are_rejected():
+    body = GOOD_BODY.replace(
+        "le concept est malin : ici, le chasseur, c'est toi.",
+        "ça te tient en haleine du début à la fin.",
+    )
+    with pytest.raises(ScriptRejected, match="forbidden"):
+        validate_body(body, facts())
+
+
+def test_script_prompt_asks_for_a_hook_first_spoken_script():
+    from content.gem_script import build_checker_messages, build_writer_messages
+
+    writer = build_writer_messages(facts())[-1]["content"]
+    assert "accroche" in writer and "tournures parlées" in writer
+    assert "Entre 95 et 135 mots" in writer
+    assert "registre oral est voulu" in build_checker_messages(facts(), GOOD_BODY)[-1]["content"]
+
+
 def test_narrated_reel_mixes_voice_over_quiet_game_audio():
     graph = build_filter_graph([6.0, 20.0], has_audio=True, has_voice=True)
     assert "volume=0.14[game]" in graph and "[voice][game]amix" in graph
@@ -401,7 +478,7 @@ def test_produce_narrates_and_times_the_reel_from_the_voice(tmp_path):
     words = len(GOOD_BODY.split())
     assert rendered.duration_seconds == pytest.approx((words - 1) * 0.4 + 0.35 + 0.8)
     assert captured["voice"] == tmp_path / "voice.mp3"
-    assert ",Phrase," in captured["captions_ass"]
+    assert ",Karaoke," in captured["captions_ass"]
 
 
 def test_failed_narration_stops_the_reel(tmp_path):
@@ -456,7 +533,7 @@ def test_render_command_targets_vertical_h264_with_reference_layout():
     starts = [6.0, 20.0]
     graph = build_filter_graph(starts, has_audio=True)
     assert "crop=1080:1920" in graph and "gblur" in graph
-    assert "overlay=0:(H-h)/2" in graph and "ass=captions.ass" in graph
+    assert "overlay=0:150" in graph and "ass=captions.ass" in graph
     command = build_command(starts, 24.0, has_audio=True)
     assert command[command.index("-c:v") + 1] == "libx264"
     assert command[command.index("-pix_fmt") + 1] == "yuv420p"
