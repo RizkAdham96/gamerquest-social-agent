@@ -51,6 +51,8 @@ jobs:
       GQ_FISH_VOICE_ID: ${{ vars.GQ_FISH_VOICE_ID || secrets.GQ_FISH_VOICE_ID }}
       GQ_FISH_MODEL: ${{ vars.GQ_FISH_MODEL || 's2.1-pro-free' }}
       GQ_FISH_SPEED: ${{ vars.GQ_FISH_SPEED || '1.0' }}
+      # Below 1 slows the narration; 1 leaves the voice at its own pace.
+      GQ_FISH_TEMPO: ${{ vars.GQ_FISH_TEMPO || '0.88' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
