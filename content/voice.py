@@ -47,6 +47,7 @@ def edge_synthesize(text: str, output: Path, voice: str | None = None, rate: str
             last_error = exc
             continue
         if words and output.exists() and output.stat().st_size > 10_000:
+            print(f"Narration: free voice ({voice}).")
             return words
         last_error = RuntimeError("the voice service returned no audio")
     raise RuntimeError(f"narration could not be produced: {last_error}")
@@ -111,6 +112,7 @@ def fish_synthesize(
 
     if time_words is None:
         from content.align import time_words
+    print(f"Narration: Fish Audio voice ({model}).")
     return time_words(text, output)
 
 

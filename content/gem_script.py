@@ -46,6 +46,9 @@ FORBIDDEN_TERMS = (
     "meilleur", "chef-d'œuvre", "chef d'œuvre", "incontournable", "culte",
     "millions", "record", "récompense", "prix du", "goty",
     "http", "www.", "#", "@",
+    # Verdicts on how the game plays, which nobody here has checked.
+    "tient en haleine", "du début à la fin", "addictif", "immersion", "captivant",
+    "impossible de lâcher", "des heures",
     # Store plumbing is not a reason to play a game.
     "steam", "succès", "cloud", "manette", "partage familial", "cartes à échanger",
 )
@@ -169,8 +172,10 @@ RÈGLES :
      du jeu du point de vue du joueur. Pas de "Dans ce jeu, tu...".
   2. Ce que le joueur fait concrètement, avec les détails précis des FAITS.
   3. Ce qui rend le jeu différent ou tendu ("Sauf que...", "Et le pire...").
-  4. Une seule phrase d'enthousiasme sur le concept, sans jamais dire que tu
-     y as joué ni que tu l'as testé.
+  4. Une seule phrase courte d'enthousiasme sur l'IDÉE du jeu (par exemple
+     "Franchement, l'idée est maligne."), sans jamais dire que tu y as joué
+     ni que tu l'as testé, et sans juger sa qualité, sa durée ou son effet
+     sur le joueur ("terrifiant", "te tient en haleine", "du début à la fin").
 - Chaque phrase doit donner une information ou faire monter la tension :
   aucune phrase creuse, aucune répétition.
 - Ne parle jamais de fonctionnalités de boutique : succès, sauvegarde en ligne,

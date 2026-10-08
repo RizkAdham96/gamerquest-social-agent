@@ -406,6 +406,34 @@ def test_clips_vary_in_length_and_cover_the_reel():
     assert f"trim=start={starts[1]}:duration={durations[1]}" in graph
 
 
+def test_cuts_are_moved_off_logo_and_black_moments():
+    from media.gem_reel import avoid_dull_moments
+
+    clips = [(6.0, 2.0), (20.0, 3.0), (40.0, 2.4)]
+    dull = {20, 21, 22}
+    moved = avoid_dull_moments(clips, dull, trailer_seconds=90.0)
+    assert moved[0] == (6.0, 2.0) and moved[2] == (40.0, 2.4)
+    start, duration = moved[1]
+    assert not any(second in dull for second in range(int(start), int(start + duration) + 1))
+    assert abs(start - 20.0) <= 8.0
+
+
+def test_cut_stays_put_when_no_clean_footage_is_near():
+    from media.gem_reel import avoid_dull_moments
+
+    dull = set(range(0, 60))
+    assert avoid_dull_moments([(20.0, 3.0)], dull, trailer_seconds=90.0) == [(20.0, 3.0)]
+
+
+def test_verdicts_on_the_game_are_rejected():
+    body = GOOD_BODY.replace(
+        "le concept est malin : ici, le chasseur, c'est toi.",
+        "ça te tient en haleine du début à la fin.",
+    )
+    with pytest.raises(ScriptRejected, match="forbidden"):
+        validate_body(body, facts())
+
+
 def test_script_prompt_asks_for_a_hook_first_spoken_script():
     from content.gem_script import build_checker_messages, build_writer_messages
 

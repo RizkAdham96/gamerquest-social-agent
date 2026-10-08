@@ -93,6 +93,70 @@ def analyze_trailer(path: Path, run=subprocess.run) -> TrailerLook:
     )
 
 
+# A moment of the trailer that is a logo on black, a fade or a title card:
+# nearly black, or bright but colourless. The first test Reel in the new
+# style showed the publisher's logo because cuts were placed blindly.
+DULL_MOMENT_MAX_LUMA = 32.0
+BLANK_MOMENT_MIN_LUMA = 215.0
+BLANK_MOMENT_MAX_SATURATION = 6.0
+CLIP_SHIFT_STEP = 0.5
+CLIP_MAX_SHIFT = 8.0
+
+
+def dull_seconds(path: Path, crop: str, run=subprocess.run) -> set[int]:
+    """Whole seconds of the trailer that show nothing worth cutting to."""
+    stats = run(
+        [
+            _ffmpeg(), "-hide_banner", "-i", str(path),
+            "-vf", f"crop={crop},fps=1,signalstats,"
+                   "metadata=print:key=lavfi.signalstats.YAVG:file=-,"
+                   "metadata=print:key=lavfi.signalstats.SATAVG:file=-",
+            "-an", "-f", "null", "-",
+        ],
+        capture_output=True, text=True,
+    )
+    luma = [float(value) for value in re.findall(r"YAVG=([0-9.]+)", stats.stdout or "")]
+    saturation = [float(value) for value in re.findall(r"SATAVG=([0-9.]+)", stats.stdout or "")]
+    dull = set()
+    for second, (brightness, colour) in enumerate(zip(luma, saturation)):
+        if brightness < DULL_MOMENT_MAX_LUMA or (
+            brightness > BLANK_MOMENT_MIN_LUMA and colour < BLANK_MOMENT_MAX_SATURATION
+        ):
+            dull.add(second)
+    return dull
+
+
+def _touches_dull(start: float, duration: float, dull: set[int]) -> bool:
+    return any(second in dull for second in range(int(start), int(start + duration) + 1))
+
+
+def avoid_dull_moments(
+    clips: list[tuple[float, float]], dull: set[int], trailer_seconds: float,
+) -> list[tuple[float, float]]:
+    """Slide each cut to the nearest stretch of real footage."""
+    if not dull:
+        return clips
+    last_start = trailer_seconds - TRAILER_OUTRO_SKIP_SECONDS
+    adjusted = []
+    for start, duration in clips:
+        choice = start
+        if _touches_dull(start, duration, dull):
+            steps = int(CLIP_MAX_SHIFT / CLIP_SHIFT_STEP)
+            for step in range(1, steps + 1):
+                for candidate in (start + step * CLIP_SHIFT_STEP, start - step * CLIP_SHIFT_STEP):
+                    if (
+                        TRAILER_INTRO_SKIP_SECONDS <= candidate
+                        and candidate + duration <= last_start
+                        and not _touches_dull(candidate, duration, dull)
+                    ):
+                        choice = candidate
+                        break
+                if choice != start:
+                    break
+        adjusted.append((round(choice, 2), duration))
+    return adjusted
+
+
 def check_trailer_look(look: TrailerLook) -> None:
     if look.height < MIN_PICTURE_HEIGHT or look.width / look.height > MAX_PICTURE_ASPECT:
         raise RuntimeError(
@@ -292,7 +356,11 @@ def render_reel(
     info = probe(output_dir / TRAILER_FILE, run=run)
     look = analyze_trailer(output_dir / TRAILER_FILE, run=run)
     check_trailer_look(look)
-    starts = plan_clips(info["duration"], reel_seconds)
+    starts = avoid_dull_moments(
+        plan_clips(info["duration"], reel_seconds),
+        dull_seconds(output_dir / TRAILER_FILE, look.crop, run=run),
+        info["duration"],
+    )
     # Relative file names and cwd keep Windows drive letters out of the
     # filter graph, where a colon would need escaping.
     run(
