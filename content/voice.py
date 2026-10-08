@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import time
 from pathlib import Path
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
@@ -57,6 +58,7 @@ FISH_TTS_URL = "https://api.fish.audio/v1/tts"
 # Free model by default; set GQ_FISH_MODEL to a paid one (e.g. s2.1-pro).
 FISH_DEFAULT_MODEL = "s2.1-pro-free"
 FISH_DEFAULT_SPEED = 1.12
+FISH_RETRY_WAIT_SECONDS = 15.0
 
 
 def _fish_request(text: str, api_key: str, voice_id: str, model: str, speed: float) -> bytes:
@@ -87,6 +89,7 @@ def fish_synthesize(
     *,
     request=_fish_request,
     time_words=None,
+    sleep=time.sleep,
 ) -> list[SpokenWord]:
     """Fish Audio voice. It returns audio only, so word timings are recovered
     by listening to the result (content.align)."""
@@ -97,7 +100,11 @@ def fish_synthesize(
     output.parent.mkdir(parents=True, exist_ok=True)
 
     last_error: Exception | None = None
-    for _attempt in range(MAX_ATTEMPTS):
+    for attempt in range(MAX_ATTEMPTS):
+        if attempt:
+            # Fish's free tier sometimes answers 503 for a few seconds; three
+            # immediate retries all failed in a test run.
+            sleep(FISH_RETRY_WAIT_SECONDS * attempt)
         try:
             audio = request(text, api_key, voice_id, model, speed)
         except Exception as exc:
