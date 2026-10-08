@@ -37,6 +37,11 @@ TRAILER_FILE = "trailer.mp4"
 VOICE_FILE = "voice.mp3"
 # Game audio stays audible under the narration without competing with it.
 GAME_VOLUME_UNDER_VOICE = 0.14
+# loudnorm holds back about three seconds of audio and never releases the
+# last of it, so every narrated Reel lost its final sentence, the one that
+# names the game. Silence appended first is what gets dropped instead; the
+# output length is still set by -t.
+LOUDNORM_PAD = "apad=pad_dur=5"
 REEL_FILE = "reel.mp4"
 
 
@@ -307,15 +312,15 @@ def build_filter_graph(
     graph += f"[bg][fg]overlay=0:{FOREGROUND_TOP},ass={CAPTIONS_FILE},setsar=1[vout]"
     if has_audio:
         # Official game audio, levelled so trailers of any loudness sit alike.
-        game = f";{audio_labels}concat=n={count}:v=0:a=1,loudnorm=I=-16:TP=-1.5:LRA=11"
+        game = f";{audio_labels}concat=n={count}:v=0:a=1,{LOUDNORM_PAD},loudnorm=I=-16:TP=-1.5:LRA=11"
         if has_voice:
             graph += game + f",volume={GAME_VOLUME_UNDER_VOICE}[game]"
-            graph += ";[1:a]loudnorm=I=-15:TP=-1.5:LRA=11[voice]"
+            graph += f";[1:a]{LOUDNORM_PAD},loudnorm=I=-15:TP=-1.5:LRA=11[voice]"
             graph += ";[voice][game]amix=inputs=2:duration=longest:normalize=0[aout]"
         else:
             graph += game + "[aout]"
     elif has_voice:
-        graph += ";[1:a]loudnorm=I=-15:TP=-1.5:LRA=11[aout]"
+        graph += f";[1:a]{LOUDNORM_PAD},loudnorm=I=-15:TP=-1.5:LRA=11[aout]"
     return graph
 
 
