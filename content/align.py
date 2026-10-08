@@ -113,11 +113,36 @@ def align_script(script: str, heard: list[SpokenWord], duration: float) -> list[
     return spoken
 
 
-def time_words(script: str, audio: Path, hear=hear_words) -> list[SpokenWord]:
+ENDING_WORDS = 6
+ENDING_WINDOW = 10
+
+
+def ending_was_spoken(script: str, heard: list[SpokenWord]) -> bool:
+    """True when the script's closing words are among the last things heard.
+
+    A published Reel stopped at "Ce jeu, c'est…": the voice service had cut
+    the sentence that names the game. With nothing heard there is nothing to
+    judge, so the narration is given the benefit of the doubt.
+    """
+    if not heard:
+        return True
+    closing = [key for key in (_key(word) for word in script.split()[-ENDING_WORDS:]) if len(key) >= 2]
+    if not closing:
+        return True
+    last_heard = {_key(word.text) for word in heard[-ENDING_WINDOW:]}
+    return sum(key in last_heard for key in closing) >= max(2, len(closing) // 2)
+
+
+def listen(script: str, audio: Path, hear=hear_words) -> tuple[list[SpokenWord], bool]:
+    """Word timings for the captions, and whether the narration reached its end."""
     duration = audio_duration(audio)
     try:
         heard = hear(audio)
     except Exception as exc:  # recogniser missing or failing must not stop the Reel
         print(f"Caption timing: recogniser unavailable ({exc}); spacing words by length.")
         heard = []
-    return align_script(script, heard, duration)
+    return align_script(script, heard, duration), ending_was_spoken(script, heard)
+
+
+def time_words(script: str, audio: Path, hear=hear_words) -> list[SpokenWord]:
+    return listen(script, audio, hear)[0]

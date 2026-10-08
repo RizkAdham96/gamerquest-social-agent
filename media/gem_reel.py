@@ -18,10 +18,13 @@ from pathlib import Path
 
 WIDTH = 1080
 HEIGHT = 1920
-FOREGROUND_HEIGHT = 1216
+# A wide window keeps about nine tenths of a 16:9 trailer in view. The
+# earlier tall window showed only the middle half, so title cards overflowed
+# the frame, and it enlarged the footage, which made it look pixelated.
+FOREGROUND_HEIGHT = 680
 # The footage sits high in the frame so the captions have the blurred band
 # beneath it, clear of the picture and of Instagram's own bottom overlay.
-FOREGROUND_TOP = 150
+FOREGROUND_TOP = 600
 CLIP_SECONDS = 2.4
 # Cuts of varying length feel edited; a fixed rhythm feels machine-made.
 CLIP_PATTERN = (2.0, 3.0, 2.4, 3.4, 2.2, 2.8)
@@ -297,7 +300,10 @@ def build_filter_graph(
         f"[bgsrc]scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"
         f"crop={WIDTH}:{HEIGHT},gblur=sigma=36,eq=brightness=-0.06[bg];"
     )
-    graph += f"[fgsrc]scale=-2:{FOREGROUND_HEIGHT},crop={WIDTH}:{FOREGROUND_HEIGHT}[fg];"
+    graph += (
+        f"[fgsrc]scale={WIDTH}:{FOREGROUND_HEIGHT}:force_original_aspect_ratio=increase"
+        f":flags=lanczos,crop={WIDTH}:{FOREGROUND_HEIGHT}[fg];"
+    )
     graph += f"[bg][fg]overlay=0:{FOREGROUND_TOP},ass={CAPTIONS_FILE},setsar=1[vout]"
     if has_audio:
         # Official game audio, levelled so trailers of any loudness sit alike.
