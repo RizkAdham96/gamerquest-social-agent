@@ -481,6 +481,31 @@ def test_produce_narrates_and_times_the_reel_from_the_voice(tmp_path):
     assert ",Karaoke," in captured["captions_ass"]
 
 
+def test_reel_lasts_as_long_as_the_narration_audio(tmp_path, monkeypatch):
+    from automation import daily_reel
+
+    script = GemScript(body=GOOD_BODY, on_screen_text=GOOD_BODY, caption="caption")
+    captured = {}
+    # The last caption ends at 10 s but the voice goes on to 14 s.
+    monkeypatch.setattr(daily_reel, "narration_seconds", lambda path: 14.0)
+    monkeypatch.setattr(daily_reel, "MIN_REEL_SECONDS", 1.0)
+
+    def speak(text, path):
+        path.write_bytes(b"voice")
+        return [SpokenWord(9.0, 10.0, "fin")]
+
+    def render(**kwargs):
+        captured.update(kwargs)
+        return SimpleNamespace(path=tmp_path / "reel.mp4", duration_seconds=kwargs["reel_seconds"])
+
+    daily_reel.produce(
+        facts(), tmp_path, write_script=lambda game: script, speak=speak,
+        fetch_trailer=lambda url, out: tmp_path / "trailer.mp4", render=render,
+        inspect_trailer=lambda trailer: None,
+    )
+    assert captured["reel_seconds"] == pytest.approx(14.8)
+
+
 def test_failed_narration_stops_the_reel(tmp_path):
     from automation.daily_reel import produce
 
@@ -533,7 +558,9 @@ def test_render_command_targets_vertical_h264_with_reference_layout():
     starts = [6.0, 20.0]
     graph = build_filter_graph(starts, has_audio=True)
     assert "crop=1080:1920" in graph and "gblur" in graph
-    assert "overlay=0:150" in graph and "ass=captions.ass" in graph
+    assert "overlay=0:600" in graph and "ass=captions.ass" in graph
+    # A wide window scaled to cover: the frame is shown almost whole, not enlarged.
+    assert "scale=1080:680:force_original_aspect_ratio=increase:flags=lanczos,crop=1080:680" in graph
     command = build_command(starts, 24.0, has_audio=True)
     assert command[command.index("-c:v") + 1] == "libx264"
     assert command[command.index("-pix_fmt") + 1] == "yuv420p"

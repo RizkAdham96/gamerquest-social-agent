@@ -106,16 +106,20 @@ def fish_synthesize(
     output: Path,
     *,
     request=_fish_request,
-    time_words=None,
+    listen=None,
     sleep=time.sleep,
 ) -> list[SpokenWord]:
     """Fish Audio voice. It returns audio only, so word timings are recovered
-    by listening to the result (content.align)."""
+    by listening to the result (content.align), which also shows whether the
+    voice read the script to its end."""
     api_key = os.getenv("FISH_AUDIO_API_KEY", "").strip()
     voice_id = os.getenv("GQ_FISH_VOICE_ID", "").strip()
     model = os.getenv("GQ_FISH_MODEL", "").strip() or FISH_DEFAULT_MODEL
     speed = float(os.getenv("GQ_FISH_SPEED", "").strip() or FISH_DEFAULT_SPEED)
+    tempo = float(os.getenv("GQ_FISH_TEMPO", "").strip() or FISH_DEFAULT_TEMPO)
     output.parent.mkdir(parents=True, exist_ok=True)
+    if listen is None:
+        from content.align import listen
 
     last_error: Exception | None = None
     for attempt in range(MAX_ATTEMPTS):
@@ -128,21 +132,22 @@ def fish_synthesize(
         except Exception as exc:
             last_error = exc
             continue
-        if len(audio) > 10_000:
-            output.write_bytes(audio)
-            break
-        last_error = RuntimeError("Fish Audio returned no audio")
-    else:
-        raise RuntimeError(f"narration could not be produced: {last_error}")
-
-    tempo = float(os.getenv("GQ_FISH_TEMPO", "").strip() or FISH_DEFAULT_TEMPO)
-    if abs(tempo - 1.0) > 0.01:
-        slow_down(output, tempo)
-
-    if time_words is None:
-        from content.align import time_words
-    print(f"Narration: Fish Audio voice ({model}, tempo {tempo}).")
-    return time_words(text, output)
+        if len(audio) <= 10_000:
+            last_error = RuntimeError("Fish Audio returned no audio")
+            continue
+        output.write_bytes(audio)
+        if abs(tempo - 1.0) > 0.01:
+            slow_down(output, tempo)
+        words, complete = listen(text, output)
+        if not complete:
+            # The Reel's last sentence names the game; a narration that stops
+            # short of it is not usable.
+            last_error = RuntimeError("Fish Audio stopped before the end of the script")
+            print(f"Narration: attempt {attempt + 1} was cut short; asking again.")
+            continue
+        print(f"Narration: Fish Audio voice ({model}, tempo {tempo}).")
+        return words
+    raise RuntimeError(f"narration could not be produced: {last_error}")
 
 
 def synthesize(text: str, output: Path, voice: str | None = None, rate: str | None = None) -> list[SpokenWord]:

@@ -24,6 +24,7 @@ from media.gem_reel import (
     analyze_trailer,
     check_trailer_look,
     download_trailer,
+    probe,
     render_reel,
 )
 from storage.publish_log import PublishLog
@@ -51,6 +52,13 @@ def env_flag(name: str, default: bool = False) -> bool:
     return default if value is None else value.strip().lower() in TRUE_VALUES
 
 
+def narration_seconds(voice_path: Path) -> float:
+    try:
+        return probe(voice_path)["duration"]
+    except Exception:
+        return 0.0
+
+
 def check_trailer(trailer: Path) -> None:
     check_trailer_look(analyze_trailer(trailer))
 
@@ -68,7 +76,9 @@ def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script
     # The narration sets the Reel's length and the captions follow its timing,
     # so a Reel is never published silent or out of step with its text.
     spoken = speak(script.on_screen_text, voice_path)
-    seconds = round(spoken[-1].end + VOICE_TAIL_SECONDS, 2)
+    # The audio file is the truth about how long the narration lasts; the
+    # last caption can end before the voice does.
+    seconds = round(max(spoken[-1].end, narration_seconds(voice_path)) + VOICE_TAIL_SECONDS, 2)
     if not MIN_REEL_SECONDS <= seconds <= MAX_REEL_SECONDS:
         raise ScriptRejected(f"the script would run {seconds:.1f}s")
     rendered = render(
