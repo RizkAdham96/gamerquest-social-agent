@@ -23,8 +23,9 @@ GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL = "openai/gpt-oss-120b"
 # The reference Reels run 35-42 seconds at about four words a second, with
 # the game's name held back to the end.
-MIN_BODY_WORDS = 95
-MAX_BODY_WORDS = 135
+# Sized for a natural speaking pace: about 36-48 seconds with the closing lines.
+MIN_BODY_WORDS = 90
+MAX_BODY_WORDS = 130
 MAX_WRITE_ATTEMPTS = 3
 # With low reasoning effort the writer produced broken French ("Tu assemblages
 # modules"); it gets medium effort and the allowance to go with it. The
