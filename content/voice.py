@@ -13,8 +13,9 @@ from urllib.request import Request, urlopen
 from content.voice_types import SpokenWord
 
 DEFAULT_VOICE = "fr-FR-VivienneMultilingualNeural"
-# The reference Reels speak at about four words a second.
-DEFAULT_RATE = "+18%"
+# The editor found the reference pace (about four words a second) too fast;
+# this is a natural speaking rate with a little energy.
+DEFAULT_RATE = "+5%"
 MAX_ATTEMPTS = 3
 
 
@@ -57,7 +58,7 @@ def edge_synthesize(text: str, output: Path, voice: str | None = None, rate: str
 FISH_TTS_URL = "https://api.fish.audio/v1/tts"
 # Free model by default; set GQ_FISH_MODEL to a paid one (e.g. s2.1-pro).
 FISH_DEFAULT_MODEL = "s2.1-pro-free"
-FISH_DEFAULT_SPEED = 1.12
+FISH_DEFAULT_SPEED = 1.0
 FISH_RETRY_WAIT_SECONDS = 15.0
 
 

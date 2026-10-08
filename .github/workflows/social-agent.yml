@@ -50,7 +50,7 @@ jobs:
       # Read from either place: the ID is not sensitive, but it was first saved as a secret.
       GQ_FISH_VOICE_ID: ${{ vars.GQ_FISH_VOICE_ID || secrets.GQ_FISH_VOICE_ID }}
       GQ_FISH_MODEL: ${{ vars.GQ_FISH_MODEL || 's2.1-pro-free' }}
-      GQ_FISH_SPEED: ${{ vars.GQ_FISH_SPEED || '1.12' }}
+      GQ_FISH_SPEED: ${{ vars.GQ_FISH_SPEED || '1.0' }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:

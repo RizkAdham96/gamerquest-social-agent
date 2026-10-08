@@ -45,7 +45,7 @@ GOOD_BODY = (
     "Tu enchaînes les combats, tu esquives, tu étourdis tes ennemis et tu repars à la chasse. "
     "En plus, tu peux même y jouer à deux en coopération."
 )
-assert 95 <= len(GOOD_BODY.split()) <= 135
+assert 90 <= len(GOOD_BODY.split()) <= 130
 
 
 def facts(**overrides):
@@ -439,7 +439,7 @@ def test_script_prompt_asks_for_a_hook_first_spoken_script():
 
     writer = build_writer_messages(facts())[-1]["content"]
     assert "accroche" in writer and "tournures parlées" in writer
-    assert "Entre 95 et 135 mots" in writer
+    assert "Entre 90 et 130 mots" in writer
     assert "registre oral est voulu" in build_checker_messages(facts(), GOOD_BODY)[-1]["content"]
 
 
