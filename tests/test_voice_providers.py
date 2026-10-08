@@ -89,3 +89,22 @@ def test_free_voice_is_used_without_a_fish_key(tmp_path, monkeypatch):
     monkeypatch.setattr(voice, "fish_synthesize", lambda *a, **k: pytest.fail("Fish must not be called"))
     monkeypatch.setattr(voice, "edge_synthesize", lambda text, output, v, r: [SpokenWord(0.0, 0.5, "ok")])
     assert voice.synthesize("ok", tmp_path / "v.mp3") == [SpokenWord(0.0, 0.5, "ok")]
+
+
+def test_fish_waits_between_retries_after_a_server_error(tmp_path, monkeypatch):
+    monkeypatch.setenv("FISH_AUDIO_API_KEY", "key")
+    waits = []
+    replies = iter([RuntimeError("Fish Audio HTTP 503"), RuntimeError("Fish Audio HTTP 503"), bytes(20_000)])
+
+    def request(*args):
+        reply = next(replies)
+        if isinstance(reply, Exception):
+            raise reply
+        return reply
+
+    words = voice.fish_synthesize(
+        "Bonjour", tmp_path / "v.mp3", request=request, sleep=waits.append,
+        time_words=lambda text, audio: [SpokenWord(0.0, 0.4, "Bonjour")],
+    )
+    assert waits == [15.0, 30.0]
+    assert [word.text for word in words] == ["Bonjour"]
