@@ -450,6 +450,13 @@ def test_narrated_reel_mixes_voice_over_quiet_game_audio():
     assert command.count("-i") == 2 and "voice.mp3" in command
 
 
+def test_every_loudness_pass_is_padded_so_the_last_words_survive():
+    for has_audio, has_voice in ((True, True), (False, True), (True, False)):
+        graph = build_filter_graph([6.0, 20.0], has_audio=has_audio, has_voice=has_voice)
+        assert graph.count("loudnorm") >= 1
+        assert graph.count("apad=pad_dur=5,loudnorm") == graph.count("loudnorm")
+
+
 def test_narration_still_plays_over_a_silent_trailer():
     graph = build_filter_graph([6.0], has_audio=False, has_voice=True)
     assert "[1:a]" in graph and graph.endswith("[aout]")
