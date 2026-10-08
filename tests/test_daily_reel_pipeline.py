@@ -581,7 +581,8 @@ def test_store_plumbing_never_reaches_the_script_facts():
 
 
 def test_store_features_in_the_text_are_rejected():
-    body = GOOD_BODY.replace("en coopération.", "en coopération, avec des succès à débloquer.")
+    # Same length as the original sentence, so only the forbidden term is at fault.
+    body = GOOD_BODY.replace("tu peux même y jouer à deux", "tu débloques des succès à deux")
     with pytest.raises(ScriptRejected, match="forbidden"):
         validate_body(body, facts())
 
