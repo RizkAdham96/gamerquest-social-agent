@@ -734,6 +734,17 @@ def test_a_catch_up_slot_does_not_post_right_after_the_previous_reel(tmp_path):
     assert orchestrator.published == []
 
 
+def test_a_timed_run_waits_for_midday(tmp_path):
+    from automation.daily_reel import daily_slot_reason
+
+    log = _log(tmp_path, "2026-10-08T12:00:00Z")
+    early = datetime(2026, 10, 9, 7, 20, tzinfo=timezone.utc)
+    assert "too early" in daily_slot_reason(log, early, 2, 5.0, earliest_hour=10)
+    assert daily_slot_reason(log, early.replace(hour=10), 2, 5.0, earliest_hour=10) == ""
+    # A run started by hand is not held back.
+    assert daily_slot_reason(log, early, 2, 5.0) == ""
+
+
 def test_no_third_reel_in_a_day(tmp_path):
     log = _log(tmp_path, "2026-10-09T09:30:00Z", "2026-10-09T13:00:00Z")
     result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 18, 50, tzinfo=timezone.utc))
@@ -784,6 +795,5 @@ def test_workflow_runs_the_daily_reel_once_a_day_with_groq():
     workflow = Path(".github/workflows/social-agent.yml").read_text(encoding="utf-8")
     assert "python -m automation.daily_reel" in workflow
     assert "GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}" in workflow
-    assert 'cron: "17 15 * * *"' in workflow
-    assert workflow.count("- cron:") == 4
+    assert 'cron: "17 5,7,9,11,13,15,17 * * *"' in workflow
     assert "GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '2' }}" in workflow
