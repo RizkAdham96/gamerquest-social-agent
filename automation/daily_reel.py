@@ -30,6 +30,9 @@ from media.gem_reel import (
 from storage.publish_log import PublishLog
 
 MAX_GAMES_PER_RUN = 4
+# Reels replaced the two daily carousels on 2026-10-09.
+MAX_REELS_PER_DAY = 2
+MIN_HOURS_BETWEEN_REELS = 3.0
 MIN_REEL_SECONDS = 20.0
 MAX_REEL_SECONDS = 55.0
 VOICE_TAIL_SECONDS = 0.8
@@ -107,19 +110,43 @@ def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script
     return script, rendered
 
 
-def published_today(log_path: Path, now: datetime | None = None) -> bool:
-    now = now or datetime.now(timezone.utc)
+def publish_times(log_path: Path) -> list[datetime]:
     if not log_path.exists():
-        return False
+        return []
+    times = []
     for record in json.loads(log_path.read_text(encoding="utf-8")):
         stamp = str(record.get("published_at") or "")
         try:
-            published = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+            times.append(datetime.fromisoformat(stamp.replace("Z", "+00:00")).astimezone(timezone.utc))
         except ValueError:
             continue
-        if published.astimezone(timezone.utc).date() == now.date():
-            return True
-    return False
+    return times
+
+
+def published_today(log_path: Path, now: datetime | None = None) -> bool:
+    now = now or datetime.now(timezone.utc)
+    return any(moment.date() == now.date() for moment in publish_times(log_path))
+
+
+def daily_slot_reason(log_path: Path, now: datetime, max_per_day: int, min_gap_hours: float) -> str:
+    """Why a scheduled run must not publish now; empty when it may.
+
+    There are more scheduled slots than Reels wanted, so that a missed or
+    failed run is made up later. The gap stops a catch-up slot from posting
+    straight after the Reel before it.
+    """
+    times = publish_times(log_path)
+    today = [moment for moment in times if moment.date() == now.date()]
+    if len(today) >= max_per_day:
+        return f"{len(today)} Reel(s) already published today (limit {max_per_day})"
+    if times:
+        hours = (now - max(times)).total_seconds() / 3600
+        if 0 <= hours < min_gap_hours:
+            return (
+                f"the last Reel went out {hours:.1f}h ago "
+                f"(minimum gap {min_gap_hours:g}h)"
+            )
+    return ""
 
 
 def run_once(
@@ -134,13 +161,17 @@ def run_once(
     now: datetime | None = None,
     allow_extra_today: bool = False,
     tiktok_poster=None,
+    max_per_day: int = MAX_REELS_PER_DAY,
+    min_gap_hours: float = MIN_HOURS_BETWEEN_REELS,
 ) -> DailyReelResult:
     now = now or datetime.now(timezone.utc)
     publish_log = PublishLog(publish_log_path)
     # Scheduled runs never post twice in a day; only an editor's explicit
     # manual request may add a second Reel.
-    if live_publish and not allow_extra_today and published_today(publish_log_path, now):
-        return DailyReelResult(status="skipped", reason="a Reel was already published today")
+    if live_publish and not allow_extra_today:
+        reason = daily_slot_reason(publish_log_path, now, max_per_day, min_gap_hours)
+        if reason:
+            return DailyReelResult(status="skipped", reason=reason)
 
     if games is None:
         candidates = candidates if candidates is not None else load_candidates()
@@ -210,6 +241,7 @@ def main() -> None:
         live_publish=live_publish,
         orchestrator=orchestrator,
         allow_extra_today=env_flag("GQ_ALLOW_EXTRA_REEL", False),
+        max_per_day=int(os.getenv("GQ_MAX_REELS_PER_DAY", "").strip() or MAX_REELS_PER_DAY),
         tiktok_poster=tiktok_poster,
     )
     print(json.dumps(asdict(result), ensure_ascii=False))

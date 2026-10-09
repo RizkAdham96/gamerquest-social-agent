@@ -688,7 +688,10 @@ def test_only_one_reel_is_published_per_day(tmp_path):
     log = tmp_path / "log.json"
     now = datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc)
     log.write_text(
-        json.dumps([{"topic_id": "steam-9", "published_at": "2026-10-06T15:20:00Z"}]),
+        json.dumps([
+            {"topic_id": "steam-8", "published_at": "2026-10-06T09:20:00Z"},
+            {"topic_id": "steam-9", "published_at": "2026-10-06T13:20:00Z"},
+        ]),
         encoding="utf-8",
     )
     orchestrator = FakeOrchestrator()
@@ -698,6 +701,50 @@ def test_only_one_reel_is_published_per_day(tmp_path):
     )
     assert result.status == "skipped" and "already published today" in result.reason
     assert orchestrator.published == []
+
+
+def _log(tmp_path, *stamps):
+    log = tmp_path / "log.json"
+    log.write_text(
+        json.dumps([{"topic_id": f"steam-{i}", "published_at": stamp} for i, stamp in enumerate(stamps)]),
+        encoding="utf-8",
+    )
+    return log
+
+
+def _scheduled(tmp_path, log, now):
+    orchestrator = FakeOrchestrator()
+    result = run_once(
+        output_dir=tmp_path, publish_log_path=log, live_publish=True,
+        orchestrator=orchestrator, games=iter([facts()]), produce_fn=fake_produce(), now=now,
+    )
+    return result, orchestrator
+
+
+def test_a_second_reel_is_published_later_the_same_day(tmp_path):
+    log = _log(tmp_path, "2026-10-09T09:30:00Z")
+    result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 15, 20, tzinfo=timezone.utc))
+    assert result.status == "published" and orchestrator.published == ["steam-1304680"]
+
+
+def test_a_catch_up_slot_does_not_post_right_after_the_previous_reel(tmp_path):
+    log = _log(tmp_path, "2026-10-09T11:50:00Z")
+    result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 12, 20, tzinfo=timezone.utc))
+    assert result.status == "skipped" and "minimum gap" in result.reason
+    assert orchestrator.published == []
+
+
+def test_no_third_reel_in_a_day(tmp_path):
+    log = _log(tmp_path, "2026-10-09T09:30:00Z", "2026-10-09T13:00:00Z")
+    result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 18, 50, tzinfo=timezone.utc))
+    assert result.status == "skipped" and "limit 2" in result.reason
+    assert orchestrator.published == []
+
+
+def test_yesterdays_late_reel_still_spaces_todays_first(tmp_path):
+    log = _log(tmp_path, "2026-10-08T23:30:00Z")
+    result, _ = _scheduled(tmp_path, log, datetime(2026, 10, 9, 0, 30, tzinfo=timezone.utc))
+    assert result.status == "skipped" and "minimum gap" in result.reason
 
 
 def test_editor_can_request_an_extra_reel_the_same_day(tmp_path):
@@ -738,3 +785,5 @@ def test_workflow_runs_the_daily_reel_once_a_day_with_groq():
     assert "python -m automation.daily_reel" in workflow
     assert "GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}" in workflow
     assert 'cron: "17 15 * * *"' in workflow
+    assert workflow.count("- cron:") == 4
+    assert "GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '2' }}" in workflow

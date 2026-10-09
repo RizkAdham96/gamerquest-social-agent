@@ -15,8 +15,11 @@ on:
         type: boolean
 
   schedule:
-    # One hidden-gem Reel a day. The second slot is a guarded fallback for a
-    # missed or failed first run; it never publishes twice in one day.
+    # Two hidden-gem Reels a day (they replaced the carousels). Four slots
+    # for two Reels: a missed, late or failed run is made up by the next one.
+    # The run itself refuses a third Reel and keeps three hours between two.
+    - cron: "17 9 * * *"
+    - cron: "17 12 * * *"
     - cron: "17 15 * * *"
     - cron: "47 18 * * *"
 
@@ -33,7 +36,8 @@ jobs:
     timeout-minutes: 25
     env:
       GQ_LIVE_PUBLISH: ${{ github.event_name == 'schedule' && 'true' || (inputs.publish_to_instagram && 'true' || 'false') }}
-      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '7' }}
+      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '14' }}
+      GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '2' }}
       GQ_BYPASS_WEEKLY_LIMIT: "false"
       GQ_ALLOW_EXTRA_REEL: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_reel_today && 'true' || 'false' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
