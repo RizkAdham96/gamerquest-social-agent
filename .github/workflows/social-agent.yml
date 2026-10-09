@@ -15,13 +15,11 @@ on:
         type: boolean
 
   schedule:
-    # Two hidden-gem Reels a day (they replaced the carousels). Four slots
-    # for two Reels: a missed, late or failed run is made up by the next one.
-    # The run itself refuses a third Reel and keeps three hours between two.
-    - cron: "17 9 * * *"
-    - cron: "17 12 * * *"
-    - cron: "17 15 * * *"
-    - cron: "47 18 * * *"
+    # Two hidden-gem Reels a day (they replaced the carousels). GitHub starts
+    # these runs up to five hours late and skips some, so there is a slot
+    # every two hours and the run itself decides: nothing before 10:00 UTC,
+    # five hours between two Reels, never a third in a day.
+    - cron: "17 5,7,9,11,13,15,17 * * *"
 
 permissions:
   contents: write

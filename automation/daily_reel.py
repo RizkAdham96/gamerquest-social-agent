@@ -32,7 +32,10 @@ from storage.publish_log import PublishLog
 MAX_GAMES_PER_RUN = 4
 # Reels replaced the two daily carousels on 2026-10-09.
 MAX_REELS_PER_DAY = 2
-MIN_HOURS_BETWEEN_REELS = 3.0
+MIN_HOURS_BETWEEN_REELS = 5.0
+# GitHub starts scheduled runs hours late and drops some, so there are many
+# slots and the run decides: nothing before midday in France, then the gap.
+EARLIEST_PUBLISH_HOUR_UTC = 10
 MIN_REEL_SECONDS = 20.0
 MAX_REEL_SECONDS = 55.0
 VOICE_TAIL_SECONDS = 0.8
@@ -128,7 +131,13 @@ def published_today(log_path: Path, now: datetime | None = None) -> bool:
     return any(moment.date() == now.date() for moment in publish_times(log_path))
 
 
-def daily_slot_reason(log_path: Path, now: datetime, max_per_day: int, min_gap_hours: float) -> str:
+def daily_slot_reason(
+    log_path: Path,
+    now: datetime,
+    max_per_day: int,
+    min_gap_hours: float,
+    earliest_hour: int = 0,
+) -> str:
     """Why a scheduled run must not publish now; empty when it may.
 
     There are more scheduled slots than Reels wanted, so that a missed or
@@ -146,6 +155,8 @@ def daily_slot_reason(log_path: Path, now: datetime, max_per_day: int, min_gap_h
                 f"the last Reel went out {hours:.1f}h ago "
                 f"(minimum gap {min_gap_hours:g}h)"
             )
+    if now.hour < earliest_hour:
+        return f"too early to publish (before {earliest_hour:02d}:00 UTC)"
     return ""
 
 
@@ -163,13 +174,14 @@ def run_once(
     tiktok_poster=None,
     max_per_day: int = MAX_REELS_PER_DAY,
     min_gap_hours: float = MIN_HOURS_BETWEEN_REELS,
+    earliest_hour: int = 0,
 ) -> DailyReelResult:
     now = now or datetime.now(timezone.utc)
     publish_log = PublishLog(publish_log_path)
     # Scheduled runs never post twice in a day; only an editor's explicit
     # manual request may add a second Reel.
     if live_publish and not allow_extra_today:
-        reason = daily_slot_reason(publish_log_path, now, max_per_day, min_gap_hours)
+        reason = daily_slot_reason(publish_log_path, now, max_per_day, min_gap_hours, earliest_hour)
         if reason:
             return DailyReelResult(status="skipped", reason=reason)
 
@@ -242,6 +254,8 @@ def main() -> None:
         orchestrator=orchestrator,
         allow_extra_today=env_flag("GQ_ALLOW_EXTRA_REEL", False),
         max_per_day=int(os.getenv("GQ_MAX_REELS_PER_DAY", "").strip() or MAX_REELS_PER_DAY),
+        # Only timed runs wait for the hour; a run started by hand publishes now.
+        earliest_hour=EARLIEST_PUBLISH_HOUR_UTC if os.getenv("GITHUB_EVENT_NAME") == "schedule" else 0,
         tiktok_poster=tiktok_poster,
     )
     print(json.dumps(asdict(result), ensure_ascii=False))
