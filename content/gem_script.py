@@ -152,7 +152,10 @@ def _facts_block(facts: GameFacts) -> str:
     )
 
 
-def build_writer_messages(facts: GameFacts, feedback: str = "") -> list[dict]:
+def build_writer_messages(
+    facts: GameFacts, feedback: str = "", words: tuple[int, int] | None = None
+) -> list[dict]:
+    min_words, max_words = words or (MIN_BODY_WORDS, MAX_BODY_WORDS)
     system = (
         "Tu écris le texte lu en voix off dans un Reel Instagram pour GamerQuest FR, "
         "qui présente chaque jour un jeu méconnu. Tu réponds uniquement en JSON."
@@ -163,7 +166,7 @@ FAITS (seule source autorisée) :
 {_facts_block(facts)}
 
 RÈGLES :
-- Entre {MIN_BODY_WORDS} et {MAX_BODY_WORDS} mots.
+- Entre {min_words} et {max_words} mots.
 - Le texte est dit à voix haute par un créateur qui parle à un ami : français
   oral, tutoiement, phrases courtes. Les tournures parlées sont voulues
   ("t'es", "c'est pas", "y a", "du coup", "sauf que", "franchement").
@@ -252,13 +255,14 @@ def _parse_json(text: str) -> dict:
     return data
 
 
-def validate_body(body: str, facts: GameFacts) -> str:
+def validate_body(body: str, facts: GameFacts, limits: tuple[int, int] | None = None) -> str:
     """Deterministic checks; returns the cleaned body or raises ScriptRejected."""
+    min_words, max_words = limits or (MIN_BODY_WORDS, MAX_BODY_WORDS)
     body = " ".join(str(body or "").split())
     words = body.split()
-    if not MIN_BODY_WORDS <= len(words) <= MAX_BODY_WORDS:
+    if not min_words <= len(words) <= max_words:
         raise ScriptRejected(
-            f"description has {len(words)} words; expected {MIN_BODY_WORDS}-{MAX_BODY_WORDS}"
+            f"description has {len(words)} words; expected {min_words}-{max_words}"
         )
     if not body.endswith((".", "!", "?")):
         raise ScriptRejected("description does not end with a complete sentence")
@@ -302,6 +306,7 @@ def on_screen_text(facts: GameFacts, body: str) -> str:
 def write_gem_script(
     facts: GameFacts,
     chat: Callable[..., str] = groq_chat,
+    words: tuple[int, int] | None = None,
 ) -> GemScript:
     """Write, validate and fact-check; raise ScriptRejected if it cannot pass."""
     feedback = ""
@@ -309,10 +314,10 @@ def write_gem_script(
     for _attempt in range(MAX_WRITE_ATTEMPTS):
         try:
             draft = _parse_json(chat(
-                build_writer_messages(facts, feedback),
+                build_writer_messages(facts, feedback, words),
                 max_tokens=WRITER_MAX_TOKENS, reasoning=WRITER_REASONING,
             ))
-            body = validate_body(draft.get("body", ""), facts)
+            body = validate_body(draft.get("body", ""), facts, words)
             verdict = _parse_json(chat(
                 build_checker_messages(facts, body),
                 max_tokens=CHECKER_MAX_TOKENS, reasoning=CHECKER_REASONING,
