@@ -262,6 +262,32 @@ def test_the_second_reel_of_the_day_is_a_deal(tmp_path, monkeypatch):
     assert result.status == "published" and orchestrator.published == ["deal-2138710-202610"]
 
 
+def test_only_one_deal_a_day_and_the_third_reel_catches_up_a_missed_one(tmp_path, monkeypatch):
+    import automation.daily_reel as daily_reel
+
+    def log_with(*topics):
+        log = tmp_path / "log.json"
+        log.write_text(json.dumps([
+            {"topic_id": topic, "published_at": f"2026-10-12T{10 + index}:30:00Z"}
+            for index, topic in enumerate(topics)
+        ]), encoding="utf-8")
+        return log
+
+    def third(log):
+        orchestrator = Orchestrator()
+        run_once(
+            output_dir=tmp_path, publish_log_path=log, live_publish=True, orchestrator=orchestrator,
+            candidates=[GEM], produce_fn=fake_produce(), now=NOW.replace(hour=20),
+            find_deals=lambda published, *, now: iter([deal()]),
+        )
+        return orchestrator.published
+
+    monkeypatch.setattr(daily_reel.iter_games, "__kwdefaults__",
+                        {**daily_reel.iter_games.__kwdefaults__, "fetch_json": gem_store})
+    assert third(log_with("steam-1", "deal-9-202610")) == ["steam-1304680"]
+    assert third(log_with("steam-1", "steam-2")) == ["deal-2138710-202610"]
+
+
 def test_without_a_good_deal_the_second_reel_is_a_hidden_gem(tmp_path, monkeypatch):
     result, orchestrator, _ = run(tmp_path, monkeypatch, stamps=("2026-10-12T10:30:00Z",), deals=())
     assert result.status == "published" and orchestrator.published == ["steam-1304680"]

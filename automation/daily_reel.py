@@ -37,14 +37,15 @@ from storage.publish_log import PublishLog
 # is not used up by games whose trailer is refused every time.
 MAX_GAMES_PER_RUN = 4
 MAX_CANDIDATES_PER_RUN = 10
-# The day's second Reel is a "bon plan" when a good one is on; if none
-# qualifies or passes the checks, a hidden gem takes the slot instead.
+# One Reel a day is a "bon plan": the second, or the third if no deal could
+# be made for the second. When none qualifies, a hidden gem takes the slot.
 MAX_DEALS_PER_RUN = 8
 MAX_DEAL_SCRIPTS_PER_RUN = 2
 REEL_KINDS = ("auto", "gem", "deal")
 # Reels replaced the two daily carousels on 2026-10-09.
-MAX_REELS_PER_DAY = 2
-MIN_HOURS_BETWEEN_REELS = 5.0
+# Three a day since 2026-10-12: two hidden gems and one game on sale.
+MAX_REELS_PER_DAY = 3
+MIN_HOURS_BETWEEN_REELS = 4.0
 # GitHub starts scheduled runs hours late and drops some, so there are many
 # slots and the run decides: nothing before midday in France, then the gap.
 EARLIEST_PUBLISH_HOUR_UTC = 10
@@ -141,6 +142,20 @@ def publish_times(log_path: Path) -> list[datetime]:
     return times
 
 
+def todays_topic_ids(log_path: Path, now: datetime) -> list[str]:
+    if not log_path.exists():
+        return []
+    topics = []
+    for record in json.loads(log_path.read_text(encoding="utf-8")):
+        try:
+            moment = datetime.fromisoformat(str(record.get("published_at") or "").replace("Z", "+00:00"))
+        except ValueError:
+            continue
+        if moment.astimezone(timezone.utc).date() == now.date():
+            topics.append(str(record.get("topic_id") or ""))
+    return topics
+
+
 def published_today(log_path: Path, now: datetime | None = None) -> bool:
     now = now or datetime.now(timezone.utc)
     return any(moment.date() == now.date() for moment in publish_times(log_path))
@@ -212,8 +227,9 @@ def run_once(
 
     if games is None:
         published_ids = publish_log.topic_ids()
-        today_count = sum(moment.date() == now.date() for moment in publish_times(publish_log_path))
-        want_deal = reel_kind == "deal" or (reel_kind == "auto" and today_count == 1)
+        today = todays_topic_ids(publish_log_path, now)
+        deal_done = any(topic.startswith("deal-") for topic in today)
+        want_deal = reel_kind == "deal" or (reel_kind == "auto" and today and not deal_done)
         deals = safe_deals(published_ids, now, find_deals) if want_deal else iter(())
         if reel_kind == "deal":
             games = deals
