@@ -31,7 +31,9 @@ TOP_SPECIALS = (
 MIN_DISCOUNT_PERCENT = 50
 MIN_REVIEWS = 2_000
 MIN_POSITIVE_RATIO = 0.85
-MAX_DEAL_LOOKUPS = 10
+# Most games on the sale lists fail the discount test on the first request;
+# ten lookups once left a single usable deal, whose trailer was then refused.
+MAX_DEAL_LOOKUPS = 40
 
 
 @dataclass(frozen=True)
