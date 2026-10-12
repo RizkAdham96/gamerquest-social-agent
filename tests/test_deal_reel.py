@@ -282,13 +282,37 @@ def test_a_store_outage_on_deals_does_not_cost_the_reel(tmp_path, monkeypatch):
     assert result.status == "published" and orchestrator.published == ["steam-1304680"]
 
 
-def test_at_most_three_deals_are_tried_in_a_run(tmp_path, monkeypatch):
+def test_two_rejected_deal_scripts_leave_the_slot_to_a_hidden_gem(tmp_path, monkeypatch):
     many = tuple(deal(appid=number, name=f"Game {number}") for number in (1, 2, 3, 4))
     _, _, make = run(
         tmp_path, monkeypatch, stamps=("2026-10-12T10:30:00Z",), deals=many,
         reject=("Game 1", "Game 2", "Game 3", "Game 4"),
     )
-    assert make.made == ["deal-1-202610", "deal-2-202610", "deal-3-202610", "steam-1304680"]
+    assert make.made == ["deal-1-202610", "deal-2-202610", "steam-1304680"]
+
+
+def test_refused_trailers_do_not_use_up_the_run(tmp_path, monkeypatch):
+    many = tuple(deal(appid=number, name=f"Game {number}") for number in range(1, 7))
+    log = tmp_path / "log.json"
+    log.write_text("[]", encoding="utf-8")
+    orchestrator, tried = Orchestrator(), []
+
+    def make(game, output_dir):
+        tried.append(game.name)
+        if game.name != "Game 6":
+            raise RuntimeError("the trailer is too dark for a Reel")
+        script = GemScript(body=BODY, on_screen_text=BODY, caption="caption")
+        return script, SimpleNamespace(path=Path(output_dir) / "reel.mp4", duration_seconds=30.0)
+
+    def find(published, *, now):
+        yield from many
+
+    result = run_once(
+        output_dir=tmp_path, publish_log_path=log, live_publish=True, orchestrator=orchestrator,
+        produce_fn=make, now=NOW, reel_kind="deal", find_deals=find,
+    )
+    assert len(tried) == 6 and result.status == "published"
+    assert orchestrator.published == ["deal-6-202610"]
 
 
 def test_an_editor_can_ask_for_a_deal_or_a_gem_by_hand(tmp_path, monkeypatch):
