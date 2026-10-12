@@ -1,4 +1,4 @@
-"""Produce and publish one hidden-gem Reel.
+"""Produce and publish one Reel: a hidden gem, or a game on sale.
 
 Each candidate game must pass every gate (suitable store page, script checks,
 fact-check, render verification). A game that fails any of them is skipped and
@@ -12,10 +12,13 @@ import json
 import os
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
+from itertools import chain, islice
 from pathlib import Path
 
+from agent.deals import DealFacts, iter_deals
 from agent.hidden_gems import GameFacts, iter_games, load_candidates
 from app.config import Settings
+from content.deal_script import write_deal_script
 from content.gem_script import ScriptRejected, write_gem_script
 from content.voice import synthesize
 from content.word_captions import build_karaoke_ass
@@ -30,6 +33,10 @@ from media.gem_reel import (
 from storage.publish_log import PublishLog
 
 MAX_GAMES_PER_RUN = 4
+# The day's second Reel is a "bon plan" when a good one is on; if none
+# qualifies or passes the checks, a hidden gem takes the slot instead.
+MAX_DEALS_PER_RUN = 2
+REEL_KINDS = ("auto", "gem", "deal")
 # Reels replaced the two daily carousels on 2026-10-09.
 MAX_REELS_PER_DAY = 2
 MIN_HOURS_BETWEEN_REELS = 5.0
@@ -69,9 +76,11 @@ def check_trailer(trailer: Path) -> None:
     check_trailer_look(analyze_trailer(trailer))
 
 
-def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script,
+def produce(facts: GameFacts, output_dir: Path, *, write_script=None,
             speak=synthesize, fetch_trailer=download_trailer, render=render_reel,
             inspect_trailer=check_trailer):
+    if write_script is None:
+        write_script = write_deal_script if isinstance(facts, DealFacts) else write_gem_script
     output_dir.mkdir(parents=True, exist_ok=True)
     # Footage first: an unusable trailer rules the game out before any AI
     # tokens are spent on its script.
@@ -97,6 +106,7 @@ def produce(facts: GameFacts, output_dir: Path, *, write_script=write_gem_script
     (output_dir / "script.json").write_text(
         json.dumps(
             {
+                "kind": "deal" if isinstance(facts, DealFacts) else "gem",
                 "game": facts.name,
                 "store_url": facts.store_url,
                 "official_description": facts.description,
@@ -160,6 +170,14 @@ def daily_slot_reason(
     return ""
 
 
+def safe_deals(published_topic_ids: set[str], now: datetime, find=iter_deals):
+    """Deals to try first; a store outage must leave the hidden-gem Reel intact."""
+    try:
+        yield from islice(find(published_topic_ids, now=now), MAX_DEALS_PER_RUN)
+    except Exception as exc:
+        print(f"Deals: unavailable for this run ({exc}).")
+
+
 def run_once(
     *,
     output_dir: Path,
@@ -175,6 +193,8 @@ def run_once(
     max_per_day: int = MAX_REELS_PER_DAY,
     min_gap_hours: float = MIN_HOURS_BETWEEN_REELS,
     earliest_hour: int = 0,
+    reel_kind: str = "auto",
+    find_deals=iter_deals,
 ) -> DailyReelResult:
     now = now or datetime.now(timezone.utc)
     publish_log = PublishLog(publish_log_path)
@@ -186,10 +206,19 @@ def run_once(
             return DailyReelResult(status="skipped", reason=reason)
 
     if games is None:
-        candidates = candidates if candidates is not None else load_candidates()
-        if not candidates:
-            return DailyReelResult(status="skipped", reason="no candidate games available")
-        games = iter_games(candidates, publish_log.topic_ids(), seed=now.strftime("%Y-%m-%d"))
+        published_ids = publish_log.topic_ids()
+        today_count = sum(moment.date() == now.date() for moment in publish_times(publish_log_path))
+        want_deal = reel_kind == "deal" or (reel_kind == "auto" and today_count == 1)
+        deals = safe_deals(published_ids, now, find_deals) if want_deal else iter(())
+        if reel_kind == "deal":
+            games = deals
+        else:
+            candidates = candidates if candidates is not None else load_candidates()
+            if not candidates and not want_deal:
+                return DailyReelResult(status="skipped", reason="no candidate games available")
+            games = chain(
+                deals, iter_games(candidates or [], published_ids, seed=now.strftime("%Y-%m-%d"))
+            )
 
     reasons = []
     for attempt, facts in enumerate(games, start=1):
@@ -247,6 +276,10 @@ def main() -> None:
         if is_connected():
             tiktok_poster = post_reel
 
+    reel_kind = os.getenv("GQ_REEL_KIND", "").strip().lower() or "auto"
+    if reel_kind not in REEL_KINDS:
+        raise SystemExit(f"GQ_REEL_KIND must be one of {', '.join(REEL_KINDS)}")
+
     result = run_once(
         output_dir=args.output_dir,
         publish_log_path=args.publish_log,
@@ -257,6 +290,7 @@ def main() -> None:
         # Only timed runs wait for the hour; a run started by hand publishes now.
         earliest_hour=EARLIEST_PUBLISH_HOUR_UTC if os.getenv("GITHUB_EVENT_NAME") == "schedule" else 0,
         tiktok_poster=tiktok_poster,
+        reel_kind=reel_kind,
     )
     print(json.dumps(asdict(result), ensure_ascii=False))
 

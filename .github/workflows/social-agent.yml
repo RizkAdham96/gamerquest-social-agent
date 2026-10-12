@@ -13,9 +13,19 @@ on:
         required: false
         default: false
         type: boolean
+      reel_kind:
+        description: "auto = the usual choice, deal = a game on sale, gem = a hidden gem"
+        required: false
+        default: auto
+        type: choice
+        options:
+          - auto
+          - deal
+          - gem
 
   schedule:
-    # Two hidden-gem Reels a day (they replaced the carousels). GitHub starts
+    # Two Reels a day (they replaced the carousels): a hidden gem first, then
+    # a game on sale when a good deal is on, otherwise a second gem. GitHub starts
     # these runs up to five hours late and skips some, so there is a slot
     # every two hours and the run itself decides: nothing before 10:00 UTC,
     # five hours between two Reels, never a third in a day.
@@ -37,6 +47,7 @@ jobs:
       GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '14' }}
       GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '2' }}
       GQ_BYPASS_WEEKLY_LIMIT: "false"
+      GQ_REEL_KIND: ${{ inputs.reel_kind || 'auto' }}
       GQ_ALLOW_EXTRA_REEL: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_reel_today && 'true' || 'false' }}
       GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
       GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
