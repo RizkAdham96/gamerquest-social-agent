@@ -32,10 +32,10 @@ from media.gem_reel import (
 )
 from storage.publish_log import PublishLog
 
-MAX_GAMES_PER_RUN = 4
+MAX_GAMES_PER_RUN = 5
 # The day's second Reel is a "bon plan" when a good one is on; if none
 # qualifies or passes the checks, a hidden gem takes the slot instead.
-MAX_DEALS_PER_RUN = 2
+MAX_DEALS_PER_RUN = 3
 REEL_KINDS = ("auto", "gem", "deal")
 # Reels replaced the two daily carousels on 2026-10-09.
 MAX_REELS_PER_DAY = 2
