@@ -32,10 +32,15 @@ from media.gem_reel import (
 )
 from storage.publish_log import PublishLog
 
-MAX_GAMES_PER_RUN = 5
+# A rejected script costs AI tokens and minutes; an unusable trailer costs a
+# short download. Only the first counts against the run's attempts, so a run
+# is not used up by games whose trailer is refused every time.
+MAX_GAMES_PER_RUN = 4
+MAX_CANDIDATES_PER_RUN = 10
 # The day's second Reel is a "bon plan" when a good one is on; if none
 # qualifies or passes the checks, a hidden gem takes the slot instead.
-MAX_DEALS_PER_RUN = 3
+MAX_DEALS_PER_RUN = 8
+MAX_DEAL_SCRIPTS_PER_RUN = 2
 REEL_KINDS = ("auto", "gem", "deal")
 # Reels replaced the two daily carousels on 2026-10-09.
 MAX_REELS_PER_DAY = 2
@@ -221,13 +226,22 @@ def run_once(
             )
 
     reasons = []
-    for attempt, facts in enumerate(games, start=1):
-        if attempt > MAX_GAMES_PER_RUN:
+    tried = rejected_scripts = rejected_deal_scripts = 0
+    for facts in games:
+        if tried >= MAX_CANDIDATES_PER_RUN or rejected_scripts >= MAX_GAMES_PER_RUN:
             break
-        print(f"Candidate {attempt}: {facts.name} ({facts.review_percent}% positive)")
+        is_deal = isinstance(facts, DealFacts)
+        if is_deal and reel_kind != "deal" and rejected_deal_scripts >= MAX_DEAL_SCRIPTS_PER_RUN:
+            # Keep the remaining attempts for the hidden gem that fills the slot.
+            continue
+        tried += 1
+        print(f"Candidate {tried}: {facts.name} ({facts.review_percent}% positive)")
         try:
             script, rendered = produce_fn(facts, Path(output_dir))
-        except (ScriptRejected, RuntimeError, OSError) as exc:
+        except (RuntimeError, OSError) as exc:
+            if isinstance(exc, ScriptRejected):
+                rejected_scripts += 1
+                rejected_deal_scripts += is_deal
             reasons.append(f"{facts.name}: {exc}")
             print(f"Skipped {facts.name}: {exc}")
             continue
