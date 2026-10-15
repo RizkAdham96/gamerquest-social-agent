@@ -684,11 +684,12 @@ def test_nothing_is_published_when_every_candidate_fails(tmp_path):
     assert orchestrator.published == []
 
 
-def test_the_daily_limit_stops_a_fourth_reel(tmp_path):
+def test_the_daily_limit_stops_a_fifth_reel(tmp_path):
     log = tmp_path / "log.json"
     now = datetime(2026, 10, 6, 18, 0, tzinfo=timezone.utc)
     log.write_text(
         json.dumps([
+            {"topic_id": "steam-6", "published_at": "2026-10-06T01:20:00Z"},
             {"topic_id": "steam-7", "published_at": "2026-10-06T05:20:00Z"},
             {"topic_id": "steam-8", "published_at": "2026-10-06T09:20:00Z"},
             {"topic_id": "steam-9", "published_at": "2026-10-06T13:20:00Z"},
@@ -746,13 +747,13 @@ def test_a_timed_run_waits_for_midday(tmp_path):
     assert daily_slot_reason(log, early, 2, 5.0) == ""
 
 
-def test_a_third_reel_is_published_but_never_a_fourth(tmp_path):
-    log = _log(tmp_path, "2026-10-09T10:30:00Z", "2026-10-09T14:40:00Z")
-    result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 18, 50, tzinfo=timezone.utc))
+def test_a_fourth_reel_is_published_but_never_a_fifth(tmp_path):
+    log = _log(tmp_path, "2026-10-09T10:30:00Z", "2026-10-09T13:40:00Z", "2026-10-09T16:50:00Z")
+    result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 20, 0, tzinfo=timezone.utc))
     assert result.status == "published"
-    log = _log(tmp_path, "2026-10-09T10:30:00Z", "2026-10-09T14:40:00Z", "2026-10-09T18:50:00Z")
+    log = _log(tmp_path, "2026-10-09T10:30:00Z", "2026-10-09T13:40:00Z", "2026-10-09T16:50:00Z", "2026-10-09T20:00:00Z")
     result, orchestrator = _scheduled(tmp_path, log, datetime(2026, 10, 9, 23, 30, tzinfo=timezone.utc))
-    assert result.status == "skipped" and "limit 3" in result.reason
+    assert result.status == "skipped" and "limit 4" in result.reason
     assert orchestrator.published == []
 
 
@@ -799,5 +800,5 @@ def test_workflow_runs_the_daily_reel_once_a_day_with_groq():
     workflow = Path(".github/workflows/social-agent.yml").read_text(encoding="utf-8")
     assert "python -m automation.daily_reel" in workflow
     assert "GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}" in workflow
-    assert 'cron: "17 5,7,9,11,13,15,17,19 * * *"' in workflow
-    assert "GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '3' }}" in workflow
+    assert 'cron: "17 5-20 * * *"' in workflow
+    assert "GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '4' }}" in workflow

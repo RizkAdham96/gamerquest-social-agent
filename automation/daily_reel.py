@@ -43,9 +43,10 @@ MAX_DEALS_PER_RUN = 8
 MAX_DEAL_SCRIPTS_PER_RUN = 2
 REEL_KINDS = ("auto", "gem", "deal")
 # Reels replaced the two daily carousels on 2026-10-09.
-# Three a day since 2026-10-12: two hidden gems and one game on sale.
-MAX_REELS_PER_DAY = 3
-MIN_HOURS_BETWEEN_REELS = 4.0
+# Four a day since 2026-10-15 (carousels removed): three hidden gems and one
+# game on sale.
+MAX_REELS_PER_DAY = 4
+MIN_HOURS_BETWEEN_REELS = 3.0
 # GitHub starts scheduled runs hours late and drops some, so there are many
 # slots and the run decides: nothing before midday in France, then the gap.
 EARLIEST_PUBLISH_HOUR_UTC = 10

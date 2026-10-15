@@ -24,12 +24,12 @@ on:
           - gem
 
   schedule:
-    # Three Reels a day: two hidden gems and one game on sale (a third gem
-    # when no good deal is on). GitHub starts
-    # these runs up to five hours late and skips some, so there is a slot
-    # every two hours and the run itself decides: nothing before 10:00 UTC,
-    # four hours between two Reels, never a fourth in a day.
-    - cron: "17 5,7,9,11,13,15,17,19 * * *"
+    # Four Reels a day: three hidden gems and one game on sale (a fourth gem
+    # when no good deal is on). GitHub starts these runs up to five hours
+    # late and skips some, so there is a slot every hour from 05:17 to 20:17
+    # UTC and the run itself decides: nothing before 10:00 UTC,
+    # three hours between two Reels, never a fifth in a day.
+    - cron: "17 5-20 * * *"
 
 permissions:
   contents: write
@@ -44,8 +44,8 @@ jobs:
     timeout-minutes: 25
     env:
       GQ_LIVE_PUBLISH: ${{ github.event_name == 'schedule' && 'true' || (inputs.publish_to_instagram && 'true' || 'false') }}
-      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '24' }}
-      GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '3' }}
+      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_MAX_REELS_PER_WEEK || '32' }}
+      GQ_MAX_REELS_PER_DAY: ${{ vars.GQ_MAX_REELS_PER_DAY || '4' }}
       GQ_BYPASS_WEEKLY_LIMIT: "false"
       GQ_REEL_KIND: ${{ inputs.reel_kind || 'auto' }}
       GQ_ALLOW_EXTRA_REEL: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_reel_today && 'true' || 'false' }}
