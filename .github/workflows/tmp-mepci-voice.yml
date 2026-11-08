@@ -1,0 +1,33 @@
+name: tmp-mepci-voice
+on:
+  push:
+    branches: [tmp-mepci-voice]
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install "edge-tts>=7.2,<8"
+      - name: Generate MEP-CI voice-over lines
+        run: |
+          mkdir out
+          python - <<'PY'
+          import asyncio, edge_tts
+          V="fr-FR-VivienneMultilingualNeural"; R="+5%"
+          L=["Vous tirez la chasse au cinquième étage… ça part où ?",
+             "Six étages. Et un seul tuyau.",
+             "Toutes les eaux usées descendent par la chute, jusqu'aux égouts.",
+             "Et en haut, elle respire : c'est la ventilation primaire.",
+             "Calculé. Posé. Testé.",
+             "La solution ? Mèp-si. Plomberie, électricité, ventilation.",
+             "Mèp-si. Vos lots techniques, maîtrisés."]
+          async def go():
+              for i,t in enumerate(L,1):
+                  for rate in [R]:
+                      await edge_tts.Communicate(t,V,rate=rate).save(f"out/l{i}.mp3")
+          asyncio.run(go())
+          PY
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with: { name: mepci-voice, path: out }
