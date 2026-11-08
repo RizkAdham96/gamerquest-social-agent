@@ -2,10 +2,13 @@ name: tmp-mepci-voice
 on:
   push:
     branches: [tmp-mepci-voice]
+permissions:
+  contents: write
 jobs:
   voice:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install "edge-tts>=7.2,<8"
@@ -29,5 +32,8 @@ jobs:
           asyncio.run(go())
           PY
           ls -la out
-      - uses: actions/upload-artifact@v4
-        with: { name: mepci-voice, path: out }
+      - name: Commit audio back to this temporary branch
+        run: |
+          mkdir -p mepci_voice && cp out/*.mp3 mepci_voice/
+          git config user.name github-actions; git config user.email actions@github.com
+          git add mepci_voice && git commit -m "MEP-CI voice lines [skip ci]" && git push
