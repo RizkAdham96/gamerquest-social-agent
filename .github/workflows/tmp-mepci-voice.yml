@@ -28,17 +28,17 @@ jobs:
           key=os.environ["FISH_AUDIO_API_KEY"]; vid=os.environ.get("GQ_FISH_VOICE_ID","")
           model=os.environ["GQ_FISH_MODEL"]; speed=float(os.environ["GQ_FISH_SPEED"]); tempo=float(os.environ["GQ_FISH_TEMPO"])
           print("key set:", bool(key), "voice id set:", bool(vid), "model:", model, "tempo:", tempo)
-          lines=["Vous tirez la chasse au cinquième étage. Ça part où ?",
-             "Six étages, et un seul tuyau.",
-             "Toutes les eaux usées descendent par la chute, jusqu'aux égouts.",
-             "Et tout en haut, elle respire : c'est la ventilation primaire.",
+          lines=["Au sixième étage, vous ouvrez le robinet. Comment l'eau est montée ?",
+             "Le réseau de la ville n'a pas assez de pression pour monter si haut.",
+             "Alors on la stocke au sous-sol, dans une bâche. Et un surpresseur la pousse vers le haut.",
+             "Dans la colonne montante, chaque étage reçoit la même pression.",
              "Tout est calculé, posé, et testé.",
              "La solution ? Mèp-si. Plomberie, électricité, ventilation.",
              "Mèp-si. Vos lots techniques, maîtrisés.",
              "Merci de votre attention."]
           tag="[voix off professionnelle de documentaire, chaleureuse, posée, fluide, articulée] "
-          for name,sp in [("F",0.88),("G",0.95),("H",0.88)]:
-              t=("(calm)(confident) " if name=="H" else tag)+"\n".join(lines)
+          for name,sp in [("P1",0.9),("P2",0.9)]:
+              t=tag+"\n".join(lines)
               audio=b""
               for a in range(4):
                   try:
