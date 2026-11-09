@@ -7,33 +7,47 @@ permissions:
 jobs:
   voice:
     runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    env:
+      FISH_AUDIO_API_KEY: ${{ secrets.FISH_AUDIO_API_KEY }}
+      GQ_FISH_VOICE_ID: ${{ vars.GQ_FISH_VOICE_ID || secrets.GQ_FISH_VOICE_ID }}
+      GQ_FISH_MODEL: ${{ vars.GQ_FISH_MODEL || 's2.1-pro-free' }}
+      GQ_FISH_SPEED: ${{ vars.GQ_FISH_SPEED || '1.0' }}
+      GQ_FISH_TEMPO: ${{ vars.GQ_FISH_TEMPO || '0.88' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install "edge-tts>=7.2,<8"
-      - name: Generate MEP-CI voice-over lines
+      - name: Generate MEP-CI lines with the GamerQuest Fish Audio voice
         run: |
-          mkdir out
+          rm -rf mepci_voice && mkdir mepci_voice
           python - <<'PY'
-          import asyncio, edge_tts
-          V="fr-FR-VivienneMultilingualNeural"; R="+5%"
+          import os, time
+          from pathlib import Path
+          from content.voice import _fish_request, change_tempo
+          key=os.environ["FISH_AUDIO_API_KEY"]; vid=os.environ.get("GQ_FISH_VOICE_ID","")
+          model=os.environ["GQ_FISH_MODEL"]; speed=float(os.environ["GQ_FISH_SPEED"]); tempo=float(os.environ["GQ_FISH_TEMPO"])
+          print("key set:", bool(key), "voice id set:", bool(vid), "model:", model, "tempo:", tempo)
           L=["Vous tirez la chasse au cinquième étage… ça part où ?",
              "Six étages. Et un seul tuyau.",
              "Toutes les eaux usées descendent par la chute, jusqu'aux égouts.",
              "Et en haut, elle respire : c'est la ventilation primaire.",
-             "Calculé. Posé. Testé.",
+             "Tout est calculé. Posé. Testé.",
              "La solution ? Mèp-si. Plomberie, électricité, ventilation.",
              "Mèp-si. Vos lots techniques, maîtrisés."]
-          async def go():
-              for i,t in enumerate(L,1):
-                  for rate in [R]:
-                      await edge_tts.Communicate(t,V,rate=rate).save(f"out/l{i}.mp3")
-          asyncio.run(go())
+          for i,t in enumerate(L,1):
+              audio=b""
+              for a in range(4):
+                  try:
+                      audio=_fish_request(t,key,vid,model,speed)
+                      if len(audio)>5000: break
+                  except Exception as e:
+                      print("retry",i,e); time.sleep(15*(a+1))
+              p=Path(f"mepci_voice/l{i}.mp3"); p.write_bytes(audio)
+              if abs(tempo-1)>0.01: change_tempo(p,tempo)
+              print("ok",i,p.stat().st_size)
           PY
-          ls -la out
       - name: Commit audio back to this temporary branch
         run: |
-          mkdir -p mepci_voice && cp out/*.mp3 mepci_voice/
           git config user.name github-actions; git config user.email actions@github.com
-          git add mepci_voice && git commit -m "MEP-CI voice lines [skip ci]" && git push
+          git add -A mepci_voice && git commit -m "MEP-CI voice lines (Fish) [skip ci]" && git push
