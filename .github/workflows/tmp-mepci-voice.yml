@@ -44,7 +44,7 @@ jobs:
                   except Exception as e:
                       print("retry",i,e); time.sleep(15*(a+1))
               p=Path(f"mepci_voice/l{i}.mp3"); p.write_bytes(audio)
-              if abs(tempo-1)>0.01: change_tempo(p,tempo)
+              pass  # tempo applied afterwards
               print("ok",i,p.stat().st_size)
           PY
       - name: Commit audio back to this temporary branch
