@@ -28,21 +28,20 @@ jobs:
           key=os.environ["FISH_AUDIO_API_KEY"]; vid=os.environ.get("GQ_FISH_VOICE_ID","")
           model=os.environ["GQ_FISH_MODEL"]; speed=float(os.environ["GQ_FISH_SPEED"]); tempo=float(os.environ["GQ_FISH_TEMPO"])
           print("key set:", bool(key), "voice id set:", bool(vid), "model:", model, "tempo:", tempo)
-          import json
-          lines=["Vous tirez la chasse au cinquième étage… ça part où ?",
+          lines=["Vous tirez la chasse au cinquième étage. Ça part où ?",
              "Six étages. Et un seul tuyau.",
              "Toutes les eaux usées descendent par la chute, jusqu'aux égouts.",
              "Et en haut, elle respire : c'est la ventilation primaire.",
              "Tout est calculé. Posé. Testé.",
              "La solution ? Mèp-si. Plomberie, électricité, ventilation.",
-             "Mèp-si. Vos lots techniques, maîtrisés."]
-          full=" ... ".join(lines)
-          variants={"A":(full,0.9),"B":("(calm)(confident) "+full,0.9),"C":("[calme, posée, sûre d'elle] "+full,0.9)}
-          for name,(t,sp) in variants.items():
+             "Mèp-si. Vos lots techniques, maîtrisés.",
+             "Merci de votre attention."]
+          full="(calm)(confident) "+"\n".join(lines)
+          for name in ["D","E"]:
               audio=b""
               for a in range(4):
                   try:
-                      audio=_fish_request(t,key,vid,model,sp)
+                      audio=_fish_request(full,key,vid,model,0.9)
                       if len(audio)>5000: break
                   except Exception as e:
                       print("retry",name,e); time.sleep(15*(a+1))
