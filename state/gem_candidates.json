@@ -3,25 +3,25 @@
   "appid": 431730,
   "name": "Aseprite",
   "review_percent": 99,
-  "review_count": 21642
+  "review_count": 21649
  },
  {
   "appid": 1055540,
   "name": "A Short Hike",
   "review_percent": 99,
-  "review_count": 19528
+  "review_count": 19534
  },
  {
   "appid": 1170880,
   "name": "Grimm's Hollow",
   "review_percent": 99,
-  "review_count": 14687
+  "review_count": 14689
  },
  {
   "appid": 1129190,
   "name": "Our Life: Beginnings & Always",
   "review_percent": 99,
-  "review_count": 13891
+  "review_count": 13895
  },
  {
   "appid": 2795000,
@@ -39,55 +39,49 @@
   "appid": 1240210,
   "name": "There Is No Game: Wrong Dimension",
   "review_percent": 98,
-  "review_count": 24353
+  "review_count": 24354
  },
  {
   "appid": 531510,
   "name": "Just Shapes & Beats",
   "review_percent": 98,
-  "review_count": 24284
+  "review_count": 24290
  },
  {
   "appid": 1082430,
   "name": "Before Your Eyes",
   "review_percent": 98,
-  "review_count": 21577
+  "review_count": 21582
  },
  {
   "appid": 736260,
   "name": "Baba Is You",
   "review_percent": 98,
-  "review_count": 21178
+  "review_count": 21181
  },
  {
   "appid": 425580,
   "name": "The Room Two",
   "review_percent": 98,
-  "review_count": 21178
+  "review_count": 21179
  },
  {
   "appid": 667970,
   "name": "VTOL VR",
   "review_percent": 98,
-  "review_count": 20035
+  "review_count": 20039
  },
  {
   "appid": 337340,
   "name": "Finding Paradise",
   "review_percent": 98,
-  "review_count": 18262
+  "review_count": 18264
  },
  {
   "appid": 990630,
   "name": "The Last Campfire",
   "review_percent": 98,
-  "review_count": 17968
- },
- {
-  "appid": 1361320,
-  "name": "The Room 4: Old Sins",
-  "review_percent": 98,
-  "review_count": 17956
+  "review_count": 17978
  },
  {
   "appid": 424280,
@@ -96,28 +90,10 @@
   "review_count": 17482
  },
  {
-  "appid": 1533420,
-  "name": "Neon White",
+  "appid": 1093910,
+  "name": "Tales of the Black Forest",
   "review_percent": 98,
-  "review_count": 17458
- },
- {
-  "appid": 1424330,
-  "name": "Wobbledogs",
-  "review_percent": 98,
-  "review_count": 13959
- },
- {
-  "appid": 1390350,
-  "name": "Webbed",
-  "review_percent": 98,
-  "review_count": 13904
- },
- {
-  "appid": 1353230,
-  "name": "Bomb Rush Cyberfunk",
-  "review_percent": 98,
-  "review_count": 12733
+  "review_count": 14950
  },
  {
   "appid": 264200,
@@ -129,19 +105,25 @@
   "appid": 926990,
   "name": "WolfQuest: Anniversary Edition",
   "review_percent": 98,
-  "review_count": 11733
- },
- {
-  "appid": 1369320,
-  "name": "Virtual Cottage",
-  "review_percent": 98,
-  "review_count": 11133
+  "review_count": 11737
  },
  {
   "appid": 206190,
   "name": "Gunpoint",
   "review_percent": 98,
-  "review_count": 10284
+  "review_count": 10283
+ },
+ {
+  "appid": 388210,
+  "name": "Day of the Tentacle Remastered",
+  "review_percent": 98,
+  "review_count": 3574
+ },
+ {
+  "appid": 5133900,
+  "name": "Can 'Em All",
+  "review_percent": 98,
+  "review_count": 3047
  },
  {
   "appid": 2198150,
@@ -153,55 +135,55 @@
   "appid": 450540,
   "name": "Hot Dogs, Horseshoes & Hand Grenades",
   "review_percent": 97,
-  "review_count": 22908
+  "review_count": 22911
  },
  {
   "appid": 519860,
   "name": "DUSK",
   "review_percent": 97,
-  "review_count": 22197
+  "review_count": 22201
+ },
+ {
+  "appid": 1604000,
+  "name": "Milk outside a bag of milk outside a bag of milk",
+  "review_percent": 97,
+  "review_count": 21026
  },
  {
   "appid": 362680,
   "name": "Fran Bow",
   "review_percent": 97,
-  "review_count": 20978
+  "review_count": 20984
  },
  {
   "appid": 1241510,
   "name": "The Test",
   "review_percent": 97,
-  "review_count": 19596
+  "review_count": 19594
  },
  {
   "appid": 557600,
   "name": "Gorogoa",
   "review_percent": 97,
-  "review_count": 19440
- },
- {
-  "appid": 1275670,
-  "name": "Outcore: Desktop Adventure",
-  "review_percent": 97,
-  "review_count": 18560
+  "review_count": 19443
  },
  {
   "appid": 221640,
   "name": "Super Hexagon",
   "review_percent": 97,
-  "review_count": 18455
+  "review_count": 18454
  },
  {
   "appid": 312990,
   "name": "The Expendabros",
   "review_percent": 97,
-  "review_count": 18263
+  "review_count": 18261
  },
  {
   "appid": 246420,
   "name": "Kingdom Rush  - Tower Defense",
   "review_percent": 97,
-  "review_count": 17317
+  "review_count": 17334
  },
  {
   "appid": 2365810,
@@ -213,19 +195,31 @@
   "appid": 488860,
   "name": "MADNESS: Project Nexus",
   "review_percent": 97,
-  "review_count": 16102
+  "review_count": 16104
+ },
+ {
+  "appid": 1746030,
+  "name": "Murders on the Yangtze River",
+  "review_percent": 97,
+  "review_count": 15999
  },
  {
   "appid": 617670,
   "name": "Zup! S",
   "review_percent": 97,
-  "review_count": 15241
+  "review_count": 15242
  },
  {
   "appid": 341800,
   "name": "Keep Talking and Nobody Explodes",
   "review_percent": 97,
   "review_count": 14405
+ },
+ {
+  "appid": 2162800,
+  "name": "shapez 2 - Factory",
+  "review_percent": 97,
+  "review_count": 14132
  },
  {
   "appid": 2666510,
@@ -243,13 +237,13 @@
   "appid": 851100,
   "name": "Touhou Luna Nights",
   "review_percent": 97,
-  "review_count": 13866
+  "review_count": 13867
  },
  {
   "appid": 909080,
   "name": "Cube Escape: Paradox",
   "review_percent": 97,
-  "review_count": 12398
+  "review_count": 12403
  },
  {
   "appid": 351640,
@@ -261,13 +255,13 @@
   "appid": 610370,
   "name": "Desperados III",
   "review_percent": 97,
-  "review_count": 11981
+  "review_count": 11983
  },
  {
   "appid": 602520,
   "name": "NEKOPARA Vol. 3",
   "review_percent": 97,
-  "review_count": 11188
+  "review_count": 11189
  },
  {
   "appid": 420110,
@@ -279,19 +273,19 @@
   "appid": 1177980,
   "name": "Little Kitty, Big City",
   "review_percent": 97,
-  "review_count": 10586
+  "review_count": 10589
  },
  {
-  "appid": 344770,
-  "name": "fault - milestone two side:above",
+  "appid": 367580,
+  "name": "Hook",
   "review_percent": 97,
-  "review_count": 1979
+  "review_count": 7928
  },
  {
-  "appid": 353090,
-  "name": "Chicken Invaders 5",
+  "appid": 370360,
+  "name": "TIS-100",
   "review_percent": 97,
-  "review_count": 942
+  "review_count": 3398
  },
  {
   "appid": 557340,
@@ -303,13 +297,13 @@
   "appid": 1127500,
   "name": "Mini Motorways",
   "review_percent": 96,
-  "review_count": 23759
+  "review_count": 23763
  },
  {
   "appid": 333600,
   "name": "NEKOPARA Vol. 1",
   "review_percent": 96,
-  "review_count": 23495
+  "review_count": 23496
  },
  {
   "appid": 2239150,
@@ -321,55 +315,43 @@
   "appid": 813230,
   "name": "ANIMAL WELL",
   "review_percent": 96,
-  "review_count": 23093
+  "review_count": 23101
  },
  {
   "appid": 837470,
   "name": "Untitled Goose Game",
   "review_percent": 96,
-  "review_count": 23065
- },
- {
-  "appid": 1291340,
-  "name": "Townscaper",
-  "review_percent": 96,
-  "review_count": 20135
+  "review_count": 23067
  },
  {
   "appid": 512900,
   "name": "Streets of Rogue",
   "review_percent": 96,
-  "review_count": 17297
+  "review_count": 17296
  },
  {
   "appid": 314650,
   "name": "SpaceEngine",
   "review_percent": 96,
-  "review_count": 16284
+  "review_count": 16291
  },
  {
   "appid": 406150,
   "name": "Refunct",
   "review_percent": 96,
-  "review_count": 16025
+  "review_count": 16026
  },
  {
   "appid": 812810,
   "name": "missed messages.",
   "review_percent": 96,
-  "review_count": 15580
+  "review_count": 15581
  },
  {
   "appid": 242680,
   "name": "Nuclear Throne",
   "review_percent": 96,
-  "review_count": 15131
- },
- {
-  "appid": 1318690,
-  "name": "shapez",
-  "review_percent": 96,
-  "review_count": 14426
+  "review_count": 15132
  },
  {
   "appid": 1239690,
@@ -381,37 +363,37 @@
   "appid": 335670,
   "name": "LISA: The Painful",
   "review_percent": 96,
-  "review_count": 13194
+  "review_count": 13197
  },
  {
   "appid": 1147690,
   "name": "NGU IDLE",
   "review_percent": 96,
-  "review_count": 13073
+  "review_count": 13074
  },
  {
   "appid": 858210,
   "name": "Nova Drift",
   "review_percent": 96,
-  "review_count": 13059
+  "review_count": 13060
  },
  {
   "appid": 287980,
   "name": "Mini Metro",
   "review_percent": 96,
-  "review_count": 12884
+  "review_count": 12887
  },
  {
   "appid": 813630,
   "name": "Supraland",
   "review_percent": 96,
-  "review_count": 12536
+  "review_count": 12538
  },
  {
   "appid": 1239080,
   "name": "Door Kickers 2: Task Force North",
   "review_percent": 96,
-  "review_count": 12506
+  "review_count": 12508
  },
  {
   "appid": 3830,
@@ -429,7 +411,7 @@
   "appid": 1182620,
   "name": "Impostor Factory",
   "review_percent": 96,
-  "review_count": 12117
+  "review_count": 12120
  },
  {
   "appid": 1229380,
@@ -441,7 +423,7 @@
   "appid": 874260,
   "name": "The Forgotten City",
   "review_percent": 96,
-  "review_count": 11315
+  "review_count": 11321
  },
  {
   "appid": 732430,
@@ -453,103 +435,79 @@
   "appid": 555220,
   "name": "Detention",
   "review_percent": 96,
-  "review_count": 10464
+  "review_count": 10467
  },
  {
-  "appid": 342560,
-  "name": "Airships: Conquer the Skies",
+  "appid": 360740,
+  "name": "Downwell",
   "review_percent": 96,
-  "review_count": 6233
+  "review_count": 7943
  },
  {
-  "appid": 334940,
-  "name": "Yoku's Island Express",
+  "appid": 359050,
+  "name": "Shower With Your Dad Simulator 2015: Do You Still Shower With Your Dad",
   "review_percent": 96,
-  "review_count": 3263
+  "review_count": 7248
  },
  {
-  "appid": 325120,
-  "name": "Notch - The Innocent LunA: Eclipsed SinnerS",
+  "appid": 373770,
+  "name": "LiEat",
   "review_percent": 96,
-  "review_count": 3152
- },
- {
-  "appid": 355980,
-  "name": "Dungeon Warfare",
-  "review_percent": 96,
-  "review_count": 1941
- },
- {
-  "appid": 339350,
-  "name": "Choice of Robots",
-  "review_percent": 96,
-  "review_count": 1891
- },
- {
-  "appid": 353540,
-  "name": "Stephen's Sausage Roll",
-  "review_percent": 96,
-  "review_count": 1608
- },
- {
-  "appid": 353330,
-  "name": "Love at First Sight",
-  "review_percent": 96,
-  "review_count": 1433
+  "review_count": 4078
  },
  {
   "appid": 609320,
   "name": "FAR: Lone Sails",
   "review_percent": 95,
-  "review_count": 24617
+  "review_count": 24620
  },
  {
   "appid": 247080,
   "name": "Crypt of the NecroDancer",
   "review_percent": 95,
-  "review_count": 23665
+  "review_count": 23666
  },
  {
   "appid": 207140,
   "name": "SpeedRunners",
   "review_percent": 95,
-  "review_count": 22862
+  "review_count": 22861
  },
  {
   "appid": 274520,
   "name": "Darkwood",
   "review_percent": 95,
-  "review_count": 22608
+  "review_count": 22613
  },
  {
   "appid": 57300,
   "name": "Amnesia: The Dark Descent",
   "review_percent": 95,
-  "review_count": 20587
+  "review_count": 20591
  },
  {
   "appid": 692890,
   "name": "Roboquest",
   "review_percent": 95,
-  "review_count": 19339
+  "review_count": 19341
  },
  {
   "appid": 1012880,
   "name": "60 Seconds! Reatomized",
   "review_percent": 95,
-  "review_count": 18578
+  "review_count": 18579
  },
  {
   "appid": 40700,
   "name": "Machinarium",
   "review_percent": 95,
-  "review_count": 18190
+  "review_count": 18193
  },
  {
   "appid": 481510,
   "name": "Night in the Woods",
   "review_percent": 95,
-  "review_count": 17964
+  "review_count": 17965
  },
  {
   "appid": 2725260,
@@ -573,13 +531,7 @@
   "appid": 405640,
   "name": "Pony Island",
   "review_percent": 95,
-  "review_count": 14908
- },
- {
-  "appid": 1515210,
-  "name": "The Past Within",
-  "review_percent": 95,
-  "review_count": 14800
+  "review_count": 14909
  },
  {
   "appid": 385800,
@@ -591,7 +543,7 @@
   "appid": 236090,
   "name": "Dust: An Elysian Tail",
   "review_percent": 95,
-  "review_count": 14290
+  "review_count": 14291
  },
  {
   "appid": 250760,
@@ -603,13 +555,13 @@
   "appid": 410340,
   "name": "Liftoff: FPV Drone Racing",
   "review_percent": 95,
-  "review_count": 13966
+  "review_count": 13969
  },
  {
   "appid": 219890,
   "name": "Antichamber",
   "review_percent": 95,
-  "review_count": 13691
+  "review_count": 13690
  },
  {
   "appid": 456750,
@@ -618,226 +570,244 @@
   "review_count": 13093
  },
  {
-  "appid": 1361510,
-  "name": "Teenage Mutant Ninja Turtles: Shredder's Revenge",
-  "review_percent": 95,
-  "review_count": 13062
- },
- {
-  "appid": 1488200,
-  "name": "Symphony of War: The Nephilim Saga",
-  "review_percent": 95,
-  "review_count": 13000
- },
- {
   "appid": 35700,
   "name": "Trine Enchanted Edition",
   "review_percent": 95,
-  "review_count": 12875
+  "review_count": 12876
  },
  {
   "appid": 333640,
   "name": "Caves of Qud",
   "review_percent": 95,
-  "review_count": 12064
+  "review_count": 12068
  },
  {
   "appid": 914800,
   "name": "Coffee Talk",
   "review_percent": 95,
-  "review_count": 11385
+  "review_count": 11388
  },
  {
   "appid": 306020,
   "name": "Bloons TD 5",
   "review_percent": 95,
-  "review_count": 10829
+  "review_count": 10831
  },
  {
   "appid": 400910,
   "name": "Rabi-Ribi",
   "review_percent": 95,
-  "review_count": 10781
+  "review_count": 10780
  },
  {
   "appid": 495890,
   "name": "Montaro",
   "review_percent": 95,
-  "review_count": 10615
+  "review_count": 10614
  },
  {
-  "appid": 336140,
-  "name": "Unavowed",
+  "appid": 359510,
+  "name": "Tangle Tower",
   "review_percent": 95,
-  "review_count": 2333
+  "review_count": 6699
  },
  {
-  "appid": 346560,
-  "name": "Hero of the Kingdom II",
+  "appid": 368390,
+  "name": "The Darkside Detective",
   "review_percent": 95,
-  "review_count": 1910
+  "review_count": 3815
  },
  {
-  "appid": 345820,
-  "name": "Shantae and the Pirate's Curse",
+  "appid": 375820,
+  "name": "Human Resource Machine",
   "review_percent": 95,
-  "review_count": 1854
+  "review_count": 3299
+ },
+ {
+  "appid": 373390,
+  "name": "Contradiction: Spot The Liar",
+  "review_percent": 95,
+  "review_count": 2841
+ },
+ {
+  "appid": 384630,
+  "name": "Aviary Attorney",
+  "review_percent": 95,
+  "review_count": 1164
+ },
+ {
+  "appid": 357300,
+  "name": "Snakebird",
+  "review_percent": 95,
+  "review_count": 915
  },
  {
   "appid": 332800,
   "name": "Five Nights at Freddy's 2",
   "review_percent": 94,
-  "review_count": 24094
+  "review_count": 24099
  },
  {
   "appid": 590380,
   "name": "Into the Breach",
   "review_percent": 94,
-  "review_count": 19184
+  "review_count": 19185
  },
  {
   "appid": 895870,
   "name": "Project Wingman",
   "review_percent": 94,
-  "review_count": 18892
+  "review_count": 18897
  },
  {
   "appid": 463530,
   "name": "Empires of the Undergrowth",
   "review_percent": 94,
-  "review_count": 18091
+  "review_count": 18103
  },
  {
   "appid": 673950,
   "name": "Farm Together",
   "review_percent": 94,
-  "review_count": 17659
+  "review_count": 17658
  },
  {
   "appid": 293760,
   "name": "Automation - The Car Company Tycoon Game",
   "review_percent": 94,
-  "review_count": 17082
+  "review_count": 17089
  },
  {
   "appid": 365450,
   "name": "Hacknet",
   "review_percent": 94,
-  "review_count": 16982
- },
- {
-  "appid": 1435790,
-  "name": "Escape Simulator",
-  "review_percent": 94,
-  "review_count": 16638
+  "review_count": 16984
  },
  {
   "appid": 1046030,
   "name": "ISLANDERS",
   "review_percent": 94,
-  "review_count": 16128
+  "review_count": 16126
  },
  {
   "appid": 343780,
   "name": "Cat Goes Fishing",
   "review_percent": 94,
-  "review_count": 15563
+  "review_count": 15567
  },
  {
   "appid": 397950,
   "name": "Clustertruck",
   "review_percent": 94,
-  "review_count": 14859
+  "review_count": 14867
  },
  {
   "appid": 1016920,
   "name": "Unrailed!",
   "review_percent": 94,
-  "review_count": 13859
+  "review_count": 13860
  },
  {
   "appid": 688420,
   "name": "Bad North: Jotunn Edition",
   "review_percent": 94,
-  "review_count": 12538
+  "review_count": 12543
  },
  {
   "appid": 799600,
   "name": "Cosmoteer: Starship Architect & Commander",
   "review_percent": 94,
-  "review_count": 12149
+  "review_count": 12153
  },
  {
   "appid": 332570,
   "name": "Amazing Frog?",
   "review_percent": 94,
-  "review_count": 11240
+  "review_count": 11242
  },
  {
-  "appid": 334920,
-  "name": "Zero-K",
+  "appid": 365300,
+  "name": "Transmissions: Element 120",
   "review_percent": 94,
-  "review_count": 4445
+  "review_count": 9967
  },
  {
-  "appid": 329130,
-  "name": "Reassembly",
+  "appid": 375480,
+  "name": "Chronicon",
   "review_percent": 94,
-  "review_count": 3624
+  "review_count": 8889
  },
  {
-  "appid": 335000,
-  "name": "Tormentum - Dark Sorrow",
+  "appid": 362620,
+  "name": "Software Inc.",
   "review_percent": 94,
-  "review_count": 2566
+  "review_count": 7637
  },
  {
-  "appid": 351700,
-  "name": "UnReal World",
+  "appid": 370910,
+  "name": "Kathy Rain",
   "review_percent": 94,
-  "review_count": 1240
+  "review_count": 1869
+ },
+ {
+  "appid": 370280,
+  "name": "Season of 12 Colors",
+  "review_percent": 94,
+  "review_count": 1804
+ },
+ {
+  "appid": 361990,
+  "name": "Lakeview Cabin Collection",
+  "review_percent": 94,
+  "review_count": 1614
+ },
+ {
+  "appid": 364390,
+  "name": "Downfall",
+  "review_percent": 94,
+  "review_count": 1475
  },
  {
   "appid": 1169040,
   "name": "Necesse",
   "review_percent": 93,
-  "review_count": 24758
+  "review_count": 24765
  },
  {
   "appid": 1227890,
   "name": "Summer Memories",
   "review_percent": 93,
-  "review_count": 24433
+  "review_count": 24437
  },
  {
   "appid": 384190,
   "name": "ABZU",
   "review_percent": 93,
-  "review_count": 22102
+  "review_count": 22104
  },
  {
   "appid": 24240,
   "name": "PAYDAY The Heist",
   "review_percent": 93,
-  "review_count": 21944
+  "review_count": 21945
  },
  {
   "appid": 410900,
   "name": "Forts",
   "review_percent": 93,
-  "review_count": 21393
+  "review_count": 21397
  },
  {
   "appid": 248820,
   "name": "Risk of Rain (2013)",
   "review_percent": 93,
-  "review_count": 20786
+  "review_count": 20782
  },
  {
   "appid": 894020,
   "name": "Death's Door",
   "review_percent": 93,
-  "review_count": 20706
+  "review_count": 20724
  },
  {
   "appid": 285920,
@@ -855,37 +825,37 @@
   "appid": 246900,
   "name": "Viscera Cleanup Detail",
   "review_percent": 93,
-  "review_count": 18114
+  "review_count": 18113
  },
  {
   "appid": 985890,
   "name": "Streets of Rage 4",
   "review_percent": 93,
-  "review_count": 17431
+  "review_count": 17435
  },
  {
   "appid": 1164940,
   "name": "Trepang2",
   "review_percent": 93,
-  "review_count": 16272
+  "review_count": 16284
  },
  {
   "appid": 257850,
   "name": "Hyper Light Drifter",
   "review_percent": 93,
-  "review_count": 15676
+  "review_count": 15678
  },
  {
   "appid": 388090,
   "name": "Five Nights at Freddy's 4",
   "review_percent": 93,
-  "review_count": 15640
+  "review_count": 15643
  },
  {
   "appid": 356670,
   "name": "Spooky's Jump Scare Mansion",
   "review_percent": 93,
-  "review_count": 15639
+  "review_count": 15638
  },
  {
   "appid": 2634950,
@@ -894,22 +864,34 @@
   "review_count": 15461
  },
  {
+  "appid": 2103140,
+  "name": "Magicraft",
+  "review_percent": 93,
+  "review_count": 15261
+ },
+ {
   "appid": 845070,
   "name": "The Awesome Adventures of Captain Spirit",
   "review_percent": 93,
-  "review_count": 15206
+  "review_count": 15207
  },
  {
   "appid": 1102130,
   "name": "Florence",
   "review_percent": 93,
-  "review_count": 14986
+  "review_count": 14990
  },
  {
   "appid": 282800,
   "name": "100% Orange Juice",
   "review_percent": 93,
-  "review_count": 14824
+  "review_count": 14825
+ },
+ {
+  "appid": 2075070,
+  "name": "KinitoPET",
+  "review_percent": 93,
+  "review_count": 13652
  },
  {
   "appid": 361280,
@@ -921,13 +903,13 @@
   "appid": 589780,
   "name": "The Red Strings Club",
   "review_percent": 93,
-  "review_count": 12877
+  "review_count": 12878
  },
  {
   "appid": 743450,
   "name": "Monster Prom",
   "review_percent": 93,
-  "review_count": 12297
+  "review_count": 12298
  },
  {
   "appid": 65800,
@@ -942,6 +924,12 @@
   "review_count": 12190
  },
  {
+  "appid": 224760,
+  "name": "FEZ",
+  "review_percent": 93,
+  "review_count": 11760
+ },
+ {
   "appid": 317360,
   "name": "Double Action: Boogaloo",
   "review_percent": 93,
@@ -951,49 +939,55 @@
   "appid": 764790,
   "name": "The Messenger",
   "review_percent": 93,
-  "review_count": 10812
+  "review_count": 10811
  },
  {
-  "appid": 352520,
-  "name": "The Silent Age",
+  "appid": 382490,
+  "name": "Relic Hunters Zero: Remix",
   "review_percent": 93,
-  "review_count": 5971
+  "review_count": 6749
  },
  {
-  "appid": 342580,
-  "name": "12 Labours of Hercules",
+  "appid": 382560,
+  "name": "Hot Lava",
   "review_percent": 93,
-  "review_count": 2313
+  "review_count": 5352
  },
  {
-  "appid": 348620,
-  "name": "Voices from the Sea",
+  "appid": 374190,
+  "name": "Infernax",
   "review_percent": 93,
-  "review_count": 1259
+  "review_count": 2160
  },
  {
-  "appid": 337150,
-  "name": "Sentinels of the Multiverse",
+  "appid": 368950,
+  "name": "Jigoku Kisetsukan: Sense of the Seasons",
   "review_percent": 93,
-  "review_count": 1208
+  "review_count": 1774
  },
  {
-  "appid": 351510,
-  "name": "Quiplash",
+  "appid": 383270,
+  "name": "Hue",
   "review_percent": 93,
-  "review_count": 1000
+  "review_count": 1710
+ },
+ {
+  "appid": 370020,
+  "name": "Templar Battleforce",
+  "review_percent": 93,
+  "review_count": 934
  },
  {
   "appid": 1062520,
   "name": "Dinkum",
   "review_percent": 92,
-  "review_count": 24753
+  "review_count": 24755
  },
  {
   "appid": 250600,
   "name": "The Plan",
   "review_percent": 92,
-  "review_count": 23721
+  "review_count": 23723
  },
  {
   "appid": 2407270,
@@ -1002,28 +996,34 @@
   "review_count": 23201
  },
  {
+  "appid": 2138710,
+  "name": "Sifu",
+  "review_percent": 92,
+  "review_count": 22386
+ },
+ {
   "appid": 241600,
   "name": "Rogue Legacy",
   "review_percent": 92,
-  "review_count": 15922
+  "review_count": 15923
  },
  {
   "appid": 1063660,
   "name": "Bendy and the Dark Revival",
   "review_percent": 92,
-  "review_count": 14900
+  "review_count": 14906
  },
  {
   "appid": 239350,
   "name": "Spelunky",
   "review_percent": 92,
-  "review_count": 14705
+  "review_count": 14706
  },
  {
   "appid": 1216710,
   "name": "Cyber Manhunt",
   "review_percent": 92,
-  "review_count": 14584
+  "review_count": 14589
  },
  {
   "appid": 201790,
@@ -1035,36 +1035,18 @@
   "appid": 714120,
   "name": "Little Misfortune",
   "review_percent": 92,
-  "review_count": 12009
+  "review_count": 12011
  },
  {
-  "appid": 2929250,
-  "name": "over the hill",
+  "appid": 366090,
+  "name": "Colony Survival",
   "review_percent": 92,
-  "review_count": 5261
+  "review_count": 8293
  },
  {
-  "appid": 1566200,
-  "name": "Tape to Tape",
+  "appid": 381020,
+  "name": "Sky Rogue",
   "review_percent": 92,
-  "review_count": 4743
- },
- {
-  "appid": 355050,
-  "name": "Sky Force Anniversary",
-  "review_percent": 92,
-  "review_count": 2100
- },
- {
-  "appid": 328760,
-  "name": "SanctuaryRPG: Black Edition",
-  "review_percent": 92,
-  "review_count": 1025
- },
- {
-  "appid": 338000,
-  "name": "Echoes+",
-  "review_percent": 92,
-  "review_count": 858
+  "review_count": 1066
  }
 ]
