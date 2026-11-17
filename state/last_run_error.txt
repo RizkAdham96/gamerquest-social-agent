@@ -1,0 +1,33 @@
+Run failed at: 2026-11-17T23:08:06Z
+
+Traceback (most recent call last):
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/media/gem_reel.py", line 207, in download_trailer
+    run(base + ["-c", "copy", str(target)], check=True, capture_output=True)
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/bin/ffmpeg', '-v', 'error', '-y', '-i', 'https://video.akamai.steamstatic.com/store_trailers/453090/195629/9d1b496a430b6da9738874e3fa0d71d56524b901/1750532529/hls_264_master.m3u8?t=1562766535', '-t', '120', '-c', 'copy', 'output/trailer.mp4']' returned non-zero exit status 234.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 330, in <module>
+    main()
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 314, in main
+    result = run_once(
+             ^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 257, in run_once
+    script, rendered = produce_fn(facts, Path(output_dir))
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/automation/daily_reel.py", line 94, in produce
+    trailer = fetch_trailer(facts.trailer_url, output_dir)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/gamerquest-social-agent/gamerquest-social-agent/media/gem_reel.py", line 209, in download_trailer
+    run(
+  File "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/bin/ffmpeg', '-v', 'error', '-y', '-i', 'https://video.akamai.steamstatic.com/store_trailers/453090/195629/9d1b496a430b6da9738874e3fa0d71d56524b901/1750532529/hls_264_master.m3u8?t=1562766535', '-t', '120', '-c:v', 'libx264', '-preset', 'veryfast', '-c:a', 'aac', 'output/trailer.mp4']' returned non-zero exit status 234.
+Deals: specials search unavailable (Expecting value: line 1 column 1 (char 0)).
+Skipped NGU IDLE: tagged Hentai
+Candidate 1: Parkitect (94% positive)
