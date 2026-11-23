@@ -22,11 +22,11 @@ from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-# French gaming outlets whose article pages can be read. Google News was
+# French gaming outlets whose article pages can be read (jeuxvideo.com
+# answers 403 to article requests from GitHub).  Google News was
 # tried and dropped: its links go through a redirect page with no article
 # text, so its headlines crowded out every usable story.
 FEEDS = (
-    ("jeuxvideo.com", "https://www.jeuxvideo.com/rss/rss.xml"),
     ("JV France", "https://www.jvfrance.com/feed/"),
     ("ActuGaming", "https://www.actugaming.net/feed/"),
     ("Gamergen", "https://gamergen.com/rss"),
