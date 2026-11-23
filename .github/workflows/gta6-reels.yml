@@ -2,7 +2,10 @@ name: GTA 6 Reels
 
 # Same pipeline as "GamerQuest Social Agent", with GTA 6 news as the content:
 # a fresh GTA 6 article -> French script + fact-check -> voice + word captions
-# -> cuts of an official Rockstar trailer -> 1080x1920 Reel -> Instagram.
+# -> cuts of the day's most-watched GTA 6 Twitch clips (an official Rockstar
+# trailer as fallback) -> 1080x1920 Reel -> Instagram. Everything used here
+# is free: public-repo Actions minutes, Groq free tier, free voice, free
+# Twitch API.
 
 on:
   workflow_dispatch:
@@ -25,6 +28,7 @@ on:
       - "agent/gta6_news.py"
       - "content/gta6_script.py"
       - "media/gta6_footage.py"
+      - "media/twitch_clips.py"
       - "automation/gta6_reel.py"
       - "gta6/**"
       - ".github/workflows/gta6-reels.yml"
@@ -60,6 +64,10 @@ jobs:
       GQ_GTA6_INSTAGRAM_USER_ID: ${{ secrets.GQ_GTA6_INSTAGRAM_USER_ID }}
       GQ_GTA6_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_GTA6_INSTAGRAM_ACCESS_TOKEN }}
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      # Free Twitch developer app (dev.twitch.tv) for the clips API.
+      TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+      TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+      GQ_TWITCH_GAME_ID: ${{ vars.GQ_TWITCH_GAME_ID }}
       GQ_REEL_VOICE: ${{ vars.GQ_REEL_VOICE || 'fr-FR-VivienneMultilingualNeural' }}
       FISH_AUDIO_API_KEY: ${{ secrets.FISH_AUDIO_API_KEY }}
       GQ_FISH_VOICE_ID: ${{ vars.GQ_FISH_VOICE_ID || secrets.GQ_FISH_VOICE_ID }}
@@ -98,7 +106,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e . pytest
           pip install faster-whisper numpy
-          # Downloads the official trailers listed in gta6/footage.json.
+          # Downloads the Twitch clips (and the fallback trailers).
           pip install --upgrade yt-dlp
 
       - name: Verify test suite
@@ -169,7 +177,7 @@ jobs:
         if: ${{ success() && env.GQ_LIVE_PUBLISH == 'true' && github.event_name != 'pull_request' }}
         shell: bash
         run: |
-          for file in gta6_publish_log.json gta6_history.json; do
+          for file in gta6_publish_log.json gta6_history.json gta6_used_clips.json; do
             if [ -f "state/$file" ]; then cp "state/$file" "$RUNNER_TEMP/$file"; fi
           done
           git config user.name "gamerquest-social-agent[bot]"
@@ -179,10 +187,10 @@ jobs:
             git fetch origin main
             git reset --hard origin/main
             mkdir -p state
-            for file in gta6_publish_log.json gta6_history.json; do
+            for file in gta6_publish_log.json gta6_history.json gta6_used_clips.json; do
               if [ -f "$RUNNER_TEMP/$file" ]; then cp "$RUNNER_TEMP/$file" "state/$file"; fi
             done
-            git add state/gta6_publish_log.json state/gta6_history.json 2>/dev/null || true
+            git add state/gta6_publish_log.json state/gta6_history.json state/gta6_used_clips.json 2>/dev/null || true
             if git diff --cached --quiet; then
               echo "State is already current on main."
               exit 0

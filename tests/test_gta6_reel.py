@@ -15,7 +15,7 @@ from agent.gta6_news import (
     record_history,
     same_story,
 )
-from automation.gta6_reel import produce, run_once
+from automation.gta6_reel import Footage, FootageSource, produce, run_once
 from content.gem_script import GemScript, ScriptRejected
 from content.gta6_script import (
     GTA6_BODY_WORDS,
@@ -261,63 +261,98 @@ def spoken(seconds=40.0):
     return [SpokenWord(text="GTA", start=0.2, end=seconds)]
 
 
-def test_produce_retries_a_dark_footage_window(tmp_path):
-    windows = []
+class FakeFootage:
+    def __init__(self, path, credits=(), clip_ids=()):
+        self.calls = []
+        self.path, self.credits, self.clip_ids = path, list(credits), list(clip_ids)
 
-    def cut(library, seconds, output_dir, *, seed):
-        windows.append(seed)
-        return output_dir / "trailer.mp4"
+    def get(self, seconds, output_dir, *, seed, exclude):
+        self.calls.append(set(exclude))
+        return Footage(self.path, self.credits, [f"{c}-{len(self.calls)}" for c in self.clip_ids])
+
+
+def test_produce_retries_dark_footage_and_credits_streamers(tmp_path):
+    footage = FakeFootage(tmp_path / "trailer.mp4", ["Streamer1", "Streamer2"], ["c"])
 
     def render(**kwargs):
-        if len(windows) == 1:
+        if len(footage.calls) == 1:
             raise RuntimeError("the trailer is too dark for a Reel")
         return SimpleNamespace(path=tmp_path / "reel.mp4", duration_seconds=kwargs["reel_seconds"])
 
-    script, rendered = produce(
-        story(), tmp_path, library=[tmp_path / "t.mp4"],
-        write_script=lambda facts: GemScript(BODY, BODY, "caption"),
-        speak=lambda text, path: spoken(), cut_footage=cut, render=render,
+    script, rendered, clip_ids = produce(
+        story(), tmp_path, footage=footage,
+        write_script=lambda facts: GemScript(BODY, BODY, build_caption(facts)),
+        speak=lambda text, path: spoken(), render=render,
     )
-    assert len(windows) == 2
+    # The refused clips are not offered again.
+    assert footage.calls[1] == {"c-1"}
+    assert clip_ids == ["c-2"]
+    assert "🎥 Clips Twitch : Streamer1, Streamer2\n\n#GTA6" in script.caption
     saved = json.loads((tmp_path / "script.json").read_text(encoding="utf-8"))
-    assert saved["kind"] == "gta6" and saved["source"] == "JV France"
+    assert saved["kind"] == "gta6" and saved["twitch_clips"] == ["c-2"]
 
 
 def test_produce_refuses_a_script_that_runs_too_long(tmp_path):
     with pytest.raises(ScriptRejected):
         produce(
-            story(), tmp_path, library=[],
+            story(), tmp_path, footage=FakeFootage(tmp_path / "t.mp4"),
             write_script=lambda facts: GemScript(BODY, BODY, "caption"),
             speak=lambda text, path: spoken(80.0),
         )
 
 
-def test_run_once_skips_when_there_is_no_story_without_touching_footage(tmp_path):
-    def no_library():
-        raise AssertionError("footage must not be fetched")
+def test_footage_source_falls_back_to_trailers_when_twitch_fails(tmp_path):
+    class BrokenTwitch:
+        def montage(self, *args, **kwargs):
+            raise RuntimeError("only 12s of new GTA 6 Twitch clips")
 
+    source = FootageSource(
+        now=NOW, twitch=BrokenTwitch(), load_library=lambda: [tmp_path / "t.mp4"],
+        cut_window=lambda library, seconds, out, *, seed: out / "trailer.mp4",
+        used_clips=set(), skip_streamers=set(),
+    )
+    chosen = source.get(40.0, tmp_path, seed="s", exclude=set())
+    assert chosen.path == tmp_path / "trailer.mp4" and chosen.credits == []
+
+
+def test_footage_source_passes_used_clips_and_skip_list_to_twitch(tmp_path):
+    seen = {}
+
+    class Twitch:
+        def montage(self, seconds, output_dir, *, now, skip_ids, skip_streamers):
+            seen.update(skip_ids=skip_ids, skip_streamers=skip_streamers)
+            clip = SimpleNamespace(id="new")
+            return SimpleNamespace(path=output_dir / "trailer.mp4", credits=["A"], clips=[clip])
+
+    source = FootageSource(now=NOW, twitch=Twitch(), used_clips={"old"}, skip_streamers={"nope"})
+    chosen = source.get(40.0, tmp_path, seed="s", exclude={"dark"})
+    assert seen == {"skip_ids": {"old", "dark"}, "skip_streamers": {"nope"}}
+    assert chosen.clip_ids == ["new"]
+
+
+def test_run_once_skips_when_there_is_no_story_without_touching_footage(tmp_path):
     result = run_once(
         output_dir=tmp_path, publish_log_path=tmp_path / "log.json", live_publish=False,
-        stories=[], library=None, now=NOW,
+        stories=[], now=NOW,
     )
     assert result.status == "skipped" and "no fresh" in result.reason
 
 
 def test_run_once_moves_to_the_next_story_and_dry_runs(tmp_path):
-    def fake_produce(facts, output_dir, *, library):
+    def fake_produce(facts, output_dir, *, footage):
         if "patch" in facts.title:
             raise ScriptRejected("fact-check failed")
-        return GemScript(BODY, BODY, "c"), SimpleNamespace(path=tmp_path / "reel.mp4", duration_seconds=40.0)
+        return GemScript(BODY, BODY, "c"), SimpleNamespace(path=tmp_path / "reel.mp4", duration_seconds=40.0), []
 
     result = run_once(
         output_dir=tmp_path, publish_log_path=tmp_path / "log.json", live_publish=False,
         stories=[story(), story(title="GTA 6 Online : date annoncée", url="https://a.fr/o")],
-        library=[tmp_path / "t.mp4"], produce_fn=fake_produce, now=NOW,
+        footage=object(), produce_fn=fake_produce, now=NOW,
     )
     assert result.status == "dry-run" and result.game == "GTA 6 Online : date annoncée"
 
 
-def test_run_once_publishes_and_records_history(tmp_path):
+def test_run_once_publishes_and_records_history_and_used_clips(tmp_path):
     published = []
 
     class Orchestrator:
@@ -327,14 +362,17 @@ def test_run_once_publishes_and_records_history(tmp_path):
 
     result = run_once(
         output_dir=tmp_path, publish_log_path=tmp_path / "log.json", live_publish=True,
-        orchestrator=Orchestrator(), stories=[story()], library=[tmp_path / "t.mp4"],
-        produce_fn=lambda facts, out, *, library: (
-            GemScript(BODY, BODY, "caption"), SimpleNamespace(path=tmp_path / "r.mp4", duration_seconds=40.0)
+        orchestrator=Orchestrator(), stories=[story()], footage=object(),
+        produce_fn=lambda facts, out, *, footage: (
+            GemScript(BODY, BODY, "caption"),
+            SimpleNamespace(path=tmp_path / "r.mp4", duration_seconds=40.0),
+            ["clip1", "clip2"],
         ),
-        now=NOW, history_path=tmp_path / "history.json",
+        now=NOW, history_path=tmp_path / "history.json", used_clips_path=tmp_path / "used.json",
     )
     assert result.status == "published" and published[0]["caption"] == "caption"
     assert json.loads((tmp_path / "history.json").read_text(encoding="utf-8"))[0]["source"] == "JV France"
+    assert json.loads((tmp_path / "used.json").read_text(encoding="utf-8")) == ["clip1", "clip2"]
 
 
 def test_run_once_respects_the_daily_limit(tmp_path):
@@ -344,7 +382,7 @@ def test_run_once_respects_the_daily_limit(tmp_path):
     ]), encoding="utf-8")
     result = run_once(
         output_dir=tmp_path, publish_log_path=log, live_publish=True, stories=[story()],
-        library=[], now=NOW, max_per_day=3,
+        footage=object(), now=NOW, max_per_day=3,
     )
     assert result.status == "skipped" and "limit 3" in result.reason
 
