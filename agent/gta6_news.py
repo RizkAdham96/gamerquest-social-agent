@@ -22,15 +22,14 @@ from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-# French gaming outlets first; Google News last because its links go through
-# a redirect page whose article text often cannot be read.
+# French gaming outlets whose article pages can be read. Google News was
+# tried and dropped: its links go through a redirect page with no article
+# text, so its headlines crowded out every usable story.
 FEEDS = (
     ("jeuxvideo.com", "https://www.jeuxvideo.com/rss/rss.xml"),
     ("JV France", "https://www.jvfrance.com/feed/"),
     ("ActuGaming", "https://www.actugaming.net/feed/"),
-    ("Millenium", "https://www.millenium.org/rss"),
     ("Gamergen", "https://gamergen.com/rss"),
-    ("Google News", "https://news.google.com/rss/search?q=%22GTA+6%22+OR+%22GTA+VI%22&hl=fr&gl=FR&ceid=FR:fr"),
 )
 HISTORY_FILE = Path("state/gta6_history.json")
 
@@ -295,7 +294,7 @@ def iter_news(
         if len(text) < MIN_FACT_CHARS and len(row["summary"]) > len(text):
             text = row["summary"][:MAX_FACT_CHARS]
         if len(text) < MIN_FACT_CHARS:
-            print(f"GTA 6 news: skipped '{row['title']}', too little text to write from.")
+            print(f"GTA 6 news: skipped '{row['title']}' ({row['source']}), only {len(text)} characters of text.")
             continue
         yield NewsFacts(
             title=row["title"], url=row["url"], source=row["source"],
