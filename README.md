@@ -20,6 +20,20 @@ Dry run (renders `output/reel.mp4` and `output/script.json`, publishes nothing):
 GROQ_API_KEY=... python -m automation.daily_reel --output-dir output
 ```
 
+## GTA 6 Reels
+
+`.github/workflows/gta6-reels.yml` runs the same pipeline with GTA 6 as the content:
+
+- `agent/gta6_news.py` picks a fresh GTA 6 story (last 72 h) from French gaming feeds, with Google News as a fallback, reads the article text and skips stories already covered by another outlet.
+- `content/gta6_script.py` has Groq write a French voice-over from the article only, then fact-checks it. Rumours must be called rumours. The caption credits the outlet and links the article.
+- `media/twitch_clips.py` builds the footage from the day's most-watched GTA 6 Twitch clips (free Twitch API, secrets `TWITCH_CLIENT_ID` and `TWITCH_CLIENT_SECRET`): one clip per streamer, never a clip already used, streamers in `gta6/streamer_skip_list.json` skipped, streamers credited in the caption, clip audio dropped.
+- `media/gta6_footage.py` is the fallback when Twitch is unavailable: a random, silent window of an official Rockstar trailer. Trailers come from `.mp4` files attached to a GitHub release tagged `gta6-footage` (most reliable), or from the links in `gta6/footage.json` via yt-dlp. Trailer audio is dropped because of its licensed music.
+- `automation/gta6_reel.py` renders with the hidden-gem renderer and publishes. State lives in `state/gta6_publish_log.json`, `state/gta6_history.json` and `state/gta6_used_clips.json`.
+
+Up to 3 a day by default (`GQ_GTA6_MAX_REELS_PER_DAY`), 3 hours apart, from 09:00 UTC. Posts to the GamerQuest account unless `GQ_GTA6_INSTAGRAM_USER_ID` and `GQ_GTA6_INSTAGRAM_ACCESS_TOKEN` are set.
+
+Dry run: `GROQ_API_KEY=... python -m automation.gta6_reel --output-dir output`
+
 ## Sprint 1
 
 Implemented foundations:

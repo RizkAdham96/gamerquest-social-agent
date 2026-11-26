@@ -1,0 +1,204 @@
+name: GTA 6 Reels
+
+# Same pipeline as "GamerQuest Social Agent", with GTA 6 news as the content:
+# a fresh GTA 6 article -> French script + fact-check -> voice + word captions
+# -> cuts of the day's most-watched GTA 6 Twitch clips (an official Rockstar
+# trailer as fallback) -> 1080x1920 Reel -> Instagram. Everything used here
+# is free: public-repo Actions minutes, Groq free tier, free voice, free
+# Twitch API.
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_to_instagram:
+        description: "Publish this Reel to Instagram"
+        required: true
+        default: false
+        type: boolean
+      extra_reel_today:
+        description: "Publish even if today's GTA 6 Reels are already out"
+        required: false
+        default: false
+        type: boolean
+
+  # A pull request that changes the GTA 6 pipeline renders a Reel as a dry
+  # run, so it can be checked before it is merged. It never publishes.
+  pull_request:
+    paths:
+      - "agent/gta6_news.py"
+      - "content/gta6_script.py"
+      - "media/gta6_footage.py"
+      - "media/twitch_clips.py"
+      - "automation/gta6_reel.py"
+      - "gta6/**"
+      - ".github/workflows/gta6-reels.yml"
+
+  schedule:
+    # GitHub starts scheduled runs late and skips some, so there are more
+    # slots than Reels and the run decides: from 09:00 UTC, three hours
+    # between two GTA 6 Reels, at most GQ_GTA6_MAX_REELS_PER_DAY a day.
+    - cron: "47 8-20 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gamerquest-gta6-reels
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GQ_LIVE_PUBLISH: ${{ github.event_name == 'schedule' && 'true' || (github.event_name == 'workflow_dispatch' && inputs.publish_to_instagram && 'true' || 'false') }}
+      GQ_MAX_REELS_PER_WEEK: ${{ vars.GQ_GTA6_MAX_REELS_PER_WEEK || '21' }}
+      GQ_GTA6_MAX_REELS_PER_DAY: ${{ vars.GQ_GTA6_MAX_REELS_PER_DAY || '3' }}
+      GQ_BYPASS_WEEKLY_LIMIT: "false"
+      GQ_ALLOW_EXTRA_REEL: ${{ github.event_name == 'workflow_dispatch' && inputs.extra_reel_today && 'true' || 'false' }}
+      GQ_META_API_VERSION: ${{ vars.GQ_META_API_VERSION || 'v26.0' }}
+      # The GamerQuest account by default. Set the two GTA6 secrets to post
+      # these Reels on a separate GTA 6 account instead.
+      GQ_INSTAGRAM_USER_ID: ${{ secrets.GQ_INSTAGRAM_USER_ID }}
+      GQ_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_INSTAGRAM_ACCESS_TOKEN }}
+      GQ_GTA6_INSTAGRAM_USER_ID: ${{ secrets.GQ_GTA6_INSTAGRAM_USER_ID }}
+      GQ_GTA6_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.GQ_GTA6_INSTAGRAM_ACCESS_TOKEN }}
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      # Free Twitch developer app (dev.twitch.tv) for the clips API.
+      TWITCH_CLIENT_ID: ${{ secrets.TWITCH_CLIENT_ID }}
+      TWITCH_CLIENT_SECRET: ${{ secrets.TWITCH_CLIENT_SECRET }}
+      GQ_TWITCH_GAME_ID: ${{ vars.GQ_TWITCH_GAME_ID }}
+      GQ_REEL_VOICE: ${{ vars.GQ_REEL_VOICE || 'fr-FR-VivienneMultilingualNeural' }}
+      FISH_AUDIO_API_KEY: ${{ secrets.FISH_AUDIO_API_KEY }}
+      GQ_FISH_VOICE_ID: ${{ vars.GQ_FISH_VOICE_ID || secrets.GQ_FISH_VOICE_ID }}
+      GQ_FISH_MODEL: ${{ vars.GQ_FISH_MODEL || 's2.1-pro-free' }}
+      GQ_FISH_SPEED: ${{ vars.GQ_FISH_SPEED || '1.0' }}
+      GQ_FISH_TEMPO: ${{ vars.GQ_FISH_TEMPO || '0.88' }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install system dependencies
+        run: |
+          export DEBIAN_FRONTEND=noninteractive
+          for attempt in 1 2 3; do
+            if timeout 180 sudo apt-get -o Acquire::Retries=3 update \
+               && timeout 360 sudo -E apt-get install -y --no-install-recommends \
+                    ffmpeg fonts-dejavu-core fonts-montserrat; then
+              exit 0
+            fi
+            echo "Package install attempt ${attempt} failed or stalled; retrying."
+            sleep 15
+          done
+          echo "System packages could not be installed." >&2
+          exit 1
+
+      - name: Install agent
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e . pytest
+          pip install faster-whisper numpy
+          # Downloads the Twitch clips (and the fallback trailers).
+          pip install --upgrade yt-dlp
+
+      - name: Verify test suite
+        run: pytest -q
+
+      - name: Restore GTA 6 footage
+        uses: actions/cache@v4
+        with:
+          path: footage_cache/gta6
+          key: gta6-footage-${{ hashFiles('gta6/footage.json') }}
+
+      - name: Show publishing mode
+        run: |
+          echo "GQ_LIVE_PUBLISH=$GQ_LIVE_PUBLISH"
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            echo "This run WILL publish a GTA 6 Reel to Instagram."
+          else
+            echo "This run is DRY-RUN only and will not publish."
+          fi
+
+      - name: Validate configuration
+        run: |
+          test -n "$GROQ_API_KEY" || (echo "Missing GROQ_API_KEY secret" >&2; exit 1)
+          if [ "$GQ_LIVE_PUBLISH" = "true" ]; then
+            test -n "${GQ_GTA6_INSTAGRAM_USER_ID:-$GQ_INSTAGRAM_USER_ID}" || (echo "Missing Instagram user id secret" >&2; exit 1)
+            test -n "${GQ_GTA6_INSTAGRAM_ACCESS_TOKEN:-$GQ_INSTAGRAM_ACCESS_TOKEN}" || (echo "Missing Instagram token secret" >&2; exit 1)
+          fi
+          echo "Configuration is present."
+
+      - name: Validate Instagram token before production
+        if: ${{ env.GQ_LIVE_PUBLISH == 'true' }}
+        shell: bash
+        run: |
+          USER_ID="${GQ_GTA6_INSTAGRAM_USER_ID:-$GQ_INSTAGRAM_USER_ID}"
+          TOKEN="${GQ_GTA6_INSTAGRAM_ACCESS_TOKEN:-$GQ_INSTAGRAM_ACCESS_TOKEN}"
+          curl --fail --silent --show-error --retry 2 \
+            -H "Authorization: Bearer $TOKEN" \
+            "https://graph.facebook.com/$GQ_META_API_VERSION/$USER_ID?fields=id" \
+            > /dev/null
+          echo "Instagram token preflight passed."
+
+      - name: Produce the GTA 6 Reel
+        id: run_agent
+        shell: bash
+        run: |
+          mkdir -p output
+          set +e
+          python -m automation.gta6_reel \
+            --output-dir output \
+            --publish-log state/gta6_publish_log.json \
+            2>&1 | tee output/gta6-reel.log
+          STATUS=${PIPESTATUS[0]}
+          exit "$STATUS"
+
+      - name: Upload generated Reel for inspection
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: gta6-reel-output
+          path: |
+            output/reel.mp4
+            output/script.json
+            output/gta6-reel.log
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Persist publish state
+        if: ${{ success() && env.GQ_LIVE_PUBLISH == 'true' && github.event_name != 'pull_request' }}
+        shell: bash
+        run: |
+          for file in gta6_publish_log.json gta6_history.json gta6_used_clips.json; do
+            if [ -f "state/$file" ]; then cp "state/$file" "$RUNNER_TEMP/$file"; fi
+          done
+          git config user.name "gamerquest-social-agent[bot]"
+          git config user.email "gamerquest-social-agent[bot]@users.noreply.github.com"
+          # The hidden-gem workflow pushes to main too; retry on a race.
+          for attempt in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+            mkdir -p state
+            for file in gta6_publish_log.json gta6_history.json gta6_used_clips.json; do
+              if [ -f "$RUNNER_TEMP/$file" ]; then cp "$RUNNER_TEMP/$file" "state/$file"; fi
+            done
+            git add state/gta6_publish_log.json state/gta6_history.json state/gta6_used_clips.json 2>/dev/null || true
+            if git diff --cached --quiet; then
+              echo "State is already current on main."
+              exit 0
+            fi
+            git commit -m "chore: persist GTA 6 Reel state"
+            if git push origin HEAD:main; then exit 0; fi
+            echo "Push refused (attempt ${attempt}); retrying."
+            sleep $((attempt * 5))
+          done
+          echo "Could not persist the GTA 6 Reel state." >&2
+          exit 1
